@@ -1,0 +1,35 @@
+*{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    outline: none;
+    border: none;
+
+    box-sizing: border-box;
+       -moz-box-sizing: border-box;
+           -box-sizing: border-box;
+}
+body{
+	background: #f7f7f7;
+}
+
+
+
+/**
+ * ======================================================== *
+ * stylesheet
+ * ======================================================== *
+ */
+#view-conteudo{
+	position: fixed;
+	float: left;
+	width: 100%;
+	height: 100%; 
+	padding: 20px 20px 20px 350px;
+	z-index: 1;
+}
+
+
+
+
+
