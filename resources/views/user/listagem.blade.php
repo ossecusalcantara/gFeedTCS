@@ -11,7 +11,7 @@
                 <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div class="w-full md:w-1/2">
                         {!! Form::open([ 'method' => 'post', 'class' => 'flex items-center']) !!}
-                            <label for="simple-search" class="sr-only">Pesquisar</label>
+                            <label for="search" class="sr-only">Pesquisar</label>
                             <div class="relative w-full">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                     <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

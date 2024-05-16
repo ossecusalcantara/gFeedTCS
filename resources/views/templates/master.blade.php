@@ -15,30 +15,31 @@
         @include('templates.menu-lateral')
  
         
-        <section id="view-conteudo">
+        <div id="view-conteudo" class="flex-1 ml-[300px] p-6">
             @yield('conteudo-view')
-        </section>
+        </div>
 
-        <script type="text/javascript">
-            function dropdown() {
-                document.querySelector("#submenu").classList.toggle("hidden");
-                document.querySelector("#arrow").classList.toggle("rotate-0");
-            }
-            dropdown();
-
-           
-            document.querySelectorAll('.teste').forEach(function(elemento) {
-                elemento.addEventListener('click', function() {
-                    
-                    //this.classList.toggle('hidden');
-                    
-                });
-            });
-
-            function openSidebar() {
-                document.querySelector(".sidebar").classList.toggle("hidden");
-            }
-        </script>
-        @yield('js-view')
     </body>
+    
+    <script type="text/javascript">
+        function dropdown() {
+            document.querySelector("#submenu").classList.toggle("hidden");
+            document.querySelector("#arrow").classList.toggle("rotate-0");
+        }
+        dropdown();
+
+        
+        document.querySelectorAll('.teste').forEach(function(elemento) {
+            elemento.addEventListener('click', function() {
+                
+                //this.classList.toggle('hidden');
+                
+            });
+        });
+
+        function openSidebar() {
+            document.querySelector(".sidebar").classList.toggle("hidden");
+        }
+    </script>
+    @yield('js-view')
 </html>
