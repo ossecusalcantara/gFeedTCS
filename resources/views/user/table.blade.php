@@ -1,49 +1,44 @@
-<div class="overflow-x-auto">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-4 py-3">Id</th>
-                <th scope="col" class="px-4 py-3">Nome</th>
-                <th scope="col" class="px-4 py-3">E-mail</th>
-                <th scope="col" class="px-4 py-3">Telefone</th>
-                <th scope="col" class="px-4 py-3">CPF</th>
-                <th scope="col" class="px-4 py-3">Status</th>
-                <th scope="col" class="px-4 py-3">
-                    <span class="sr-only">Ações</span>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($users as $user)
-            <tr class="border-b dark:border-gray-700">
-                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $user->id }}</th>
-                <td class="px-4 py-3"> {{ $user->name }}</td>
-                <td class="px-4 py-3"> {{ $user->email }}</td>
-                <td class="px-4 py-3"> {{ $user->phone }}</td>
-                <td class="px-4 py-3"> {{ $user->cpf }}</td>
-                <td class="px-4 py-3"> {{ $user->status }}</td>
-                <td class="px-4 py-3 flex items-center justify-end">
-                    <button id="{{ $user->id }}-dropdown-button" data-dropdown-toggle="{{ $user->id }}-dropdown" class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
-                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                        </svg>
+
+<table class="table datatable">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Telefone</th>
+        <th>CPF</th>
+        <th class="text-center">Status</th>
+        <th class="text-center">Ações</th>
+      </tr>
+  
+    <tbody>
+        @foreach ($users as $user)
+        <tr>
+            <th> {{ $user->id }}</th>
+            <td> {{ $user->name }}</td>
+            <td> {{ $user->email }}</td>
+            <td> {{ $user->phone }}</td>
+            <td> {{ $user->cpf }}</td>
+            <td class="text-center"> 
+                @if ($user->status == 'active')
+                    <span class="badge bg-success">Ativo</span>
+                @else
+                    <span class="badge bg-danger">Inativo</span>
+                @endif
+            </td>
+            <td class="text-center">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm " data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots"></i>
                     </button>
-                    <div id="{{ $user->id }}-dropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="{{ $user->id }}-dropdown-button">
-                            <li>
-                                <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Visualizar</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Editar</a>
-                            </li>
-                        </ul>
-                        <div class="py-1">
-                            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Excluir</a>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            @endforeach
-        </tbofy>
-    </table>
-</div>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Visualizar</a></li>
+                        <li><a class="dropdown-item" href="#">Editar</a></li>
+                        <li><a class="dropdown-item" href="#">Excluir</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        @endforeach
+    </tbofy>
+</table>

@@ -53,7 +53,6 @@ class DashboardController extends Controller
            return $e->getMessage();
         }
 
-        // dd($request->all());
-        // echo "Auth metod";
+
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Departament;
+use App\Entities\Office;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -9,6 +11,8 @@ use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Repositories\DepartamentRepository;
+use App\Repositories\OfficeRepository;
 use App\Repositories\UserRepository;
 use App\Validators\UserValidator;
 use Illuminate\Database\QueryException;
@@ -31,16 +35,23 @@ class UsersController extends Controller
      */
     protected $validator;
 
+    protected $departamentRepository;
+
+    protected $officeRepository;
+
     /**
      * UsersController constructor.
      *
      * @param UserRepository $repository
      * @param UserValidator $validator
      */
-    public function __construct(UserRepository $repository, UserValidator $validator)
+    public function __construct(UserRepository $repository, UserValidator $validator, DepartamentRepository $departamentRepository, OfficeRepository $officeRepository)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
+        $this->departamentRepository = $departamentRepository;
+        $this->officeRepository      = $officeRepository;
+
     }
 
     /**
@@ -50,22 +61,26 @@ class UsersController extends Controller
      */
     public function index()
     {
+        $departament_list   = $this->departamentRepository->selectBoxList();
+        $office_list        = $this->officeRepository->selectBoxList();
+    
+        return view('user.index', ['departament_list' => $departament_list, 'office_list' => $office_list]);
+    }
+    
+    public function listagem(){
+        
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $users = $this->repository->all();
-
+    
         if (request()->wantsJson()) {
-
+    
             return response()->json([
                 'data' => $users,
             ]);
         }
-
+    
        // return view('users.index', compact('users'));
         return view('user.listagem', ['users' => $users]);
-    }
-
-    public function cadastro(){
-        return view('user.index');
     }
 
     /**
@@ -93,9 +108,6 @@ class UsersController extends Controller
 
             
             return redirect()->route('user.index');
-            // return view('user.index'. [
-            //     'usuario' => $usuario
-            // ]);
 
         } catch (ValidatorException $e) {
             switch(get_class($e))

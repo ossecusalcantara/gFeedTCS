@@ -4,29 +4,88 @@
 @endsection
 
 @section('conteudo-view')
-
-    @if(session('success'))
+    @if (session('success'))
         <h3>{{ session('success')['messages'] }}</he>
     @endif
 
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Cadastro de novo usuário, preencha todas os campos.</h5>
 
-	{!! Form::open(['route' => 'user.store','method' => 'post', 'class' => 'form-padrao']) !!}
+            {!! Form::open(['route' => 'user.store', 'method' => 'post', 'class' => 'row g-3']) !!}
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        {!! Form::text( 'name', null, ['class' => 'form-control', 'placeholder' => 'Nome']) !!}
+                        <label for="name">Nome</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        {!! Form::text( 'email', null, ['class' => 'form-control', 'placeholder' => 'E-mail']) !!}
+                        <label for="email">E-mail</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Senha']) !!}
+                        <label for="password">Senha</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        {!! Form::text( 'cpf', null, ['class' => 'form-control', 'placeholder' => 'CPF']) !!}
+                        <label for="cpf">CPF</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-floating ">
+                        {!! Form::select('gender', ['M' => 'Masculino', 'F' => 'Feminino'] , null, [ 'class' => 'form-select', 'aria-label' => 'Gênero']) !!}
+                        <label for="gender">Gênero</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating ">
+                        {!! Form::select('departament_id', $departament_list , null, [ 'class' => 'form-select', 'aria-label' => 'Setor']) !!}
+                        <label for="departament_id">Setor</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating ">
+                        {!! Form::select('office_id', $office_list , null, [ 'class' => 'form-select', 'aria-label' => 'Cargo']) !!}
+                        <label for="office_id">Cargo</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        {!! Form::text( 'phone', null, ['class' => 'form-control', 'placeholder' => 'Telefone']) !!}
+                        <label for="email">Telefone</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        {!! Form::date( 'birth', null, ['class' => 'form-control', 'placeholder' => 'Data de Aniversário']) !!}
+                        <label for="birth">Data de Aniversário</label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-floating">
+                        {!! Form::textarea( 'notes', null, ['class' => 'form-control', 'placeholder' => 'Notas', 'style' => 'height: 100px;']) !!}
+                        <label for="notes">Notas</label>
+                    </div>
+                </div>
+                <div class="text-center">
+                    @include('templates.formulario.submit', [
+                        'input' => 'Cadastrar',
+                        'attributes' => [
+                            'class' => 'btn btn-primary',
+                        ],
+                    ])
+                    <button type="reset" class="btn btn-secondary">Voltar</button>
+                </div>
+            {!! Form::close() !!}
 
-        <div class="space-y-12">
-            <div class="border-b border-gray-900/10 pb-12">
-                <h2 class="text-base font-semibold leading-7 text-gray-900">Usuário</h2>
-                <p class="mt-1 text-sm leading-6 text-gray-600">Cadastro de novo usuário, preencha todas os campos.</p>
-
-                @include('user.form-fields')
-            </div>
         </div>
-
-        <div class="mt-6 flex items-center justify-end gap-x-6">
-            @include('templates.formulario.submit', [
-                'input' => 'Cadastrar',
-                'attributes' => ['class' => 'rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'] ])
-        </div>
-    {!! Form::close() !!}
+    </div>
 
 @endsection
 
