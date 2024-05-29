@@ -11,6 +11,8 @@ use App\Http\Requests\SkillCreateRequest;
 use App\Http\Requests\SkillUpdateRequest;
 use App\Repositories\SkillRepository;
 use App\Validators\SkillValidator;
+use Illuminate\Database\QueryException;
+use Exception;
 
 /**
  * Class SkillsController.
@@ -48,6 +50,11 @@ class SkillsController extends Controller
      */
     public function index()
     {
+        return view('skill.index');
+    }
+
+    public function listagem() {
+
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $skills = $this->repository->all();
 
@@ -58,7 +65,8 @@ class SkillsController extends Controller
             ]);
         }
 
-        return view('skills.index', compact('skills'));
+        return view('skill.listagem', ['skills'=> $skills]);
+
     }
 
     /**
@@ -76,29 +84,27 @@ class SkillsController extends Controller
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $skill = $this->repository->create($request->all());
+            $request = $this->repository->create($request->all());
+            $skill = $request['success'] ? $request['data'] : null;
 
-            $response = [
-                'message' => 'Skill created.',
-                'data'    => $skill->toArray(),
-            ];
+            session()->flash('success', [
+                'success' 	=> $request['success'],
+                'messages' 	=> $request['messages']
+            ]);
 
-            if ($request->wantsJson()) {
+            
+            return redirect()->route('skill.index');
 
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
         } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+            switch(get_class($e))
+			{
+				case QueryException::class 		:  return ['success' => false, 'messages' => $e->getMessage()];
+				case ValidatorException::class 	:  return ['success' => false, 'messages' => $e->getMessage()];
+				case Exception::class 			:  return ['success' => false, 'messages' => $e->getMessage()];
+				default 						:  return ['success' => false, 'messages' => get_class($e)];
+			}
         }
+
     }
 
     /**

@@ -20,7 +20,11 @@ class DepartamentValidator extends LaravelValidator
     protected $rules = [
         ValidatorInterface::RULE_CREATE => [
             'name' => 'required',
+            'description' => 'required',
         ],
-        ValidatorInterface::RULE_UPDATE => [],
+        ValidatorInterface::RULE_UPDATE => [
+            'name' => 'required',
+            'description' => 'required',
+        ],
     ];
 }

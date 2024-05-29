@@ -83,6 +83,7 @@ class DepartamentsController extends Controller
 
         try {
 
+
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
             $request = $this->repository->create($request->all());

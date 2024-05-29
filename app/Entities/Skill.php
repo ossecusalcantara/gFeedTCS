@@ -5,6 +5,7 @@ namespace App\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 /**
  * Class Skill.
@@ -27,5 +28,16 @@ class Skill extends Model implements Transformable
         'description',
         'type'
     ];
+
+    protected $appends = [
+        'formatted_type'
+    ];
+
+    protected function formattedType() : Attribute
+    {
+        return Attribute::make(
+            get:fn () => formatType($this->type)
+        );
+    }
 
 }

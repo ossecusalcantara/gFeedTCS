@@ -17,8 +17,8 @@
             <th> {{ $user->id }}</th>
             <td> {{ $user->name }}</td>
             <td> {{ $user->email }}</td>
-            <td> {{ $user->phone }}</td>
-            <td> {{ $user->cpf }}</td>
+            <td> {{ $user->formatted_phone }}</td>
+            <td> {{ $user->formatted_cpf }}</td>
             <td class="text-center"> 
                 @if ($user->status == 'active')
                     <span class="badge bg-success">Ativo</span>

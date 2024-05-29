@@ -9,6 +9,7 @@ use App\Entities\Office;
 use Illuminate\Database\Seeder;
 use App\Entities\User;
 use App\Entities\Skill;
+use App\Models\Permission;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,16 +20,16 @@ class DatabaseSeeder extends Seeder
     {
         
         // User::create([
-        //     'cpf'         => '11122233345', 
-        //     'name'        => 'Carlos', 
+        //     'cpf'         => '11122233399', 
+        //     'name'        => 'Gabriel', 
         //     'phone'       => '4899151515', 
         //     'birth'       => '2003-02-23', 
         //     'gender'      => 'M', 
-        //     'notes'       => 'Pior Funcionario', 
-        //     'email'       => 'carlos@gmail.com', 
-        //     'departament_id'  => '1', 
-        //     'office_id'       => '1', 
-        //     'password'    => env('PASSWORD_HASH') ? bcrypt('admin12345*') : 'admin12345*', 
+        //     'notes'       => 'Funcionario', 
+        //     'email'       => 'gabriel@gmail.com', 
+        //     'departament_id'  => '2', 
+        //     'office_id'       => '2', 
+        //     'password'    => env('PASSWORD_HASH') ? bcrypt('admin12345*') : 'senha12345*', 
         // ]);
 
         // $departamentos = [
@@ -94,6 +95,20 @@ class DatabaseSeeder extends Seeder
         // foreach ($skills as $skill) {
         //     Skill::create($skill);
         // } 
+
+        // $permissions = [
+        //     'app.admin',
+        //     'app.user',
+        //     'app.manager'
+        // ];
+        
+        // foreach ($permissions as $permission) {
+           
+        //     Permission::create([
+        //         'name' => $permission, 
+        //     ]);
+        // }
+
 
     }
 }

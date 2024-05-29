@@ -24,6 +24,10 @@ class SkillValidator extends LaravelValidator
 			'type' 	      => 'required', 
         ],
         
-        ValidatorInterface::RULE_UPDATE => [],
+        ValidatorInterface::RULE_UPDATE => [
+            'name' 		  => 'required', 
+			'description' => 'required', 
+			'type' 	      => 'required', 
+        ],
     ];
 }

@@ -24,7 +24,8 @@ class Office extends Model implements Transformable
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name',
+        'description'
     ];
 
 }

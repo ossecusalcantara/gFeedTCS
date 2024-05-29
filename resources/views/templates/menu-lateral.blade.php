@@ -43,6 +43,7 @@
             </ul>
         </li>
 
+        @can('admin')
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-journal-text"></i><span>Cadastros</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -54,22 +55,23 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('user.listagem') }}">
+                    <a href="{{ route('departament.listagem') }}">
                         <i class="bi bi-circle"></i><span>Setores</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('user.listagem') }}">
+                    <a href="{{ route('office.listagem') }}">
                         <i class="bi bi-circle"></i><span>Cargos</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('user.listagem') }}">
+                    <a href="{{ route('skill.listagem') }}">
                         <i class="bi bi-circle"></i><span>Skills</span>
                     </a>
                 </li>
             </ul>
         </li>
+        @endcan
 
 
         <li class="nav-heading">Pages</li>

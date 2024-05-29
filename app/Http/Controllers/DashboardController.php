@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Repositories\UserRepository;
 use App\Validators\UserValidator;
 use Exception;
+use Illuminate\Support\Facades\Gate;
 
 class DashboardController extends Controller
 {
@@ -39,13 +40,25 @@ class DashboardController extends Controller
 
                 $user = $this->repository->findWhere(['email' => $data['email']])->first();
 
-                if(!$user) 
-                    throw new Exception("E-mail informado é invállido", 1); 
-                
-                if($user->password != $data['password']) 
-                    throw new Exception("Senha informado é inválida", 1); 
+                if (!$user) {
+                    return redirect()->back()->with('error', 'E-mail informado é inválido');
+                }
+
+                if ($user->password != $data['password']) {
+                    return redirect()->back()->with('error', 'Senha informada é inválida');
+                }
 
                 Auth::login($user);
+
+                if($user->hasPermission('app.admin'))
+                    Gate::authorize('admin');
+
+                if($user->hasPermission('app.user'))
+                    Gate::authorize('user');
+
+                if($user->hasPermission('app.manager'))
+                    Gate::authorize('manager');
+                
             }
 
             return redirect()->route('user.dashboard');
