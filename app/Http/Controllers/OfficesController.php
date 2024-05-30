@@ -113,16 +113,10 @@ class OfficesController extends Controller
      */
     public function show($id)
     {
+
         $office = $this->repository->find($id);
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $office,
-            ]);
-        }
-
-        return view('offices.show', compact('office'));
+        return view('offices.show', ['office' => $office]);
     }
 
     /**
@@ -136,7 +130,7 @@ class OfficesController extends Controller
     {
         $office = $this->repository->find($id);
 
-        return view('offices.edit', compact('office'));
+        return view('offices.edit', ['office' => $office]);
     }
 
     /**
@@ -162,12 +156,7 @@ class OfficesController extends Controller
                 'data'    => $office->toArray(),
             ];
 
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
+            return redirect()->route('office.listagem');
         } catch (ValidatorException $e) {
 
             if ($request->wantsJson()) {

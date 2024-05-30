@@ -14,6 +14,7 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Repositories\DepartamentRepository;
 use App\Repositories\OfficeRepository;
 use App\Repositories\UserRepository;
+use App\Repositories\PermissionRepository;
 use App\Validators\UserValidator;
 use Illuminate\Database\QueryException;
 use Exception;
@@ -39,6 +40,9 @@ class UsersController extends Controller
 
     protected $officeRepository;
 
+    protected $permissionRepository;
+
+
     /**
      * UsersController constructor.
      *
@@ -63,6 +67,9 @@ class UsersController extends Controller
     {
         $departament_list   = $this->departamentRepository->selectBoxList();
         $office_list        = $this->officeRepository->selectBoxList();
+        //$permission_list    = $this->permissionRepository->selectBoxList();
+
+        //dd($permission_list);
     
         return view('user.index', ['departament_list' => $departament_list, 'office_list' => $office_list]);
     }
@@ -107,7 +114,7 @@ class UsersController extends Controller
             ]);
 
             
-            return redirect()->route('user.index');
+            return redirect()->route('user.listagem');
 
         } catch (ValidatorException $e) {
             switch(get_class($e))

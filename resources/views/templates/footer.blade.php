@@ -23,6 +23,10 @@
  <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
  <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
  <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
-
+ 
  <!-- Template Main JS File -->
+ <script src="{{ asset('assets/js/lib/jquery-3.7.1.js') }}"></script>
+ <script src="{{ asset('assets/js/DataTables/datatables.js') }}"></script>
+ <script src="{{ asset('assets/js/DataTables/datatables.min.js') }}"></script>
+ <script src="{{ asset('assets/js/helper.js') }}"></script>
  <script src="{{ asset('assets/js/main.js') }}"></script>

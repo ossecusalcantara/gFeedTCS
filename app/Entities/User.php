@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Permission;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Gate;
 
 class User extends Authenticatable
@@ -68,6 +69,17 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Permission::class);
     }
+
+    public function departament(): BelongsTo 
+    {
+        return $this->belongsTo(Departament::class, 'departament_id');
+    }
+
+    public function office(): BelongsTo 
+    {
+        return $this->belongsTo(Office::class, 'office_id');
+    }
+
 
     public function assignPermission(string $permission): void
     {

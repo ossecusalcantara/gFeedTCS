@@ -1,5 +1,5 @@
 
-<table class="table datatable">
+<table class="table data-table">
     <thead>
       <tr>
         <th>Id</th>
@@ -18,9 +18,13 @@
                         <i class="bi bi-three-dots"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Visualizar</a></li>
-                        <li><a class="dropdown-item" href="#">Editar</a></li>
-                        <li><a class="dropdown-item" href="#">Excluir</a></li>
+                        <li><a class="dropdown-item" href="{{ route('office.show', $office->id)}}">Visualizar</a></li>
+                        <li><a class="dropdown-item" href="{{ route('office.edit', $office->id)}}">Editar</a></li>
+    
+                        {!! Form::open(['route' => ['office.destroy', $office->id], 'method' => 'DELETE', 'style' => 'display:inline;']) !!}
+                            @csrf
+                            {!! Form::submit('Excluir', ['class' => 'dropdown-item', 'onclick' => "return confirm('Você tem certeza que deseja excluir este cargo?');"]) !!}
+                        {!! Form::close() !!}
                     </ul>
                 </div>
             </td>

@@ -92,7 +92,6 @@ class SkillsController extends Controller
                 'messages' 	=> $request['messages']
             ]);
 
-            
             return redirect()->route('skill.index');
 
         } catch (ValidatorException $e) {
@@ -116,16 +115,10 @@ class SkillsController extends Controller
      */
     public function show($id)
     {
+        
         $skill = $this->repository->find($id);
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $skill,
-            ]);
-        }
-
-        return view('skills.show', compact('skill'));
+        return view('skill.show', ['skill' => $skill]);
     }
 
     /**
@@ -139,7 +132,7 @@ class SkillsController extends Controller
     {
         $skill = $this->repository->find($id);
 
-        return view('skills.edit', compact('skill'));
+        return view('skill.edit', ['skill' => $skill]);
     }
 
     /**
@@ -165,23 +158,16 @@ class SkillsController extends Controller
                 'data'    => $skill->toArray(),
             ];
 
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
+            //return redirect()->back()->with('message', $response['message']);
+            return redirect()->route('skill.listagem');
+        }  catch (ValidatorException $e) {
+            switch(get_class($e))
+            {
+                case QueryException::class 		:  return ['success' => false, 'messages' => $e->getMessage()];
+                case ValidatorException::class 	:  return ['success' => false, 'messages' => $e->getMessage()];
+                case Exception::class 			:  return ['success' => false, 'messages' => $e->getMessage()];
+                default 						:  return ['success' => false, 'messages' => get_class($e)];
             }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
         }
     }
 
@@ -195,16 +181,30 @@ class SkillsController extends Controller
      */
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
 
-        if (request()->wantsJson()) {
+        try{
 
-            return response()->json([
-                'message' => 'Skill deleted.',
-                'deleted' => $deleted,
-            ]);
+            $deleted = $this->repository->delete($id);
+
+            $response = [
+				'success' 	=> true,
+				'messages' 	=> "Skill removida.",
+				'data' 	  	=> null,
+			];
+
+            //return redirect()->back()->with('message', 'Skill deleted.');
+            return redirect()->route('skill.listagem');
+
+        } catch (ValidatorException $e) {
+            switch(get_class($e))
+            {
+                case QueryException::class 		:  return ['success' => false, 'messages' => $e->getMessage()];
+                case ValidatorException::class 	:  return ['success' => false, 'messages' => $e->getMessage()];
+                case Exception::class 			:  return ['success' => false, 'messages' => $e->getMessage()];
+                default 						:  return ['success' => false, 'messages' => get_class($e)];
+            }
         }
 
-        return redirect()->back()->with('message', 'Skill deleted.');
+
     }
 }

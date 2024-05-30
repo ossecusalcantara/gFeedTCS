@@ -119,14 +119,7 @@ class DepartamentsController extends Controller
     {
         $departament = $this->repository->find($id);
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $departament,
-            ]);
-        }
-
-        return view('departaments.show', compact('departament'));
+        return view('departaments.show', ['departament' => $departament]);
     }
 
     /**
@@ -140,7 +133,7 @@ class DepartamentsController extends Controller
     {
         $departament = $this->repository->find($id);
 
-        return view('departaments.edit', compact('departament'));
+        return view('departaments.edit', ['departament' => $departament]);
     }
 
     /**
@@ -166,12 +159,7 @@ class DepartamentsController extends Controller
                 'data'    => $departament->toArray(),
             ];
 
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
+            return redirect()->route('departament.listagem');
         } catch (ValidatorException $e) {
 
             if ($request->wantsJson()) {

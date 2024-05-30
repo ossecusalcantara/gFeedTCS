@@ -1,5 +1,5 @@
 
-<table class="table datatable">
+<table class="table data-table">
     <thead>
       <tr>
         <th>Id</th>
@@ -18,9 +18,13 @@
                         <i class="bi bi-three-dots"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Visualizar</a></li>
-                        <li><a class="dropdown-item" href="#">Editar</a></li>
-                        <li><a class="dropdown-item" href="#">Excluir</a></li>
+                        <li><a class="dropdown-item" href="{{ route('departament.show', $departament->id)}}">Visualizar</a></li>
+                        <li><a class="dropdown-item" href="{{ route('departament.edit', $departament->id)}}">Editar</a></li>
+    
+                        {!! Form::open(['route' => ['departament.destroy', $departament->id], 'method' => 'DELETE', 'style' => 'display:inline;']) !!}
+                            @csrf
+                            {!! Form::submit('Excluir', ['class' => 'dropdown-item', 'onclick' => "return confirm('Você tem certeza que deseja excluir esta habilidade?');"]) !!}
+                        {!! Form::close() !!}
                     </ul>
                 </div>
             </td>

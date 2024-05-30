@@ -7,9 +7,9 @@
 
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Cadastro de nova skill, preencha todas os campos.</h5>
+            <h5 class="card-title">Editando skill, preencha todas os campos.</h5>
 
-            {!! Form::open(['route' => 'skill.store', 'method' => 'post', 'class' => 'row g-3',]) !!}
+            {!! Form::model($skill, ['route' => ['skill.update', $skill->id], 'method' => 'put', 'class' => 'row g-3',]) !!}
                 <div class="col-md-8">
                     <div class="form-floating ">
                         {!! Form::text( 'name', null, ['class' => 'form-control', 'placeholder' => 'Nome', 'required']) !!}
@@ -29,12 +29,7 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    @include('templates.formulario.submit', [
-                        'input' => 'Cadastrar',
-                        'attributes' => [
-                            'class' => 'btn btn-primary',
-                        ],
-                    ])
+                    {!! Form::submit('Salvar', ['class' => 'btn btn-primary']) !!}
                     <button type="button"  onclick="window.location='{{ route('skill.listagem') }}'"  class="btn btn-secondary">Voltar</button>
                 </div>
             {!! Form::close() !!}
