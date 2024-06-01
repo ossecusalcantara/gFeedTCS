@@ -43,18 +43,20 @@ class UsersController extends Controller
     protected $permissionRepository;
 
 
+
     /**
      * UsersController constructor.
      *
      * @param UserRepository $repository
      * @param UserValidator $validator
      */
-    public function __construct(UserRepository $repository, UserValidator $validator, DepartamentRepository $departamentRepository, OfficeRepository $officeRepository)
+    public function __construct(UserRepository $repository, UserValidator $validator, DepartamentRepository $departamentRepository, OfficeRepository $officeRepository, PermissionRepository $permissionRepository )
     {
         $this->repository = $repository;
         $this->validator  = $validator;
         $this->departamentRepository = $departamentRepository;
         $this->officeRepository      = $officeRepository;
+        $this->permissionRepository  = $permissionRepository;
 
     }
 
@@ -67,11 +69,9 @@ class UsersController extends Controller
     {
         $departament_list   = $this->departamentRepository->selectBoxList();
         $office_list        = $this->officeRepository->selectBoxList();
-        //$permission_list    = $this->permissionRepository->selectBoxList();
-
-        //dd($permission_list);
+        $permission_list    = $this->permissionRepository->selectBoxList('description', 'name');
     
-        return view('user.index', ['departament_list' => $departament_list, 'office_list' => $office_list]);
+        return view('user.index', ['departament_list' => $departament_list, 'office_list' => $office_list, 'permission_list' => $permission_list]);
     }
     
     public function listagem(){
@@ -103,17 +103,20 @@ class UsersController extends Controller
     {
         try {
 
+            
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $request = $this->repository->create($request->all());
-            $usuario = $request['success'] ? $request['data'] : null;
+            $usuario = $this->repository->create($request->all());
+
+            $permission = $usuario->permission;
+
+            $usuario = $usuario->assignPermission($permission);
 
             session()->flash('success', [
                 'success' 	=> $request['success'],
                 'messages' 	=> $request['messages']
             ]);
 
-            
             return redirect()->route('user.listagem');
 
         } catch (ValidatorException $e) {
@@ -138,14 +141,7 @@ class UsersController extends Controller
     {
         $user = $this->repository->find($id);
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $user,
-            ]);
-        }
-
-        return view('users.show', compact('user'));
+        return view('users.show', ['user' => $user]);
     }
 
     /**
@@ -159,7 +155,11 @@ class UsersController extends Controller
     {
         $user = $this->repository->find($id);
 
-        return view('users.edit', compact('user'));
+        $departament_list   = $this->departamentRepository->selectBoxList();
+        $office_list        = $this->officeRepository->selectBoxList();
+        $permission_list    = $this->permissionRepository->selectBoxList('description', 'name');
+
+        return view('user.edit', ['user' => $user,'departament_list' => $departament_list, 'office_list' => $office_list, 'permission_list' => $permission_list]);
     }
 
     /**
@@ -177,7 +177,7 @@ class UsersController extends Controller
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
-
+            
             $user = $this->repository->update($request->all(), $id);
 
             $response = [
@@ -185,23 +185,17 @@ class UsersController extends Controller
                 'data'    => $user->toArray(),
             ];
 
-            if ($request->wantsJson()) {
+            return redirect()->route('user.listagem');
+        }catch (ValidatorException $e) {
 
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+            //dd(get_class($e));
+            switch(get_class($e))
+			{
+				case QueryException::class 		:  return ['success' => false, 'messages' => $e->getMessage()];
+				case ValidatorException::class 	:  return ['success' => false, 'messages' => $e->getMessageBag()];
+				case Exception::class 			:  return ['success' => false, 'messages' => $e->getMessage()];
+				default 						:  return ['success' => false, 'messages' => get_class($e)];
+			}
         }
     }
 

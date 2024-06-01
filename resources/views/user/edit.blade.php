@@ -10,9 +10,9 @@
 
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Cadastro de novo usuário, preencha todas os campos.</h5>
+            <h5 class="card-title">Atualização de usuário, preencha todas os campos.</h5>
 
-            {!! Form::open(['route' => 'user.store', 'method' => 'post', 'class' => 'row g-3']) !!}
+            {!! Form::model($user, ['route' => ['user.update', $user->id], 'method' => 'put', 'class' => 'row g-3']) !!}
                 <div class="col-md-12">
                     <div class="form-floating">
                         {!! Form::text( 'name', null, ['class' => 'form-control', 'placeholder' => 'Nome', 'required']) !!}
@@ -74,7 +74,7 @@
                     </div>
                 </div>
                 <div class="text-center">
-                     {!! Form::submit('Cadastrar', ['class' => 'btn btn-primary']) !!}
+                     {!! Form::submit('Salvar', ['class' => 'btn btn-primary']) !!}
                     <button type="button"  onclick="window.location='{{ route('user.listagem') }}'"  class="btn btn-secondary">Voltar</button>
                 </div>
             {!! Form::close() !!}

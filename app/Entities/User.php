@@ -65,21 +65,21 @@ class User extends Authenticatable
         'formatted_phone'
     ];
 
-    public function permissions(): BelongsToMany
-    {
-        return $this->belongsToMany(Permission::class);
-    }
-
+    
     public function departament(): BelongsTo 
     {
         return $this->belongsTo(Departament::class, 'departament_id');
     }
-
+    
     public function office(): BelongsTo 
     {
         return $this->belongsTo(Office::class, 'office_id');
     }
-
+    
+    public function permissions(): BelongsToMany
+    {
+        return $this->belongsToMany(Permission::class);
+    }
 
     public function assignPermission(string $permission): void
     {

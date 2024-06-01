@@ -30,7 +30,7 @@ class UserValidator extends LaravelValidator
             'cpf' 		=> 'required', 
 			'name' 		=> 'required', 
 			'phone' 	=> 'required', 
-			'email' 	     => 'required|unique:app_users,email', 
+			'email' 	     => 'required', 
         	'departament_id' => 'required|exists:departaments,id',
         	'office_id'      => 'required|exists:offices,id',
         ],

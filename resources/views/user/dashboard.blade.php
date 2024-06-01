@@ -4,6 +4,7 @@
 @endsection
 
 @section('conteudo-view');
+
 @endsection
 
 @section('js-view');

@@ -35,4 +35,9 @@ class PermissionRepositoryEloquent extends BaseRepository implements PermissionR
         $this->pushCriteria(app(RequestCriteria::class));
     }
     
+    public function selectBoxList(string $descricao = 'name', string $chave = 'id')
+    {
+        return $this->model->orderBy($descricao, 'asc')->pluck($descricao, $chave)->all();
+    }
+    
 }

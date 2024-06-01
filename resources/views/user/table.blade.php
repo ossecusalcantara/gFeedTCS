@@ -32,9 +32,13 @@
                         <i class="bi bi-three-dots"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Visualizar</a></li>
-                        <li><a class="dropdown-item" href="#">Editar</a></li>
-                        <li><a class="dropdown-item" href="#">Excluir</a></li>
+                        <li><a class="dropdown-item" href="{{ route('user.show', $user->id)}}">Visualizar</a></li>
+                        <li><a class="dropdown-item" href="{{ route('user.edit', $user->id)}}">Editar</a></li>
+    
+                        {!! Form::open(['route' => ['user.destroy', $user->id], 'method' => 'DELETE', 'style' => 'display:inline;']) !!}
+                            @csrf
+                            {!! Form::submit('Excluir', ['class' => 'dropdown-item', 'onclick' => "return confirm('Você tem certeza que deseja excluir esta habilidade?');"]) !!}
+                        {!! Form::close() !!}
                     </ul>
                 </div>
             </td>
