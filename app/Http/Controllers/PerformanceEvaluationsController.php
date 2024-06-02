@@ -10,7 +10,9 @@ use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\PerformanceEvaluationCreateRequest;
 use App\Http\Requests\PerformanceEvaluationUpdateRequest;
 use App\Repositories\PerformanceEvaluationRepository;
+use App\Repositories\UserRepository;
 use App\Validators\PerformanceEvaluationValidator;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class PerformanceEvaluationsController.
@@ -29,16 +31,19 @@ class PerformanceEvaluationsController extends Controller
      */
     protected $validator;
 
+    protected $userRepository;
+
     /**
      * PerformanceEvaluationsController constructor.
      *
      * @param PerformanceEvaluationRepository $repository
      * @param PerformanceEvaluationValidator $validator
      */
-    public function __construct(PerformanceEvaluationRepository $repository, PerformanceEvaluationValidator $validator)
+    public function __construct(PerformanceEvaluationRepository $repository, PerformanceEvaluationValidator $validator, UserRepository $userRepository)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -47,6 +52,13 @@ class PerformanceEvaluationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+    {
+        $usuarios_list = $this->userRepository->selectBoxList();
+
+        return view('performanceEvaluations.index', ['usuarios_list' => $usuarios_list ]);
+    }
+
+    public function listagem() 
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $performanceEvaluations = $this->repository->all();
@@ -58,7 +70,8 @@ class PerformanceEvaluationsController extends Controller
             ]);
         }
 
-        return view('performanceEvaluations.index', compact('performanceEvaluations'));
+        return view('performanceEvaluations.listagem', ['performanceEvaluations' => $performanceEvaluations]);
+
     }
 
     /**
@@ -74,6 +87,8 @@ class PerformanceEvaluationsController extends Controller
     {
         try {
 
+            $request['admin_id'] = Auth::id();
+
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
             $performanceEvaluation = $this->repository->create($request->all());
@@ -88,7 +103,7 @@ class PerformanceEvaluationsController extends Controller
                 return response()->json($response);
             }
 
-            return redirect()->back()->with('message', $response['message']);
+            return redirect()->route('performanceEvaluations.index');
         } catch (ValidatorException $e) {
             if ($request->wantsJson()) {
                 return response()->json([

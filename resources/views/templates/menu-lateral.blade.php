@@ -44,6 +44,27 @@
         </li>
 
         @can('admin')
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#performanceEvaluations-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-x-diamond-fill"></i><span>Avaliação de Desenpenho</span><i
+                    class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="performanceEvaluations-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ route('performanceEvaluations.store') }}">
+                        <i class="bi bi-circle"></i><span>Cadastros</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('performanceEvaluations.listagem') }}">
+                        <i class="bi bi-circle"></i><span>Registros</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-journal-text"></i><span>Cadastros</span><i class="bi bi-chevron-down ms-auto"></i>

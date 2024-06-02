@@ -7,11 +7,11 @@ use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 /**
- * Class Question.
+ * Class TypeQuestion.
  *
  * @package namespace App\Entities;
  */
-class Question extends Model implements Transformable
+class TypeQuestion extends Model implements Transformable
 {
     use TransformableTrait;
 
@@ -20,12 +20,7 @@ class Question extends Model implements Transformable
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'order',
-        'question_description',
-        'type_question_id'
-    ];
-    protected $table = 'questions';
+    protected $fillable = ['name'];
+    protected $table = 'type_questions';
 
 }

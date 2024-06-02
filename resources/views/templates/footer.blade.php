@@ -30,3 +30,6 @@
  <script src="{{ asset('assets/js/DataTables/datatables.min.js') }}"></script>
  <script src="{{ asset('assets/js/helper.js') }}"></script>
  <script src="{{ asset('assets/js/main.js') }}"></script>
+
+ <!-- Tmplate Main cdn -->
+ <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

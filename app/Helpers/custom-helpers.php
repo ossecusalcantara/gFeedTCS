@@ -22,8 +22,8 @@ if(!function_exists('formatPhone')) {
     }
 }
 
-if(!function_exists('formatBith')) {
-    function formatBith($value)
+if(!function_exists('formatData')) {
+    function formatData($value)
     {
         $birth = explode('-', $value);
         
