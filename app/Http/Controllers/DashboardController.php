@@ -8,6 +8,8 @@ use App\Repositories\UserRepository;
 use App\Validators\UserValidator;
 use Exception;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\View;
+use App\Http\ViewComposer\UserComposer;
 
 class DashboardController extends Controller
 {
@@ -59,13 +61,15 @@ class DashboardController extends Controller
                 if($user->hasPermission('app.manager'))
                     Gate::authorize('manager');
                 
+            
+                //View::share('user', Auth::user());
+                //View::composer('templates.master', UserComposer::class);
             }
 
-            return redirect()->route('user.dashboard');
+           return redirect()->route('user.dashboard');
         } catch (Exception $e) {
            return $e->getMessage();
         }
-
 
     }
 }

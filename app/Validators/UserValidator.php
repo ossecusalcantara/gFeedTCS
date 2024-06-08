@@ -26,13 +26,11 @@ class UserValidator extends LaravelValidator
         	'departament_id' => 'required|exists:departaments,id',
         	'office_id'      => 'required|exists:offices,id',
         ],
-        ValidatorInterface::RULE_UPDATE => [
-            'cpf' 		=> 'required', 
+        ValidatorInterface::RULE_UPDATE => [ 
 			'name' 		=> 'required', 
 			'phone' 	=> 'required', 
-			'email' 	     => 'required', 
-        	'departament_id' => 'required|exists:departaments,id',
-        	'office_id'      => 'required|exists:offices,id',
+			'email' 	=> 'required', 
         ],
+
     ];
 }

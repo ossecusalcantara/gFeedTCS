@@ -20,115 +20,139 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        
-        // User::create([
-        //     'cpf'         => '11122233399', 
-        //     'name'        => 'Gabriel', 
-        //     'phone'       => '4899151515', 
-        //     'birth'       => '2003-02-23', 
-        //     'gender'      => 'M', 
-        //     'notes'       => 'Funcionario', 
-        //     'email'       => 'gabriel@gmail.com', 
-        //     'departament_id'  => '2', 
-        //     'office_id'       => '2', 
-        //     'password'    => env('PASSWORD_HASH') ? bcrypt('admin12345*') : 'senha12345*', 
-        // ]);
 
-        // $departamentos = [
-        //     'Engenharia',
-        //     'Recursos Humanos',
-        //     'Marketing',
-        //     'Finanças',
-        //     'Vendas',
-        //     'TI',
-        //     'Suporte ao Cliente',
-        //     'Operações',
-        //     'Pesquisa e Desenvolvimento',
-        //     'Logística'
-        // ];
+    }
+    
+    private function SeederUser() : void
+    {
+        User::create([
+            'cpf'         => '11122233399', 
+            'name'        => 'Gabriel', 
+            'phone'       => '4899151515', 
+            'birth'       => '2003-02-23', 
+            'gender'      => 'M', 
+            'notes'       => 'Funcionario', 
+            'email'       => 'gabriel@gmail.com', 
+            'departament_id'  => '2', 
+            'office_id'       => '2', 
+            'password'    => env('PASSWORD_HASH') ? bcrypt('admin12345*') : 'senha12345*', 
+        ]);
 
-        // foreach ($departamentos as $departamento) {
-        //     Departament::create([
-        //         'name' => $departamento, 
-        //     ]);
-        // }
-        
-        // $cargos = ['Engenheiro Civil', 'Engenheiro de Software', 'Engenheiro Elétrico',
-        //     'Recrutador', 'Gerente de RH', 'Especialista em Benefícios',
-        //     'Analista de Marketing', 'Gerente de Produto', 'Coordenador de Eventos',
-        //     'Contador', 'Analista Financeiro', 'Tesoureiro',
-        //     'Vendedor', 'Gerente de Vendas', 'Executivo de Contas',
-        //     'Desenvolvedor', 'Administrador de Sistemas', 'Analista de Suporte',
-        //     'Atendente', 'Especialista em Suporte', 'Coordenador de Suporte',
-        //     'Gerente de Operações', 'Supervisor de Produção', 'Analista de Logística',
-        //     'Cientista', 'Pesquisador', 'Engenheiro de P&D',
-        //     'Coordenador de Logística', 'Analista de Transporte', 'Supervisor de Armazém', 'Assitente', 'Auxiliar'];
+    }
 
-        // foreach ($cargos as $cargo) {
-        //     Office::create(['name' => $cargo]);
-        // } 
+    private function SeederDepartamentos() : void
+    {
+        $departamentos = [
+            'Engenharia',
+            'Recursos Humanos',
+            'Marketing',
+            'Finanças',
+            'Vendas',
+            'TI',
+            'Suporte ao Cliente',
+            'Operações',
+            'Pesquisa e Desenvolvimento',
+            'Logística'
+        ];
 
-        // $skills = [
-        //     // Soft Skills
-        //     ['name' => 'Comunicação', 'type' => '1', 'description' => 'A habilidade de transmitir informações de forma clara e eficaz, tanto verbalmente quanto por escrito.'],
-        //     ['name' => 'Trabalho em Equipe', 'type' => '1', 'description' => 'Capacidade de colaborar bem com colegas e contribuir para alcançar objetivos comuns.'],
-        //     ['name' => 'Liderança', 'type' => '1', 'description' => 'Habilidade de guiar, inspirar e motivar uma equipe para atingir metas e resolver problemas.'],
-        //     ['name' => 'Gestão do Tempo', 'type' => '1', 'description' => 'Capacidade de organizar e planejar quanto tempo gastar em atividades específicas para aumentar a eficiência.'],
-        //     ['name' => 'Resolução de Problemas', 'type' => '1', 'description' => 'Habilidade de analisar situações complexas e desenvolver soluções eficazes para os desafios.'],
-        //     ['name' => 'Empatia', 'type' => '1', 'description' => 'Capacidade de entender e compartilhar os sentimentos dos outros, promovendo relacionamentos positivos.'],
-        //     ['name' => 'Adaptabilidade', 'type' => '1', 'description' => 'Capacidade de ajustar-se rapidamente a novas condições, desafios ou ambientes.'],
-        //     ['name' => 'Pensamento Crítico', 'type' => '1', 'description' => 'Habilidade de analisar fatos de forma lógica e objetiva para formar um julgamento sólido.'],
-        //     ['name' => 'Inteligência Emocional', 'type' => '1', 'description' => 'Capacidade de reconhecer, entender e gerenciar suas próprias emoções e as emoções dos outros.'],
-        //     ['name' => 'Criatividade', 'type' => '1', 'description' => 'Habilidade de pensar fora da caixa e gerar ideias inovadoras e originais.'],
+        foreach ($departamentos as $departamento) {
+            Departament::create([
+                'name' => $departamento, 
+            ]);
+        }
+    }
 
-        //     // Hard Skills
-        //     ['name' => 'Programação', 'type' => '2', 'description' => 'Habilidade de escrever código em linguagens de programação como Python, Java, ou C++.'],
-        //     ['name' => 'Análise de Dados', 'type' => '2', 'description' => 'Capacidade de coletar, processar e interpretar grandes conjuntos de dados para tomar decisões informadas.'],
-        //     ['name' => 'Design Gráfico', 'type' => '2', 'description' => 'Habilidade de criar conteúdo visual usando softwares como Adobe Photoshop e Illustrator.'],
-        //     ['name' => 'Gestão de Projetos', 'type' => '2', 'description' => 'Competência em planejar, executar e fechar projetos, utilizando metodologias como Agile ou Waterfall.'],
-        //     ['name' => 'Marketing Digital', 'type' => '2', 'description' => 'Conhecimento em promover produtos ou serviços através de plataformas digitais como SEO, SEM, e redes sociais.'],
-        //     ['name' => 'Contabilidade', 'type' => '2', 'description' => 'Habilidade de gerenciar contas financeiras, preparar balanços e entender princípios contábeis.'],
-        //     ['name' => 'Desenvolvimento Web', 'type' => '2', 'description' => 'Capacidade de construir e manter websites usando tecnologias como HTML, CSS, JavaScript, e frameworks.'],
-        //     ['name' => 'Engenharia de Software', 'type' => '2', 'description' => 'Conhecimento em aplicar princípios de engenharia ao design, desenvolvimento e manutenção de software.'],
-        //     ['name' => 'Habilidades em Office', 'type' => '2', 'description' => 'Proficiência no uso de ferramentas de produtividade como Microsoft Office (Word, Excel, PowerPoint).'],
-        //     ['name' => 'Suporte Técnico', 'type' => '2', 'description' => 'Habilidade de fornecer assistência técnica e resolver problemas de hardware e software.'],
-        // ];
+    private function SeederCargos() : void
+    {
+        $cargos = ['Engenheiro Civil', 'Engenheiro de Software', 'Engenheiro Elétrico',
+            'Recrutador', 'Gerente de RH', 'Especialista em Benefícios',
+            'Analista de Marketing', 'Gerente de Produto', 'Coordenador de Eventos',
+            'Contador', 'Analista Financeiro', 'Tesoureiro',
+            'Vendedor', 'Gerente de Vendas', 'Executivo de Contas',
+            'Desenvolvedor', 'Administrador de Sistemas', 'Analista de Suporte',
+            'Atendente', 'Especialista em Suporte', 'Coordenador de Suporte',
+            'Gerente de Operações', 'Supervisor de Produção', 'Analista de Logística',
+            'Cientista', 'Pesquisador', 'Engenheiro de P&D',
+            'Coordenador de Logística', 'Analista de Transporte', 'Supervisor de Armazém', 'Assitente', 'Auxiliar'];
 
-        // foreach ($skills as $skill) {
-        //     Skill::create($skill);
-        // } 
+        foreach ($cargos as $cargo) {
+            Office::create(['name' => $cargo]);
+        } 
+    }
 
-        // $permissions = [
-        //     'app.admin',
-        //     'app.user',
-        //     'app.manager'
-        // ];
-        
-        // foreach ($permissions as $permission) {
+    private function SeederSkills() : void
+    { 
+        $skills = [
+            // Soft Skills
+            ['name' => 'Comunicação', 'type' => '1', 'description' => 'A habilidade de transmitir informações de forma clara e eficaz, tanto verbalmente quanto por escrito.'],
+            ['name' => 'Trabalho em Equipe', 'type' => '1', 'description' => 'Capacidade de colaborar bem com colegas e contribuir para alcançar objetivos comuns.'],
+            ['name' => 'Liderança', 'type' => '1', 'description' => 'Habilidade de guiar, inspirar e motivar uma equipe para atingir metas e resolver problemas.'],
+            ['name' => 'Gestão do Tempo', 'type' => '1', 'description' => 'Capacidade de organizar e planejar quanto tempo gastar em atividades específicas para aumentar a eficiência.'],
+            ['name' => 'Resolução de Problemas', 'type' => '1', 'description' => 'Habilidade de analisar situações complexas e desenvolver soluções eficazes para os desafios.'],
+            ['name' => 'Empatia', 'type' => '1', 'description' => 'Capacidade de entender e compartilhar os sentimentos dos outros, promovendo relacionamentos positivos.'],
+            ['name' => 'Adaptabilidade', 'type' => '1', 'description' => 'Capacidade de ajustar-se rapidamente a novas condições, desafios ou ambientes.'],
+            ['name' => 'Pensamento Crítico', 'type' => '1', 'description' => 'Habilidade de analisar fatos de forma lógica e objetiva para formar um julgamento sólido.'],
+            ['name' => 'Inteligência Emocional', 'type' => '1', 'description' => 'Capacidade de reconhecer, entender e gerenciar suas próprias emoções e as emoções dos outros.'],
+            ['name' => 'Criatividade', 'type' => '1', 'description' => 'Habilidade de pensar fora da caixa e gerar ideias inovadoras e originais.'],
+
+            // Hard Skills
+            ['name' => 'Programação', 'type' => '2', 'description' => 'Habilidade de escrever código em linguagens de programação como Python, Java, ou C++.'],
+            ['name' => 'Análise de Dados', 'type' => '2', 'description' => 'Capacidade de coletar, processar e interpretar grandes conjuntos de dados para tomar decisões informadas.'],
+            ['name' => 'Design Gráfico', 'type' => '2', 'description' => 'Habilidade de criar conteúdo visual usando softwares como Adobe Photoshop e Illustrator.'],
+            ['name' => 'Gestão de Projetos', 'type' => '2', 'description' => 'Competência em planejar, executar e fechar projetos, utilizando metodologias como Agile ou Waterfall.'],
+            ['name' => 'Marketing Digital', 'type' => '2', 'description' => 'Conhecimento em promover produtos ou serviços através de plataformas digitais como SEO, SEM, e redes sociais.'],
+            ['name' => 'Contabilidade', 'type' => '2', 'description' => 'Habilidade de gerenciar contas financeiras, preparar balanços e entender princípios contábeis.'],
+            ['name' => 'Desenvolvimento Web', 'type' => '2', 'description' => 'Capacidade de construir e manter websites usando tecnologias como HTML, CSS, JavaScript, e frameworks.'],
+            ['name' => 'Engenharia de Software', 'type' => '2', 'description' => 'Conhecimento em aplicar princípios de engenharia ao design, desenvolvimento e manutenção de software.'],
+            ['name' => 'Habilidades em Office', 'type' => '2', 'description' => 'Proficiência no uso de ferramentas de produtividade como Microsoft Office (Word, Excel, PowerPoint).'],
+            ['name' => 'Suporte Técnico', 'type' => '2', 'description' => 'Habilidade de fornecer assistência técnica e resolver problemas de hardware e software.'],
+        ];
+
+        foreach ($skills as $skill) {
+            Skill::create($skill);
+        } 
+    }
+
+
+    private function SeederPermissoes() : void
+    { 
+        $permissions = [
+            'app.admin',
+            'app.user',
+            'app.manager'
+        ];
+
+        foreach ($permissions as $permission) {
            
-        //     Permission::create([
-        //         'name' => $permission, 
-        //     ]);
-        // }
+            Permission::create([
+                'name' => $permission, 
+            ]);
+        }
+    }
 
-        // $typeQuestions = [
-        //     'Comunicação',
-        //     'Foco e Orientação para Resultados',
-        //     'Inovação, Qualidade e Melhoria Contínua',
-        //     'Liderança e Gestão de Equipes de Alto Desempenho',
-        //     'Autodesenvolvimento',
-        //     'Qualidade de Vida e Segurança do Trabalho',
-        //     'Visão Estratégica e Sistêmica'
-        // ];
+    private function SeederTypeQuestios() : void
+    { 
+        $typeQuestions = [
+            'Comunicação',
+            'Foco e Orientação para Resultados',
+            'Inovação, Qualidade e Melhoria Contínua',
+            'Liderança e Gestão de Equipes de Alto Desempenho',
+            'Autodesenvolvimento',
+            'Qualidade de Vida e Segurança do Trabalho',
+            'Visão Estratégica e Sistêmica'
+        ];
+    
+        foreach ($typeQuestions as $typeQuestion) {
         
-        // foreach ($typeQuestions as $typeQuestion) {
-           
-        //     TypeQuestion::create([
-        //         'name' => $typeQuestion, 
-        //     ]);
-        // }
+            TypeQuestion::create([
+                'name' => $typeQuestion, 
+            ]);
+        }
+    }
 
-         $questions = [
+    private function SeederQuestions() : void
+    { 
+        $questions = [
            
             ['type_question_id' => 1
                 , 'order' => 1
@@ -219,7 +243,7 @@ class DatabaseSeeder extends Seeder
                 $question
             );
         }
-
-
     }
+    
+
 }

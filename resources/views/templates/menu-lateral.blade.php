@@ -10,12 +10,14 @@
             </a>
         </li>
 
-		<li class="nav-item">
-            <a class="nav-link " href="index.html">
-                <i class="bi bi-x-diamond-fill"></i>
-                <span>Avaliação de Desenpenho</span>
-            </a>
-        </li>
+        @can('manager')
+            <li class="nav-item">
+                <a class="nav-link " href="{{ route('performanceEvaluations.managerlist') }}">
+                    <i class="bi bi-x-diamond-fill"></i>
+                    <span>Avaliação de Desenpenho</span>
+                </a>
+            </li>
+        @endcan
 
 		<li class="nav-item">
             <a class="nav-link " href="index.html">

@@ -31,12 +31,19 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ route('performanceEvaluations.show', $performanceEvaluation->id)}}">Visualizar</a></li>
+
+                    @can('manager')
+                        <li><a class="dropdown-item" href="{{ route('performanceEvaluations.accomplish', $performanceEvaluation->id)}}">Realizar</a></li>
+                    @endcan
+
+                    @can('admin')
                         <li><a class="dropdown-item" href="{{ route('performanceEvaluations.edit', $performanceEvaluation->id)}}">Editar</a></li>
     
                         {!! Form::open(['route' => ['performanceEvaluations.destroy', $performanceEvaluation->id], 'method' => 'DELETE', 'style' => 'display:inline;']) !!}
                             @csrf
                             {!! Form::submit('Excluir', ['class' => 'dropdown-item', 'onclick' => "return confirm('Você tem certeza que deseja excluir este cargo?');"]) !!}
                         {!! Form::close() !!}
+                        @endcan
                     </ul>
                 </div>
             </td>

@@ -18,6 +18,7 @@ use App\Repositories\PermissionRepository;
 use App\Validators\UserValidator;
 use Illuminate\Database\QueryException;
 use Exception;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class UsersController.
@@ -144,6 +145,13 @@ class UsersController extends Controller
         return view('users.show', ['user' => $user]);
     }
 
+    public function userProfile($id) 
+    {
+        $user = $this->repository->find($id);
+
+        return view('user.user-profile', ['user' => $user]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -188,7 +196,41 @@ class UsersController extends Controller
             return redirect()->route('user.listagem');
         }catch (ValidatorException $e) {
 
-            //dd(get_class($e));
+            switch(get_class($e))
+			{
+				case QueryException::class 		:  return ['success' => false, 'messages' => $e->getMessage()];
+				case ValidatorException::class 	:  return ['success' => false, 'messages' => $e->getMessageBag()];
+				case Exception::class 			:  return ['success' => false, 'messages' => $e->getMessage()];
+				default 						:  return ['success' => false, 'messages' => get_class($e)];
+			}
+        }
+    }
+
+    public function profileUpdate(UserUpdateRequest $request, $id)
+    {
+        try {
+            
+            if($request->hasFile('image') && $request->file('image')->isValid()) {
+                $requestImage = $request->file('image');
+                $extension = $requestImage->extension();
+                $imageName = md5($requestImage->getClientOriginalName() . strtotime('now') .  $extension);
+                $request->file('image')->move(public_path('img/profile'), $imageName);
+                $request['profile_picture'] = $imageName;
+            }
+            
+            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+
+            $user = $this->repository->update($request->all(), $id);
+            
+            $response = [
+                'message' => 'User updated.',
+                'data'    => $user->toArray(),
+            ];
+
+            return view('user.user-profile', ['user' => $user]);
+            
+        }catch (ValidatorException $e) {
+
             switch(get_class($e))
 			{
 				case QueryException::class 		:  return ['success' => false, 'messages' => $e->getMessage()];

@@ -10,9 +10,12 @@ use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\PerformanceEvaluationCreateRequest;
 use App\Http\Requests\PerformanceEvaluationUpdateRequest;
 use App\Repositories\PerformanceEvaluationRepository;
+use App\Repositories\QuestionRepository;
 use App\Repositories\UserRepository;
 use App\Validators\PerformanceEvaluationValidator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
+use Exception;
 
 /**
  * Class PerformanceEvaluationsController.
@@ -33,17 +36,20 @@ class PerformanceEvaluationsController extends Controller
 
     protected $userRepository;
 
+    protected $questionsRepository;
+
     /**
      * PerformanceEvaluationsController constructor.
      *
      * @param PerformanceEvaluationRepository $repository
      * @param PerformanceEvaluationValidator $validator
      */
-    public function __construct(PerformanceEvaluationRepository $repository, PerformanceEvaluationValidator $validator, UserRepository $userRepository)
+    public function __construct(PerformanceEvaluationRepository $repository, PerformanceEvaluationValidator $validator, UserRepository $userRepository, QuestionRepository $questionsRepository)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
         $this->userRepository = $userRepository;
+        $this->questionsRepository = $questionsRepository;
     }
 
     /**
@@ -72,6 +78,24 @@ class PerformanceEvaluationsController extends Controller
 
         return view('performanceEvaluations.listagem', ['performanceEvaluations' => $performanceEvaluations]);
 
+    }
+
+    public function managerlist() 
+    {
+        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $performanceEvaluations = $this->repository->where( 'manager_id', Auth::id())->all();
+
+        return view('performanceEvaluations.managerlist', ['performanceEvaluations' => $performanceEvaluations]);
+
+    }
+
+    public function accomplish($id) 
+    {
+        $performanceEvaluation = $this->repository->find($id);
+       
+        $questions_list = $this->questionsRepository->where('level', $performanceEvaluation->level)->get();
+
+        return view('performanceEvaluations.accomplish', ['performanceEvaluation' => $performanceEvaluation,'questions_list' => $questions_list]);
     }
 
     /**
@@ -105,14 +129,14 @@ class PerformanceEvaluationsController extends Controller
 
             return redirect()->route('performanceEvaluations.index');
         } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
 
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+            switch(get_class($e))
+			{
+				case QueryException::class 		:  return ['success' => false, 'messages' => $e->getMessage()];
+				case ValidatorException::class 	:  return ['success' => false, 'messages' => $e->getMessageBag()];
+				case Exception::class 			:  return ['success' => false, 'messages' => $e->getMessage()];
+				default 						:  return ['success' => false, 'messages' => get_class($e)];
+			}
         }
     }
 
@@ -182,15 +206,13 @@ class PerformanceEvaluationsController extends Controller
             return redirect()->back()->with('message', $response['message']);
         } catch (ValidatorException $e) {
 
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+            switch(get_class($e))
+			{
+				case QueryException::class 		:  return ['success' => false, 'messages' => $e->getMessage()];
+				case ValidatorException::class 	:  return ['success' => false, 'messages' => $e->getMessageBag()];
+				case Exception::class 			:  return ['success' => false, 'messages' => $e->getMessage()];
+				default 						:  return ['success' => false, 'messages' => get_class($e)];
+			}
         }
     }
 

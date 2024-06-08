@@ -38,6 +38,7 @@ class User extends Authenticatable
         'permission',
         'departament_id',
         'office_id',
+        'profile_picture',
     ];
 
     /**
