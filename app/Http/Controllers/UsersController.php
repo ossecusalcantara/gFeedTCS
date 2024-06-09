@@ -142,7 +142,7 @@ class UsersController extends Controller
     {
         $user = $this->repository->find($id);
 
-        return view('users.show', ['user' => $user]);
+        return view('user.show', ['user' => $user]);
     }
 
     public function userProfile($id) 

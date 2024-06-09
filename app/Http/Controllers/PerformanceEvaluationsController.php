@@ -123,7 +123,6 @@ class PerformanceEvaluationsController extends Controller
             ];
 
             if ($request->wantsJson()) {
-
                 return response()->json($response);
             }
 
@@ -236,6 +235,6 @@ class PerformanceEvaluationsController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('message', 'PerformanceEvaluation deleted.');
+        return redirect()->route('performanceEvaluations.listagem');
     }
 }

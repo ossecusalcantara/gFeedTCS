@@ -63,7 +63,9 @@ class User extends Authenticatable
 
     protected $appends = [
         'formatted_cpf',
-        'formatted_phone'
+        'formatted_phone',
+        'formatted_gender',
+        'formatted_birth',
     ];
 
     
@@ -114,6 +116,20 @@ class User extends Authenticatable
     {
         return Attribute::make(
             get:fn () => formatPhone($this->phone)
+        );
+    }
+
+    protected function formattedBirth() : Attribute
+    {
+        return Attribute::make(
+            get:fn () => formatData($this->birth)
+        );
+    }
+
+    protected function formattedGender() : Attribute
+    {
+        return Attribute::make(
+            get:fn () => formatGender($this->gender)
         );
     }
 

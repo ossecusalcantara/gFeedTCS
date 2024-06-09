@@ -6,11 +6,11 @@ use \Prettus\Validator\Contracts\ValidatorInterface;
 use \Prettus\Validator\LaravelValidator;
 
 /**
- * Class SkillProfileValidator.
+ * Class FeedbackValidator.
  *
  * @package namespace App\Validators;
  */
-class SkillProfileValidator extends LaravelValidator
+class FeedbackValidator extends LaravelValidator
 {
     /**
      * Validation Rules
@@ -19,9 +19,9 @@ class SkillProfileValidator extends LaravelValidator
      */
     protected $rules = [
         ValidatorInterface::RULE_CREATE => [
-            'pontuation'  => 'required', 
-        	'user_id'     => 'required|exists:app_users,id',
-        	'skill_id'    => 'required|exists:skills,id',
+            'reason' 		=> 'required', 
+            'notes' 		=> 'required', 
+			'user_id' 	     => 'required|exists:app_users,id', 
         ],
         ValidatorInterface::RULE_UPDATE => [],
     ];

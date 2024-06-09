@@ -41,3 +41,10 @@ if(!function_exists('formatType')) {
         return $value == '1' ? 'Soft Skill' : 'Hard Skill';
     }
 }
+
+if(!function_exists('formatGender')) {
+    function formatGender($value)
+    {
+        return $value == 'M' ? 'Masculino' : 'Feminino';
+    }
+}

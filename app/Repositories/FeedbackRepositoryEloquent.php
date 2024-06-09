@@ -4,16 +4,16 @@ namespace App\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\skillRepository;
-use App\Entities\Skill;
-use App\Validators\SkillValidator;
+use App\Repositories\FeedbackRepository;
+use App\Entities\Feedback;
+use App\Validators\FeedbackValidator;
 
 /**
- * Class SkillRepositoryEloquent.
+ * Class FeedbackRepositoryEloquent.
  *
  * @package namespace App\Repositories;
  */
-class SkillRepositoryEloquent extends BaseRepository implements SkillRepository
+class FeedbackRepositoryEloquent extends BaseRepository implements FeedbackRepository
 {
     /**
      * Specify Model class name
@@ -22,7 +22,7 @@ class SkillRepositoryEloquent extends BaseRepository implements SkillRepository
      */
     public function model()
     {
-        return Skill::class;
+        return Feedback::class;
     }
 
     /**
@@ -33,7 +33,7 @@ class SkillRepositoryEloquent extends BaseRepository implements SkillRepository
     public function validator()
     {
 
-        return SkillValidator::class;
+        return FeedbackValidator::class;
     }
 
 
@@ -43,11 +43,6 @@ class SkillRepositoryEloquent extends BaseRepository implements SkillRepository
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
-    }
-
-    public function selectBoxList(string $descricao = 'name', string $chave = 'id')
-    {
-        return $this->model->orderBy($descricao, 'asc')->pluck($descricao, $chave)->all();
     }
     
 }

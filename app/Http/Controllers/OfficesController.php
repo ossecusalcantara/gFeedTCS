@@ -159,15 +159,13 @@ class OfficesController extends Controller
             return redirect()->route('office.listagem');
         } catch (ValidatorException $e) {
 
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+            switch(get_class($e))
+			{
+				case QueryException::class 		:  return ['success' => false, 'messages' => $e->getMessage()];
+				case ValidatorException::class 	:  return ['success' => false, 'messages' => $e->getMessageBag()];
+				case Exception::class 			:  return ['success' => false, 'messages' => $e->getMessage()];
+				default 						:  return ['success' => false, 'messages' => get_class($e)];
+			}
         }
     }
 

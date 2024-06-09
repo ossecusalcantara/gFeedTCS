@@ -19,7 +19,7 @@
                 <div class="col-md-4">
                     <div class="form-floating ">
                         {!! Form::select('type', ['1' => 'Soft Skill', '2' => 'Hard Skill'] , null, [ 'class' => 'form-select', 'aria-label' => 'Tipo', 'required']) !!}
-                        <label for="type">Gênero</label>
+                        <label for="type">Tipo</label>
                     </div>
                 </div>
                 <div class="col-12">

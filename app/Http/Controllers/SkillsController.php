@@ -158,7 +158,6 @@ class SkillsController extends Controller
                 'data'    => $skill->toArray(),
             ];
 
-            //return redirect()->back()->with('message', $response['message']);
             return redirect()->route('skill.listagem');
         }  catch (ValidatorException $e) {
             switch(get_class($e))
@@ -192,7 +191,6 @@ class SkillsController extends Controller
 				'data' 	  	=> null,
 			];
 
-            //return redirect()->back()->with('message', 'Skill deleted.');
             return redirect()->route('skill.listagem');
 
         } catch (ValidatorException $e) {

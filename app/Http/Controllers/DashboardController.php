@@ -61,9 +61,6 @@ class DashboardController extends Controller
                 if($user->hasPermission('app.manager'))
                     Gate::authorize('manager');
                 
-            
-                //View::share('user', Auth::user());
-                //View::composer('templates.master', UserComposer::class);
             }
 
            return redirect()->route('user.dashboard');

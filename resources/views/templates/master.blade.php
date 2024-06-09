@@ -16,4 +16,5 @@
         
         @include('templates.footer')
     <body>
+        @yield('js-view')
 </html>

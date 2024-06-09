@@ -7,11 +7,11 @@ use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 /**
- * Class SkillProfile.
+ * Class Feedback.
  *
  * @package namespace App\Entities;
  */
-class SkillProfile extends Model implements Transformable
+class Feedback extends Model implements Transformable
 {
     use TransformableTrait;
 
@@ -20,12 +20,13 @@ class SkillProfile extends Model implements Transformable
      *
      * @var array
      */
-    protected $fillable = [
-        'pontuation' ,
-        'user_id' ,
-        'skill_id'
-    ];
+    public    $timestamps   = true;
 
-    protected $table = "skill_profiles";
+    protected $fillable = [
+        'reason',
+        'notes',
+        'user_id'
+    ];
+    protected $table = 'feedbacks';
 
 }

@@ -78,8 +78,6 @@ class AnswersEvaluationsController extends Controller
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            
-
             // $input = $request->except('_token');
             // dd($input);
             // $answersEvaluation = $this->repository->create($input->all());

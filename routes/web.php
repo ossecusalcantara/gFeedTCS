@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartamentsController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\OfficesController;
 use App\Http\Controllers\PerformanceEvaluationsController;
 use App\Http\Controllers\SkillsController;
@@ -16,7 +17,6 @@ use App\Http\Controllers\SkillsController;
 |--------------------------------------------------------------------------
 |
 */
-
 Route::get('/login', [Controller::class, 'fazerLogin']);
 Route::post('/login', [DashboardController::class, 'auth'])->name('user.login');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
@@ -60,3 +60,4 @@ Route::resource('skill', SkillsController::class);
 
 
 Route::resource('answersEvaluation', AnswersEvaluationsController::class);
+Route::resource('feedback', FeedbackController::class);
