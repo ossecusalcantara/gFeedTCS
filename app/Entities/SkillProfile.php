@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Prettus\Repository\Traits\TransformableTrait;
 
 /**
@@ -27,5 +28,10 @@ class SkillProfile extends Model implements Transformable
     ];
 
     protected $table = "skill_profiles";
+
+    public function skill(): BelongsTo 
+    {
+        return $this->belongsTo(Skill::class, 'skill_id');
+    }
 
 }

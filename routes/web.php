@@ -17,9 +17,11 @@ use App\Http\Controllers\SkillsController;
 |--------------------------------------------------------------------------
 |
 */
+Route::get('/', [Controller::class, 'fazerLogin']);
 Route::get('/login', [Controller::class, 'fazerLogin']);
 Route::post('/login', [DashboardController::class, 'auth'])->name('user.login');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
+Route::get('api/dashboard', [DashboardController::class, 'getDadosDashboard'])->name('user.getDadosDashboard');
 
 /*
 |--------------------------------------------------------------------------

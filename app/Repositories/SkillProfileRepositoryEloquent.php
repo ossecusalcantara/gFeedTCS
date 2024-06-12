@@ -45,4 +45,36 @@ class SkillProfileRepositoryEloquent extends BaseRepository implements SkillProf
         $this->pushCriteria(app(RequestCriteria::class));
     }
     
+    public function getDadosSkillMedia($idUser) {
+
+        $itens = $this->model->where('user_id', $idUser)->orderBy('skill_id', 'asc')->get();
+
+        $skillData  = [];
+
+        foreach ($itens as $item) {
+
+           $skill = $item->skill->name;
+           if(!isset($skillData[$skill])) {
+                $skillData[$skill] = [
+                    'total' => 0,
+                    'count' => 0
+                ];
+           }
+           
+           $skillData[$skill]['total'] += $item->pontuation;
+           $skillData[$skill]['count'] += 1;
+        }
+
+        $averagePontuations = [];
+        $skillDescriptions = [];
+        foreach ($skillData as $skill => $data) {
+           $average = $data['total'] / $data['count'];
+           
+           array_push($skillDescriptions, $skill);
+           array_push($averagePontuations, $average);
+        }
+
+        return [$averagePontuations, $skillDescriptions];
+
+    }
 }

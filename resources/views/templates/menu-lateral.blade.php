@@ -20,7 +20,7 @@
         @endcan
 
 		<li class="nav-item">
-            <a class="nav-link " href="{{ route('feedback.index') }}">
+            <a class="nav-link " href="{{ route('feedback.index') }}" target="frame_paginas">
                 <i class=" ri-command-fill"></i>
                 <span>Feedback 360</span>
             </a>

@@ -8,18 +8,25 @@ use App\Repositories\UserRepository;
 use App\Validators\UserValidator;
 use Exception;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\View;
-use App\Http\ViewComposer\UserComposer;
+use App\Repositories\FeedbackRepository;
+use App\Repositories\PerformanceEvaluationRepository;
+use App\Repositories\SkillProfileRepository;
 
 class DashboardController extends Controller
 {
     protected $repository;
     protected $validator;
+    protected $skillProfileRepository;
+    protected $feedbackRepository;
+    protected $evaluationRepository;
 
-    public function __construct(UserRepository $repository, UserValidator $validator)
+    public function __construct(UserRepository $repository, UserValidator $validator, SkillProfileRepository $skillProfileRepository, FeedbackRepository $feedbackRepository, PerformanceEvaluationRepository $evaluationRepository)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
+        $this->skillProfileRepository = $skillProfileRepository;
+        $this->feedbackRepository     = $feedbackRepository;
+        $this->evaluationRepository   = $evaluationRepository;
     }  
 
     public function index() 
@@ -67,6 +74,18 @@ class DashboardController extends Controller
         } catch (Exception $e) {
            return $e->getMessage();
         }
+
+    }
+
+    public function getDadosDashboard(Request $request) {
+
+        $idUser = Auth::id();
+        $data = $this->skillProfileRepository->getDadosSkillMedia(6);
+
+        return response()->json([
+            'message' => 'Successfully calculated averages',
+            'data' => $data
+        ]);
 
     }
 }

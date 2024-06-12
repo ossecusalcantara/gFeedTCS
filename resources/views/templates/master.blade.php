@@ -10,7 +10,9 @@
         @include('templates.menu-lateral')
 
         <main id="main" class="main">
-            @yield('conteudo-view')
+            <!-- <iframe style="border:none; width:100%" src="{{ route('user.dashboard') }}" name="frame_paginas" botder="0">
+            </iframe> -->
+                @yield('conteudo-view')
         </main>
         
         
