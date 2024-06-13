@@ -27,6 +27,7 @@
             <br>
 
         {!! Form::open(['route' => 'answersEvaluation.store', 'method' => 'post', 'class' => ' g-3']) !!}
+            {!! Form::number( 'performance_evaluation_id', $performanceEvaluation->id , ['class' => 'd-none']) !!}
         @foreach ($questions_list as $question)
             <div class="row">
                 <div class="col-md-12">
@@ -36,7 +37,6 @@
 
             <div class="row mb-2">
                 <div class="col-md-2">
-                    {!! Form::number( 'performance_evaluation_id[]', $performanceEvaluation->id , ['class' => 'd-none']) !!}
                     {!! Form::number( 'question_id[]', $question->id , ['class' => 'd-none']) !!}
                     <div class="form-floating">
                         {!! Form::number( 'punctuation[]', null, ['class' => 'form-control', 'placeholder' => 'Pontuação', 'required']) !!}

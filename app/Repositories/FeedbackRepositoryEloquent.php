@@ -7,6 +7,8 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\FeedbackRepository;
 use App\Entities\Feedback;
 use App\Validators\FeedbackValidator;
+use Carbon\Carbon;
+
 
 /**
  * Class FeedbackRepositoryEloquent.
@@ -43,6 +45,26 @@ class FeedbackRepositoryEloquent extends BaseRepository implements FeedbackRepos
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
+    }
+
+    public function getCountFeedback($userId) {
+
+        $startOfYear  = Carbon::now()->startOfYear();
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $today = Carbon::today();
+
+        $count = [];
+
+        $coutn['countYear'] =  $this->model->where('user_id', $userId)
+            ->whereBetween('created_at', [$startOfYear, $today])
+            ->count();
+
+        $coutn['countMounth'] =  $this->model->where('user_id', $userId)
+            ->whereBetween('created_at', [$startOfMonth, $today])
+            ->count();
+
+        return  $coutn;
+
     }
     
 }

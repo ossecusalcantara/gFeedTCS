@@ -81,10 +81,13 @@ class DashboardController extends Controller
 
         $idUser = Auth::id();
         $data = $this->skillProfileRepository->getDadosSkillMedia(6);
+        $coutFeedBack = $this->feedbackRepository->getCountFeedback(6);
 
         return response()->json([
             'message' => 'Successfully calculated averages',
-            'data' => $data
+            'data' => $data,
+            'countFeedbackYear' => $coutFeedBack['countYear'],
+            'countFeedbackMouth' => $coutFeedBack['countMounth']
         ]);
 
     }

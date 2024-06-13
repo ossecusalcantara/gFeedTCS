@@ -6,6 +6,7 @@ use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\AnswersEvaluationRepository;
 use App\Entities\AnswersEvaluation;
+use Illuminate\Support\Facades\Validator;
 use App\Validators\AnswersEvaluationValidator;
 
 /**
@@ -44,5 +45,31 @@ class AnswersEvaluationRepositoryEloquent extends BaseRepository implements Answ
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
+    public function getMediaEvaluations($userId) 
+    {
+
+        $this->model->where('user_id', $userId)->orderBy('created_at', 'asc')->get();
+
+    }
+
+    public function setDataAnswersEvaluations($data) 
+    {
+
+        $validator = Validator::make($data, [
+            'question_id' => 'required',
+            'performance_evaluation_id' => 'required',
+            'notes'       => 'required',
+            'punctuation' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $answersEvaluation = AnswersEvaluation::create($data);
+
+    } 
+    
     
 }

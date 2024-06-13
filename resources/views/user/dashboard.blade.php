@@ -14,6 +14,29 @@
             <div class="col-lg-8">
                 <div class="row">
 
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                        class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                    </li>
+
+                                    <li><a class="dropdown-item" href="#">Today</a></li>
+                                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="card-body pb-0">
+                                <h5 class="card-title">Habilidades <span>| Resultado de feedbacks recebidos</span></h5>
+                                <div id="budgetChart" ></div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Reports -->
                     <div class="col-12">
                         <div class="card">
@@ -42,36 +65,13 @@
                         </div>
                     </div><!-- End Reports -->
 
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                        class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
-
-                                    <li><a class="dropdown-item" href="#">Today</a></li>
-                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                                </ul>
-                            </div>
-
-                            <div class="card-body pb-0">
-                                <h5 class="card-title">Habilidades <span>| Resultado de feedbacks recebidos</span></h5>
-                                <div id="budgetChart" ></div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
 
     
             <div class="col-lg-4">
 
-                <div class="col-xxl-4 col-xl-12">
+                <div class="col-xxl-12 col-xl-12">
                     <div class="card info-card customers-card">
 
                         <div class="card-body">
@@ -82,10 +82,9 @@
                                     <i class="bi bi-people"></i>
                                 </div>
                                 <div class="ps-3">
-                                    <h6>1244</h6>
-                                    <span class="text-danger small pt-1 fw-bold">12%</span> <span
-                                        class="text-muted small pt-2 ps-1">decrease</span>
-
+                                    <h6 id="countFeedbackYear">0</h6>
+                                    <span class="text-danger small pt-1 fw-bold" id="countFeedbackMounth"></span> 
+                                    <span class="text-muted small pt-2 ps-1">Este Mês</span>
                                 </div>
                             </div>
 

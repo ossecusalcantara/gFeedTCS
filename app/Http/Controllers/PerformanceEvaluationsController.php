@@ -9,6 +9,7 @@ use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\PerformanceEvaluationCreateRequest;
 use App\Http\Requests\PerformanceEvaluationUpdateRequest;
+use App\Repositories\AnswersEvaluationRepository;
 use App\Repositories\PerformanceEvaluationRepository;
 use App\Repositories\QuestionRepository;
 use App\Repositories\UserRepository;
@@ -38,18 +39,21 @@ class PerformanceEvaluationsController extends Controller
 
     protected $questionsRepository;
 
+    protected $answersEvaluationsRepository;
+
     /**
      * PerformanceEvaluationsController constructor.
      *
      * @param PerformanceEvaluationRepository $repository
      * @param PerformanceEvaluationValidator $validator
      */
-    public function __construct(PerformanceEvaluationRepository $repository, PerformanceEvaluationValidator $validator, UserRepository $userRepository, QuestionRepository $questionsRepository)
+    public function __construct(PerformanceEvaluationRepository $repository, PerformanceEvaluationValidator $validator, UserRepository $userRepository, QuestionRepository $questionsRepository, AnswersEvaluationRepository $answersEvaluationsRepository)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
         $this->userRepository = $userRepository;
         $this->questionsRepository = $questionsRepository;
+        $this->answersEvaluationsRepository = $answersEvaluationsRepository;
     }
 
     /**
@@ -117,6 +121,10 @@ class PerformanceEvaluationsController extends Controller
 
             $performanceEvaluation = $this->repository->create($request->all());
 
+            $level = $this->userRepository->getPermissionUser($performanceEvaluation['user_id']);
+
+            $performanceEvaluation['level'] =  $level;
+
             $response = [
                 'message' => 'PerformanceEvaluation created.',
                 'data'    => $performanceEvaluation->toArray(),
@@ -149,6 +157,8 @@ class PerformanceEvaluationsController extends Controller
     public function show($id)
     {
         $performanceEvaluation = $this->repository->find($id);
+        
+        $answersEvaluations_list = $this->answersEvaluationsRepository;
 
         if (request()->wantsJson()) {
 

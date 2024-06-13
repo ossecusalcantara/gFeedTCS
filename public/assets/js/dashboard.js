@@ -70,6 +70,9 @@ $(document).ready(function() {
             console.log(response.data)
             data = response.data;
 
+            $('#countFeedbackYear').text(response.countFeedbackYear);
+            $('#countFeedbackMounth').text(response.countFeedbackMouth);
+
             var chart2 = new ApexCharts(document.querySelector("#budgetChart"), {
                 series: data[0],
                 chart: {

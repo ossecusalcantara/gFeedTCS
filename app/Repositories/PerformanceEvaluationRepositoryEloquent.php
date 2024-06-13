@@ -7,6 +7,8 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\PerformanceEvaluationRepository;
 use App\Entities\PerformanceEvaluation;
 use App\Validators\PerformanceEvaluationValidator;
+use Illuminate\Support\Facades\Validator;
+
 
 /**
  * Class PerformanceEvaluationRepositoryEloquent.
@@ -43,6 +45,21 @@ class PerformanceEvaluationRepositoryEloquent extends BaseRepository implements 
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
+    }
+
+    public function updateEvaluationById($performanceEvaluationsId, array $data)
+    {
+
+        $validator = Validator::make($data, [
+            'media' => 'required',
+            'conclusion' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        return $this->model->where('id', $performanceEvaluationsId)->update($data);
     }
     
 }

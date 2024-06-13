@@ -33,7 +33,9 @@
                         <li><a class="dropdown-item" href="{{ route('performanceEvaluations.show', $performanceEvaluation->id)}}">Visualizar</a></li>
 
                     @can('manager')
-                        <li><a class="dropdown-item" href="{{ route('performanceEvaluations.accomplish', $performanceEvaluation->id)}}">Realizar</a></li>
+                        @if ($performanceEvaluation->status == 'pending')
+                            <li><a class="dropdown-item" href="{{ route('performanceEvaluations.accomplish', $performanceEvaluation->id)}}">Realizar</a></li>
+                        @endif
                     @endcan
 
                     @can('admin')

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\AnswersEvaluation;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -10,9 +11,13 @@ use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\AnswersEvaluationCreateRequest;
 use App\Http\Requests\AnswersEvaluationUpdateRequest;
 use App\Repositories\AnswersEvaluationRepository;
+use App\Repositories\PerformanceEvaluationRepository;
 use App\Validators\AnswersEvaluationValidator;
 use Illuminate\Database\QueryException;
 use Exception;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+
 
 /**
  * Class AnswersEvaluationsController.
@@ -31,16 +36,19 @@ class AnswersEvaluationsController extends Controller
      */
     protected $validator;
 
+    protected $performanceEvaluationRepository;
+
     /**
      * AnswersEvaluationsController constructor.
      *
      * @param AnswersEvaluationRepository $repository
      * @param AnswersEvaluationValidator $validator
      */
-    public function __construct(AnswersEvaluationRepository $repository, AnswersEvaluationValidator $validator)
+    public function __construct(AnswersEvaluationRepository $repository, AnswersEvaluationValidator $validator, PerformanceEvaluationRepository $performanceEvaluationRepository)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
+        $this->performanceEvaluationRepository = $performanceEvaluationRepository;
     }
 
     /**
@@ -76,15 +84,36 @@ class AnswersEvaluationsController extends Controller
     {
         try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+            $evaluationId   = $request->input('performance_evaluation_id');
+            $notes          = $request->input('notes', []);
+            $questions      = $request->input('question_id', []);
+            $punctuations   = $request->input('punctuation', []);
 
-            // $input = $request->except('_token');
-            // dd($input);
-            // $answersEvaluation = $this->repository->create($input->all());
+            $somaMedia = 0;
+            for ($i=0; $i < count( $questions); $i++) { 
+                
+                $dataCreate = [
+                    'question_id' => $questions[$i],
+                    'performance_evaluation_id' => $evaluationId,
+                    'notes' => $notes[$i],
+                    'punctuation' => $punctuations[$i],
+                ];
+                    
+                $this->repository->setDataAnswersEvaluations($dataCreate);
+                
+                $somaMedia += $punctuations[$i];
+            }
+                
+            $data = [];
+            $data['media'] = $somaMedia/20;
+            $data['conclusion'] = Carbon::today();
+            $data['status']     = 'completed';
+            
+            //dd($data);
+            $this->performanceEvaluationRepository->updateEvaluationById($evaluationId, $data);
 
             $response = [
                 'message' => 'AnswersEvaluation created.',
-                //'data'    => $answersEvaluation->toArray(),
             ];
 
             if ($request->wantsJson()) {
