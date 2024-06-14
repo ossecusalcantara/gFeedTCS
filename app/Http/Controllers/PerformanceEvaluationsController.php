@@ -158,7 +158,7 @@ class PerformanceEvaluationsController extends Controller
     {
         $performanceEvaluation = $this->repository->find($id);
         
-        $answersEvaluations_list = $this->answersEvaluationsRepository;
+        $answersEvaluations_list = $this->answersEvaluationsRepository->getAnswersEvaluations($id);
 
         if (request()->wantsJson()) {
 
@@ -167,7 +167,7 @@ class PerformanceEvaluationsController extends Controller
             ]);
         }
 
-        return view('performanceEvaluations.show', compact('performanceEvaluation'));
+        return view('performanceEvaluations.show', ['performanceEvaluation' => $performanceEvaluation, 'answersEvaluations_list' => $answersEvaluations_list]);
     }
 
     /**
@@ -180,8 +180,9 @@ class PerformanceEvaluationsController extends Controller
     public function edit($id)
     {
         $performanceEvaluation = $this->repository->find($id);
+        $usuarios_list = $this->userRepository->selectBoxList();
 
-        return view('performanceEvaluations.edit', compact('performanceEvaluation'));
+        return view('performanceEvaluations.edit', ['performanceEvaluation' => $performanceEvaluation, 'usuarios_list' => $usuarios_list]);
     }
 
     /**
@@ -207,12 +208,7 @@ class PerformanceEvaluationsController extends Controller
                 'data'    => $performanceEvaluation->toArray(),
             ];
 
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
+            return redirect()->route('performanceEvaluations.listagem');
         } catch (ValidatorException $e) {
 
             switch(get_class($e))

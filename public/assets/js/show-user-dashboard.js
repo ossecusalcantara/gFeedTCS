@@ -11,7 +11,7 @@ $(document).ready(function() {
     var options = {
         series: [{
             name: '',
-            data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+            data: []
         }],
         chart: {
             type: 'bar',
@@ -33,7 +33,7 @@ $(document).ready(function() {
             colors: ['transparent']
         },
         xaxis: {
-            categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+            categories: [],
         },
         yaxis: {
             min: 0, // valor mínimo do eixo y
@@ -64,8 +64,9 @@ $(document).ready(function() {
     var chart = new ApexCharts(document.querySelector("#reportsChart"), options);
     chart.render();
     
+    let userId = $('#userId').val()
     $.ajax({
-        url: '/api/dashboard', 
+        url: `/api/dashboard/${userId}`, 
         type: 'GET',
         dataType: 'json',
         success: function(response) {
@@ -73,9 +74,6 @@ $(document).ready(function() {
             console.log(response)
             data = response.data;
             evaluationData = response.evaluationData;
-
-            $('#countFeedbackYear').text(response.countFeedbackYear);
-            $('#countFeedbackMounth').text(response.countFeedbackMouth);
 
             var chart2 = new ApexCharts(document.querySelector("#budgetChart"), {
                 series: data[0],

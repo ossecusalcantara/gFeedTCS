@@ -53,6 +53,13 @@ class AnswersEvaluationRepositoryEloquent extends BaseRepository implements Answ
 
     }
 
+    public function getAnswersEvaluations($evaluationId) 
+    {
+       
+       return $this->model->where('performance_evaluation_id', $evaluationId)->orderBy('id', 'asc')->get();
+
+    }
+
     public function setDataAnswersEvaluations($data) 
     {
 

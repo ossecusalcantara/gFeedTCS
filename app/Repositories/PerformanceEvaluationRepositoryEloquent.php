@@ -8,6 +8,7 @@ use App\Repositories\PerformanceEvaluationRepository;
 use App\Entities\PerformanceEvaluation;
 use App\Validators\PerformanceEvaluationValidator;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 
 /**
@@ -60,6 +61,26 @@ class PerformanceEvaluationRepositoryEloquent extends BaseRepository implements 
         }
 
         return $this->model->where('id', $performanceEvaluationsId)->update($data);
+    }
+
+    public function getMediaPerformanceEvaluation($userId) {
+
+        $itens = $this->model->where('user_id', $userId)->orderBy('created_at', 'asc')->get();
+
+        $mediaData = [];
+        $mounthData = [];
+        foreach ($itens as $item ) {
+
+            $conclusionDate = Carbon::parse($item->conclusion);
+            $monthYear = $conclusionDate->format('m/Y');
+            
+            array_push($mediaData, $item->media);
+            array_push($mounthData, $monthYear);
+            
+        }
+
+        return [$mediaData, $mounthData];
+
     }
     
 }

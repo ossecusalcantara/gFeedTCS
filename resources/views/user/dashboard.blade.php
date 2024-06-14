@@ -56,7 +56,7 @@
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">Reports <span>/Today</span></h5>
+                                <h5 class="card-title">Avaliações de Desempenho <span>/Histórico</span></h5>
 
                                 <div id="reportsChart"></div>
 

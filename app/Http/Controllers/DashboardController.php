@@ -82,12 +82,27 @@ class DashboardController extends Controller
         $idUser = Auth::id();
         $data = $this->skillProfileRepository->getDadosSkillMedia(6);
         $coutFeedBack = $this->feedbackRepository->getCountFeedback(6);
+        $evaluationData = $this->evaluationRepository->getMediaPerformanceEvaluation(6);
 
         return response()->json([
             'message' => 'Successfully calculated averages',
             'data' => $data,
+            'evaluationData' => $evaluationData,
             'countFeedbackYear' => $coutFeedBack['countYear'],
             'countFeedbackMouth' => $coutFeedBack['countMounth']
+        ]);
+
+    }
+
+    public function getDadosDashboardUserShow($userId) {
+
+        $data = $this->skillProfileRepository->getDadosSkillMedia($userId);
+        $evaluationData = $this->evaluationRepository->getMediaPerformanceEvaluation($userId);
+
+        return response()->json([
+            'message' => 'Successfully calculated averages',
+            'data' => $data,
+            'evaluationData' => $evaluationData,
         ]);
 
     }

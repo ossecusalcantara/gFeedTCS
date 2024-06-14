@@ -41,7 +41,7 @@
                 </div>
                 <div class="text-center">
                     {!! Form::submit('Cadastrar', ['class' => 'btn btn-primary']) !!}
-                    <button type="button"  onclick="window.location='{{ route('user.listagem') }}'"  class="btn btn-secondary">Voltar</button>
+                    <button type="button"  onclick="window.location='{{ route('performanceEvaluations.listagem') }}'"  class="btn btn-secondary">Voltar</button>
                 </div>
             {!! Form::close() !!}
         </div>

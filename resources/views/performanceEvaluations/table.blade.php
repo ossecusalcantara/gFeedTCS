@@ -30,8 +30,9 @@
                         <i class="bi bi-three-dots"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('performanceEvaluations.show', $performanceEvaluation->id)}}">Visualizar</a></li>
-
+                        @if ($performanceEvaluation->status == 'completed')
+                            <li><a class="dropdown-item" href="{{ route('performanceEvaluations.show', $performanceEvaluation->id)}}">Visualizar</a></li>
+                        @endif
                     @can('manager')
                         @if ($performanceEvaluation->status == 'pending')
                             <li><a class="dropdown-item" href="{{ route('performanceEvaluations.accomplish', $performanceEvaluation->id)}}">Realizar</a></li>
@@ -45,7 +46,7 @@
                             @csrf
                             {!! Form::submit('Excluir', ['class' => 'dropdown-item', 'onclick' => "return confirm('Você tem certeza que deseja excluir este cargo?');"]) !!}
                         {!! Form::close() !!}
-                        @endcan
+                    @endcan
                     </ul>
                 </div>
             </td>
