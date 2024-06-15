@@ -19,14 +19,13 @@ class QuestionValidator extends LaravelValidator
      */
     protected $rules = [
         ValidatorInterface::RULE_CREATE => [
-            'name' => 'required',
+            'level'  => 'required',
             'order' => 'required',
             'question_description' => 'required',
             'type_question_id' => 'required|exists:type_questions,id'
         ],
         ValidatorInterface::RULE_UPDATE => [
-            'name' => 'required',
-            'order' => 'required',
+            'level'  => 'required',
             'question_description' => 'required',
             'type_question_id' => 'required|exists:type_questions,id'
         ],

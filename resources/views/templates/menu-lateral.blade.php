@@ -89,6 +89,11 @@
                         <i class="bi bi-circle"></i><span>Skills</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('questions.listagem') }}">
+                        <i class="bi bi-circle"></i><span>Perguntas</span>
+                    </a>
+                </li>
             </ul>
         </li>
         @endcan

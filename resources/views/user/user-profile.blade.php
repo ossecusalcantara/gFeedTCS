@@ -135,21 +135,19 @@
 
                             <div class="tab-pane fade pt-3" id="profile-change-password">
 
-                                <form>
+                                {!! Form::open(['route' => 'user.store', 'method' => 'post', 'class' => 'row g-3']) !!}
                                     <div class="row mb-3">
                                         <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Senha
                                             Atual</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="password" type="password" class="form-control"
-                                                id="currentPassword">
+                                            {!! Form::password('currentPassword', ['class' => 'form-control', 'id' => 'newPassword', 'required']) !!}
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Nova Senha</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="newpassword" type="password" class="form-control"
-                                                id="newPassword">
+                                            {!! Form::password('newPassword', ['class' => 'form-control', 'id' => 'newPassword', 'required']) !!}
                                         </div>
                                     </div>
 
@@ -157,15 +155,14 @@
                                         <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Confirme a
                                             nova senha</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="renewpassword" type="password" class="form-control"
-                                                id="renewPassword">
+                                            {!! Form::password('renewPassword', ['class' => 'form-control', 'id' => 'renewPassword', 'required']) !!}
                                         </div>
                                     </div>
 
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Salvar</button>
+                                        {!! Form::submit('Salvar', ['class' => 'btn btn-primary']) !!}
                                     </div>
-                                </form>
+                                {!! Form::close() !!}
                             </div>
 
                         </div>

@@ -9,6 +9,7 @@ use App\Http\Controllers\DepartamentsController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\OfficesController;
 use App\Http\Controllers\PerformanceEvaluationsController;
+use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\SkillsController;
 
 /*
@@ -61,6 +62,8 @@ Route::resource('departament', DepartamentsController::class);
 Route::get('/skill/listagem', [SkillsController::class, 'listagem'])->name('skill.listagem');
 Route::resource('skill', SkillsController::class);
 
+Route::get('/questions/listagem', [QuestionsController::class, 'listagem'])->name('questions.listagem');
+Route::resource('questions', QuestionsController::class);
 
 Route::resource('answersEvaluation', AnswersEvaluationsController::class);
 Route::resource('feedback', FeedbackController::class);

@@ -18,7 +18,8 @@ use App\Repositories\PermissionRepository;
 use App\Validators\UserValidator;
 use Illuminate\Database\QueryException;
 use Exception;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class UsersController.
@@ -262,5 +263,30 @@ class UsersController extends Controller
         }
 
         return redirect()->back()->with('message', 'User deleted.');
+    }
+
+    public function changePassword(Request $request) {
+
+        $data = [
+            'currentPassword' => $request->get('currentPassword'),
+            'newPassword'     => $request->get('newPassword'),
+            'renewPassword'   => $request->get('renewPassword'),
+        ];
+
+        $user = Auth::user();
+
+        if (!Hash::check($data['currentPassword'], $user->password)) {
+            return redirect()->back()->with('error', 'Senha atual informada é inválida');
+        }
+
+        if(!Hash::check($data['newPassword'], $data['renewPassword'])) {
+            return redirect()->back()->with('error', 'A nova senha e a senha de confirmação não coincidem');
+        }
+
+        $password = bcrypt($data['newPassword']);
+        $this->repository->setNewPassword($user->id, ['password' => $password]);
+
+        return view('user.user-profile', ['user' => $user]);
+
     }
 }

@@ -7,6 +7,8 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\UserRepository;
 use App\Entities\User;
 use App\Validators\UserValidator;
+use Illuminate\Support\Facades\Validator;
+
 
 /**
  * Class UserRepositoryEloquent.
@@ -60,6 +62,20 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         if($user->permission == 'app.manager')
             return 2;
 
+    }
+
+    public function setNewPassword($userId, array $data)
+    {
+
+        $validator = Validator::make($data, [
+            'media' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        return $this->model->where('id', $userId)->update($data);
     }
     
 }

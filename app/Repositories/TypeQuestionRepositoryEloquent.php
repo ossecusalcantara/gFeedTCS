@@ -35,4 +35,10 @@ class TypeQuestionRepositoryEloquent extends BaseRepository implements TypeQuest
         $this->pushCriteria(app(RequestCriteria::class));
     }
     
+
+    public function selectBoxList(string $descricao = 'name', string $chave = 'id')
+    {
+        return $this->model->orderBy($descricao, 'asc')->pluck($descricao, $chave)->all();
+    }
+    
 }

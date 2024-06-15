@@ -50,11 +50,11 @@ $(document).ready(function() {
             y: {
                 formatter: function(val) {
                     if(val <= 2.5) {
-                        return  val + "Necessita desenvolver"
+                        return  val + " - Necessita desenvolver"
                     } else if(val > 2.5 && val <= 3.5) {
-                        return  val + "Atende aos requisitos"
+                        return  val + " - Atende aos requisitos"
                     } else if(val > 3.5 && val <= 4.0) {
-                        return  val + "Supera/ É Referência "
+                        return  val + " - Supera/ É Referência "
                     }
                 }
             }
