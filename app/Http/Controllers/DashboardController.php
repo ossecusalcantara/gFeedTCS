@@ -9,6 +9,7 @@ use App\Validators\UserValidator;
 use Exception;
 use Illuminate\Support\Facades\Gate;
 use App\Repositories\FeedbackRepository;
+use App\Repositories\NotificationRepository;
 use App\Repositories\PerformanceEvaluationRepository;
 use App\Repositories\SkillProfileRepository;
 
@@ -19,19 +20,29 @@ class DashboardController extends Controller
     protected $skillProfileRepository;
     protected $feedbackRepository;
     protected $evaluationRepository;
+    protected $notificationRepository;
 
-    public function __construct(UserRepository $repository, UserValidator $validator, SkillProfileRepository $skillProfileRepository, FeedbackRepository $feedbackRepository, PerformanceEvaluationRepository $evaluationRepository)
+    public function __construct(
+        UserRepository $repository,
+        UserValidator $validator, 
+        SkillProfileRepository $skillProfileRepository, 
+        FeedbackRepository $feedbackRepository, 
+        PerformanceEvaluationRepository $evaluationRepository,
+        NotificationRepository $notificationRepository)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
         $this->skillProfileRepository = $skillProfileRepository;
         $this->feedbackRepository     = $feedbackRepository;
         $this->evaluationRepository   = $evaluationRepository;
+        $this->notificationRepository = $notificationRepository;
     }  
 
     public function index() 
     {
-        return view('user.dashboard');
+        $activities   = $this->notificationRepository->getActivities(Auth::id());
+        //dd($activities);
+        return view('user.dashboard', ['activities' => $activities]);
     }
 
     public function auth(Request $request) 
@@ -44,7 +55,24 @@ class DashboardController extends Controller
         try {
 
             if(env('PASSWORD_HASH')) {
-                Auth::attempt($data , false);
+
+                if(Auth::attempt($data , false)) {
+
+                    $user = $this->repository->findWhere(['email' => $data['email']])->first();
+
+                    if($user->hasPermission('app.admin'))
+                        Gate::authorize('admin');
+
+                    if($user->hasPermission('app.user'))
+                        Gate::authorize('user');
+
+                    if($user->hasPermission('app.manager'))
+                        Gate::authorize('manager');
+
+                    return redirect()->route('user.dashboard');
+                }
+
+                redirect()->back()->with('error', 'E-mail ou senha informado é inválido');
             } else {
 
                 $user = $this->repository->findWhere(['email' => $data['email']])->first();
@@ -83,11 +111,25 @@ class DashboardController extends Controller
         $data = $this->skillProfileRepository->getDadosSkillMedia($idUser);
         $coutFeedBack = $this->feedbackRepository->getCountFeedback($idUser);
         $evaluationData = $this->evaluationRepository->getMediaPerformanceEvaluation($idUser);
+        $dataRecenteFeedBack =  $this->feedbackRepository->getRecentActivities($idUser);
+        $dataRecenteEvaluation = $this->evaluationRepository->getRecentActivities($idUser);
+
+        $dataActivity = ['values' => [], 'labels' => []];
+        foreach ($dataRecenteFeedBack as $value) {
+            array_push($dataActivity['values'], $value['value']);
+            array_push($dataActivity['labels'], $value['name']);
+        }
+
+        foreach ($dataRecenteEvaluation as $value) {
+            array_push($dataActivity['values'], $value['value']);
+            array_push($dataActivity['labels'], $value['name']);
+        }
 
         return response()->json([
             'message' => 'Successfully calculated averages',
             'data' => $data,
             'evaluationData' => $evaluationData,
+            'dataActivity'   => $dataActivity,
             'countFeedbackYear' => $coutFeedBack['countYear'],
             'countFeedbackMouth' => $coutFeedBack['countMounth']
         ]);

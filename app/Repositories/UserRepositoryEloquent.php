@@ -68,7 +68,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     {
 
         $validator = Validator::make($data, [
-            'media' => 'required',
+            'password' => 'required',
         ]);
 
         if ($validator->fails()) {

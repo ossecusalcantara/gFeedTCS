@@ -5,14 +5,13 @@ namespace App\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class Feedback.
+ * Class Notification.
  *
  * @package namespace App\Entities;
  */
-class Feedback extends Model implements Transformable
+class Notification extends Model implements Transformable
 {
     use TransformableTrait;
 
@@ -21,18 +20,14 @@ class Feedback extends Model implements Transformable
      *
      * @var array
      */
-    public    $timestamps   = true;
-
     protected $fillable = [
-        'reason',
-        'notes',
-        'user_id'
+        'text',
+        'type',
+        'view',
+        'user_id',
+        'route',
+        'route_id'
     ];
-    protected $table = 'feedbacks';
-
-    protected function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
+    protected $table = 'notifications';
 
 }

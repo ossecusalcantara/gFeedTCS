@@ -7,6 +7,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartamentsController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\OfficesController;
 use App\Http\Controllers\PerformanceEvaluationsController;
 use App\Http\Controllers\QuestionsController;
@@ -21,6 +22,8 @@ use App\Http\Controllers\SkillsController;
 Route::get('/', [Controller::class, 'fazerLogin']);
 Route::get('/login', [Controller::class, 'fazerLogin']);
 Route::post('/login', [DashboardController::class, 'auth'])->name('user.login');
+Route::post('/change-password', [UsersController::class, 'changePassword'])->name('user.changePassword');
+Route::post('/logout', [UsersController::class, 'logout'])->name('user.logout');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
 Route::get('api/dashboard', [DashboardController::class, 'getDadosDashboard'])->name('user.getDadosDashboard');
 Route::get('api/dashboard/{id}', [DashboardController::class, 'getDadosDashboardUserShow'])->name('user.getDadosDashboardUserShow');
@@ -65,5 +68,10 @@ Route::resource('skill', SkillsController::class);
 Route::get('/questions/listagem', [QuestionsController::class, 'listagem'])->name('questions.listagem');
 Route::resource('questions', QuestionsController::class);
 
-Route::resource('answersEvaluation', AnswersEvaluationsController::class);
+Route::get('/feedback/listagem', [FeedbackController::class, 'listagem'])->name('feedback.listagem');
+Route::get('/feedback/admin/listagem', [FeedbackController::class, 'adminList'])->name('feedback.adminList');
 Route::resource('feedback', FeedbackController::class);
+
+Route::resource('answersEvaluation', AnswersEvaluationsController::class);
+Route::resource('notifications', NotificationsController::class);
+

@@ -26,7 +26,7 @@ return new class extends Migration
 
 			//auth data
 			$table->string('email', 80)->unique();
-			$table->string('password', 254)->nullalbe();
+			$table->string('password', 254)->default('gfeed2024');
 			
 			//Permission
 			$table->string('status')->default('active');

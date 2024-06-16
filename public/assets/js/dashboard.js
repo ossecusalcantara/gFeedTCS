@@ -40,7 +40,7 @@ $(document).ready(function() {
             max: 4.0, // valor máximo do eixo y
             tickAmount: 8,
             title: {
-                text: 'Médias da Avaliação (Soma das notas ÷ 20)'
+                text: 'Médias da Avaliação (Soma das notas ÷ ÷ Qtd. de Perguntas)'
             }
         },
         fill: {
@@ -70,9 +70,9 @@ $(document).ready(function() {
         dataType: 'json',
         success: function(response) {
 
-            console.log(response)
             data = response.data;
             evaluationData = response.evaluationData;
+            dataActivity = response.dataActivity;
 
             $('#countFeedbackYear').text(response.countFeedbackYear);
             $('#countFeedbackMounth').text(response.countFeedbackMouth);
@@ -105,6 +105,20 @@ $(document).ready(function() {
                     categories: evaluationData[1]
                 }
             });
+
+           
+            var chart3 =  new ApexCharts(document.querySelector("#activityChart"), {
+                series: dataActivity['values'],
+                chart: {
+                    height: 350,
+                    type: 'donut',
+                    toolbar: {
+                        show: true
+                    }
+                },
+                labels: dataActivity['labels'],
+            }).render();
+            
         },
         error: function(xhr, status, error) {
             var errorMessage = xhr.status + ': ' + xhr.statusText;

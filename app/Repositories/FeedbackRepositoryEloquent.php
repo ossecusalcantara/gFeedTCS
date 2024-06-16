@@ -53,18 +53,31 @@ class FeedbackRepositoryEloquent extends BaseRepository implements FeedbackRepos
         $startOfMonth = Carbon::now()->startOfMonth();
         $today = Carbon::today();
 
-        $count = [];
-
-        $coutn['countYear'] =  $this->model->where('user_id', $userId)
+        $count['countYear'] =  $this->model->where('user_id', $userId)
             ->whereBetween('created_at', [$startOfYear, $today])
             ->count();
 
-        $coutn['countMounth'] =  $this->model->where('user_id', $userId)
+        $count['countMounth'] =  $this->model->where('user_id', $userId)
             ->whereBetween('created_at', [$startOfMonth, $today])
             ->count();
 
-        return  $coutn;
+        return  $count;
 
     }
-    
+
+    public function getRecentActivities($userId) {
+
+        $startOfYear  = Carbon::now()->startOfYear();
+        $today = Carbon::today();
+
+        $received =  $this->model->where('user_id', $userId)->count();
+        $register =  $this->model->where('register_id', $userId)->count();
+        
+        $data = [];
+        array_push($data, ['value' => $received , 'name' => 'Feedbacks Recebidos']);
+        array_push($data, ['value' => $register , 'name' => 'Feedbacks Registrados']);
+
+        return $data;
+    }
+
 }

@@ -268,9 +268,9 @@ class UsersController extends Controller
     public function changePassword(Request $request) {
 
         $data = [
-            'currentPassword' => $request->get('currentPassword'),
-            'newPassword'     => $request->get('newPassword'),
-            'renewPassword'   => $request->get('renewPassword'),
+            'currentPassword' =>  $request->get('currentPassword'),
+            'newPassword'     =>  $request->get('newPassword'),
+            'renewPassword'   =>  $request->get('renewPassword'),
         ];
 
         $user = Auth::user();
@@ -279,14 +279,23 @@ class UsersController extends Controller
             return redirect()->back()->with('error', 'Senha atual informada é inválida');
         }
 
-        if(!Hash::check($data['newPassword'], $data['renewPassword'])) {
+        if ($data['newPassword'] !== $data['renewPassword']) {
             return redirect()->back()->with('error', 'A nova senha e a senha de confirmação não coincidem');
         }
 
         $password = bcrypt($data['newPassword']);
         $this->repository->setNewPassword($user->id, ['password' => $password]);
 
-        return view('user.user-profile', ['user' => $user]);
+        return redirect()->back()->with('success', 'Senha alterada com sucesso');
+    }
+
+    public function logout(Request $request) {
+
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login')->with('success', 'Você saiu com sucesso!');
 
     }
 }

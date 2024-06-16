@@ -26,16 +26,42 @@ class DatabaseSeeder extends Seeder
     private function SeederUser() : void
     {
         User::create([
-            'cpf'         => '11122233399', 
-            'name'        => 'Gabriel', 
-            'phone'       => '4899151515', 
+            'cpf'         => '11122233388', 
+            'name'        => 'Gabriel Chaucoski', 
+            'phone'       => '4899150055', 
             'birth'       => '2003-02-23', 
             'gender'      => 'M', 
             'notes'       => 'Funcionario', 
             'email'       => 'gabriel@gmail.com', 
-            'departament_id'  => '2', 
+            'departament_id'  => '6', 
+            'office_id'       => '16', 
+            'password'    => env('PASSWORD_HASH') ? bcrypt('gfeed2024*') : 'gfeed2024*', 
+        ]);
+
+        User::create([
+            'cpf'         => '11166633399', 
+            'name'        => 'Adson Alcântara', 
+            'phone'       => '4891591515', 
+            'birth'       => '1998-02-23', 
+            'gender'      => 'M', 
+            'notes'       => 'Funcionario', 
+            'email'       => 'adson@gmail.com', 
+            'departament_id'  => '6', 
             'office_id'       => '2', 
-            'password'    => env('PASSWORD_HASH') ? bcrypt('admin12345*') : 'senha12345*', 
+            'password'    => env('PASSWORD_HASH') ? bcrypt('gfeed2024*') : 'gfeed2024*', 
+        ]);
+
+        User::create([
+            'cpf'         => '22222233399', 
+            'name'        => 'Rogerio Ricardo', 
+            'phone'       => '4866551515', 
+            'birth'       => '2005-02-23', 
+            'gender'      => 'M', 
+            'notes'       => 'Funcionario', 
+            'email'       => 'rogerio@gmail.com', 
+            'departament_id'  => '2', 
+            'office_id'       => '5', 
+            'password'    => env('PASSWORD_HASH') ? bcrypt('gfeed2024*') : 'gfeed2024*', 
         ]);
 
     }
@@ -139,7 +165,14 @@ class DatabaseSeeder extends Seeder
             'Liderança e Gestão de Equipes de Alto Desempenho',
             'Autodesenvolvimento',
             'Qualidade de Vida e Segurança do Trabalho',
-            'Visão Estratégica e Sistêmica'
+            'Visão Estratégica e Sistêmica',
+            'Produtividade',
+            'Diversidade e Adaptabilidade',
+            'Engajamento e Trabalho em Equipe',
+            'Autodesenvolvimento',
+            'Segurança no Trabalho',
+            'Assiduidade e Pontualidade',
+
         ];
     
         foreach ($typeQuestions as $typeQuestion) {
@@ -155,89 +188,176 @@ class DatabaseSeeder extends Seeder
         $questions = [
            
             ['type_question_id' => 1
+                , 'level' => 2
                 , 'order' => 1
                 , 'question_description' => 'Transmite informações de forma clara e objetiva, ouve com atenção e preocupa-se em assegurar o entendimento das informações por parte dos receptores.'],
             ['type_question_id' => 1
+                , 'level' => 2
                 , 'order' => 2
                 , 'question_description' => 'Sabe claramente as diretrizes e estratégias da empresa e compartilha as informações, objetivos, metas e os resultados alcançados em reuniões periódicas.'],
             ['type_question_id' => 2
+                , 'level' => 2
                 , 'order' => 3
                 , 'question_description' => 'Planeja e controla com disciplina as atividades da área por meio de análise de indicadores e corrige desvios de forma ágil.'],
             ['type_question_id' => 2
+                , 'level' => 2
                 , 'order' => 4
                 , 'question_description' => 'Atinge os objetivos e metas da área efetivando planos de ação que geram economia/redução de custos, redução de desperdícios, ganhos de produtividade e qualidade, aumento da receita, atendimento de prazos, etc;'],
             ['type_question_id' => 3
+                , 'level' => 2
                 , 'order' => 5
                 , 'question_description' => 'Desenvolve, revisa, cumpre e compartilha os procedimentos, normas e políticas da empresa, garantindo que sua equipe
                 também atue de acordo com as mesmas.'],
             ['type_question_id' => 3
+                , 'level' => 2
                 , 'order' => 6
                 , 'question_description' => 'É criativo e inovador, apresentando e implementando soluções para os novos desafios, utilizando ferramentas e
                 metodologias da Qualidade e Lean Manufacturing (exemplos: 5S, PDCA, 5W2H, kaizen, A3, FMEA, etc.)'],
             ['type_question_id' => 3
+                , 'level' => 2
                 , 'order' => 7
                 , 'question_description' => 'É aberto, flexível e reage positivamente as mudanças, tem facilidade de adaptação para utilização de novos métodos,
                 procedimentos e estratégias.'],
             ['type_question_id' => 3
+                , 'level' => 2
                 , 'order' => 8
                 , 'question_description' => 'Incentiva os colaboradores a proporem suas ideias, avaliando e viabilizando a implementação em prol dos resultados da
                 área e da melhoria contínua.'],
             ['type_question_id' => 3
+                , 'level' => 2
                 , 'order' => 9
                 , 'question_description' => 'Promove a cultura do "foco no cliente", compromete-se com a melhoria dos processos, produtos e serviços para atender
                 as necessidades dos clientes internos/externos.'],
 
             ['type_question_id' => 4
+                , 'level' => 2
                 , 'order' => 10
                 , 'question_description' => 'Respeita a diversidade (raça, crença, orientação sexual, deficiência, cultura, entre outros), promove um ambiente de
                 trabalho inclusivo, livre de preconceitos e discriminação.'],
             ['type_question_id' => 4
+                , 'level' => 2
                 , 'order' => 11
                 , 'question_description' => 'Exerce a liderança pelo exemplo, atuando de forma transparente e justa, com idoneidade, ética e respeito, inspirando
                 confiança.'],
             ['type_question_id' => 4
+                , 'level' => 2
                 , 'order' => 12
                 , 'question_description' => 'Coopera com outras áreas do négocio e estimula comportamentos similares em sua equipe em prol dos resultados.'],
             ['type_question_id' => 4
+                , 'level' => 2
                 , 'order' => 13
                 , 'question_description' => 'Comemora as metas e conquistas alcançadas, reconhece e elogia o trabalho bem feito/diferenciado da equipe e dos
                 pares.'],
             ['type_question_id' => 4
+                , 'level' => 2
                 , 'order' => 14
                 , 'question_description' => 'Pratica o feedback como ferramenta para elevar a performance, cumprindo o cronograma das avaliações de sua equipe,
                 dando suporte nas ações de treinamento e desenvolvimento.'],
             ['type_question_id' => 4
+                , 'level' => 2
                 , 'order' => 15
                 , 'question_description' => 'Divide seu conhecimento e experiências de forma espontânea, incentivando o desenvolvimento da equipe, avalia
                 necessidades e promove treinamentos e atualizações de procedimentos e normas de trabalho, identificando talentos e
                 sucessores.'],
 
             ['type_question_id' => 5
+                , 'level' => 2
                 , 'order' => 16
                 , 'question_description' => 'Preocupa-se com o seu desenvolvimento pessoal e profissional, investe tempo e esforço em adquirir novos
                 conhecimentos, tomando para si a responsabilidade de manter-se atualizado, bem como participa dos treinamentos,
                 programas e ações promovidos pela empresa.'],
          
             ['type_question_id' => 6
+                , 'level' => 2
                 , 'order' => 17
                 , 'question_description' => 'Cumpre e assegura que sua equipe siga as normas de segurança e utilize corretamente os EPIs e EPCs.'],
                 
             ['type_question_id' => 6
+                , 'level' => 2
                 , 'order' => 18
                 , 'question_description' => 'Promove um ambiente físico e social saudável assegurando clima e condições favoráveis para o trabalho, demonstrando
                 interesse genuíno pela saúde e segurança das pessoas.'],
 
             ['type_question_id' => 7
+                , 'level' => 2
                 , 'order' => 19
                 , 'question_description' => 'Apresenta a visão do todo, percebe a interdependência da sua área com as demais, e toma decisões assertivas
                 utilizando critérios lógicos e fatos/dados consistentes para alcançar os melhores resultados para a empresa.'],
             ['type_question_id' => 7
+                , 'level' => 2
                 , 'order' => 20
                 , 'question_description' => 'Toma decisões de forma estratégica considerando as perspectivas de curto a longo prazo, atentando-se para os riscos
                 envolvidos, compartilhando as mais complexas com seus pares/superiores, respeitando as alçadas e políticas da empresa.'],
         ];
 
         foreach ($questions as $question) {
+           
+            Question::create(
+                $question
+            );
+        }
+
+        $questions1 = [
+           
+            ['type_question_id' => 1
+                , 'level' => 1
+                , 'order' => 1
+                , 'question_description' => 'Transmite informações de forma clara e objetiva, ouve com atenção e preocupa-se em assegurar o entendimento das informações por parte dos receptores.'],
+            ['type_question_id' => 8
+                , 'level' => 1
+                , 'order' => 2
+                , 'question_description' => 'Atende as demandas de trabalho esperadas em determinado tempo dentro de metas adequadas para função.'],
+            ['type_question_id' => 3
+                , 'level' => 1
+                , 'order' => 3
+                , 'question_description' => 'Conhece os procedimentos e normas do seu setor, realizando suas tarefas de forma completa e precisa, sem desperdícios,
+                    atendendo aos padrões de qualidade esperados.'],
+            ['type_question_id' => 3
+                , 'level' => 1
+                , 'order' => 4
+                , 'question_description' => 'Identifica e propõe ideias e melhorias.'],
+            ['type_question_id' => 9
+                , 'level' => 1
+                , 'order' => 5
+                , 'question_description' => 'Respeita a diversidade (raça, crença, orientação sexual, deficiência, cultura, entre outros) proporcionando um ambiente livre
+                de discriminação'],
+            ['type_question_id' => 9
+                , 'level' => 1
+                , 'order' => 6
+                , 'question_description' => ' É flexível e reage positivamente as mudanças necessárias e tem facilidade de adaptação para utilização de novos métodos,
+                procedimentos e estratégias.'],
+            ['type_question_id' => 10
+                , 'level' => 1
+                , 'order' => 7
+                , 'question_description' => 'Tem comportamentos que servem de exemplos para os colegas: comprometido com objetivos e metas, responsável e
+                participativo.'],
+            ['type_question_id' => 10
+                , 'level' => 1
+                , 'order' => 8
+                , 'question_description' => 'Mantém organizado e limpo seu local de trabalho e espaços coletivos (refeitório, banheiros, salas de reuniões, pátios, entre
+                outros).'],
+            ['type_question_id' => 10
+                , 'level' => 1
+                , 'order' => 9
+                , 'question_description' => 'Colabora/Ajuda em qualquer situação e divide seu conhecimento/experiências com colegas de forma espontânea.'],
+            ['type_question_id' => 11
+                , 'level' => 2
+                , 'order' => 10
+                , 'question_description' => ' Preocupa-se com o seu desenvolvimento, investe tempo e esforço em adquirir novos conhecimentos, tomando para si a
+                responsabilidade de manter-se atualizado, bem como participa dos treinamentos promovidos pela empresa.'],
+            ['type_question_id' => 12
+                , 'level' => 1
+                , 'order' => 11
+                , 'question_description' => 'Conhece e respeita as normas de segurança e faz uso adequado dos EPIs.'],
+            ['type_question_id' => 13
+                , 'level' => 1
+                , 'order' => 12
+                , 'question_description' => '- Cumpre a jornada de trabalho, sem faltas, atrasos e ausencias do posto de trabalho. É comprometido em estar e ser
+                presente'],
+        ];
+
+        
+        foreach ($questions1 as $question) {
            
             Question::create(
                 $question

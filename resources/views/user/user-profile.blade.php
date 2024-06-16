@@ -135,7 +135,25 @@
 
                             <div class="tab-pane fade pt-3" id="profile-change-password">
 
-                                {!! Form::open(['route' => 'user.store', 'method' => 'post', 'class' => 'row g-3']) !!}
+                                @if(session('error'))
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <i class="bi bi-exclamation-octagon me-1"></i>
+                                            {{ session('error') }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                    <br>
+                                @endif
+
+                                @if(session('success'))
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <i class="bi bi-check-circle me-1"></i>
+                                            {{ session('success') }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                    <br>
+                                @endif
+
+                                {!! Form::open(['route' => 'user.changePassword', 'method' => 'post', 'class' => 'row g-3']) !!}
                                     <div class="row mb-3">
                                         <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Senha
                                             Atual</label>

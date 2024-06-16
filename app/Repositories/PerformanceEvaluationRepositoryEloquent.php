@@ -60,7 +60,9 @@ class PerformanceEvaluationRepositoryEloquent extends BaseRepository implements 
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        return $this->model->where('id', $performanceEvaluationsId)->update($data);
+        $this->model->where('id', $performanceEvaluationsId)->update($data);
+
+        return $this->model->where('id', $performanceEvaluationsId)->get();
     }
 
     public function getMediaPerformanceEvaluation($userId) {
@@ -81,6 +83,18 @@ class PerformanceEvaluationRepositoryEloquent extends BaseRepository implements 
 
         return [$mediaData, $mounthData];
 
+    }
+
+    public function getRecentActivities($userId) {
+
+        $received = $this->model->where('user_id', $userId)->count();
+        $register = $this->model->where('manager_id', $userId)->count();
+
+        $data = [];
+        array_push($data, ['value' => $received , 'name' => 'Avaliações Recebidas']);
+        array_push($data, ['value' => $register , 'name' => 'Avaliações Registradas']);
+
+        return $data;
     }
     
 }

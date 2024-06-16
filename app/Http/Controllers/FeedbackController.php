@@ -12,6 +12,8 @@ use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\FeedbackCreateRequest;
 use App\Http\Requests\FeedbackUpdateRequest;
 use App\Repositories\FeedbackRepository;
+use App\Repositories\NotificationRepository;
+use App\Repositories\SkillProfileRepository;
 use App\Repositories\SkillRepository;
 use App\Repositories\UserRepository;
 use App\Validators\FeedbackValidator;
@@ -38,18 +40,24 @@ class FeedbackController extends Controller
 
     protected $skillRepository;
 
+    protected $notificationRepository;
+
+    protected $skillProfileRepository;
+
     /**
      * FeedbackController constructor.
      *
      * @param FeedbackRepository $repository
      * @param FeedbackValidator $validator
      */
-    public function __construct(FeedbackRepository $repository, FeedbackValidator $validator, UserRepository $userRepository, SkillRepository $skillRepository)
+    public function __construct(FeedbackRepository $repository, FeedbackValidator $validator, UserRepository $userRepository, SkillRepository $skillRepository, NotificationRepository $notificationRepository, SkillProfileRepository $skillProfileRepository)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
         $this->userRepository = $userRepository;
         $this->skillRepository = $skillRepository;
+        $this->notificationRepository = $notificationRepository;
+        $this->skillProfileRepository = $skillProfileRepository;
     }
 
     /**
@@ -64,6 +72,23 @@ class FeedbackController extends Controller
         $skil_list = $this->skillRepository->selectBoxList();
         //dd( $user_list);
         return view('feedback.index', ['user_list' => $user_list, 'skill_list' => $skil_list]);
+    }
+
+    public function listagem() 
+    {
+        $feedbacks = $this->repository->where('user_id', Auth::id())->get();
+
+        return view('feedback.listagem', ['feedbacks' => $feedbacks]);
+    }
+
+    public function adminList() 
+    {
+
+        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $feedbacks = $this->repository->all();
+
+        return view('feedback.listagem', ['feedbacks' => $feedbacks]);
+
     }
 
     /**
@@ -85,6 +110,7 @@ class FeedbackController extends Controller
                 'user_id' => $request->input('user_id'),
                 'reason'  => $request->input('reason'),
                 'notes'   => $request->input('notes'),
+                'register_id'  => Auth::id(),
             ];
 
             
@@ -100,9 +126,13 @@ class FeedbackController extends Controller
                     'user_id' => $feedback->user_id,
                     'skill_id' => $skills[$i],
                     'pontuation' => $pontuations[$i],
+                    'feedback_id' => $feedback->id
                 ]);
 
             }
+
+            $this->notificationRepository->setNotification($feedback->user_id, 'Você recebue um feedback','N','feedback.show', $feedback->id);
+            $this->notificationRepository->setNotification($feedback->register_id, 'Você cadastrou um feedback', 'R');
 
             $response = [
                 'message' => 'Feedback created.',
@@ -137,14 +167,10 @@ class FeedbackController extends Controller
     {
         $feedback = $this->repository->find($id);
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $feedback,
-            ]);
-        }
-
-        return view('feedback.show', compact('feedback'));
+        
+        $skillsFeedback_list = $this->skillProfileRepository->where('feedback_id', $id)->get();
+       
+        return view('feedback.show', ['feedback' => $feedback, 'skillsFeedback_list' => $skillsFeedback_list]);
     }
 
     /**

@@ -10,6 +10,7 @@ use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\PerformanceEvaluationCreateRequest;
 use App\Http\Requests\PerformanceEvaluationUpdateRequest;
 use App\Repositories\AnswersEvaluationRepository;
+use App\Repositories\NotificationRepository;
 use App\Repositories\PerformanceEvaluationRepository;
 use App\Repositories\QuestionRepository;
 use App\Repositories\UserRepository;
@@ -41,19 +42,22 @@ class PerformanceEvaluationsController extends Controller
 
     protected $answersEvaluationsRepository;
 
+    protected $notificationRepository;
+
     /**
      * PerformanceEvaluationsController constructor.
      *
      * @param PerformanceEvaluationRepository $repository
      * @param PerformanceEvaluationValidator $validator
      */
-    public function __construct(PerformanceEvaluationRepository $repository, PerformanceEvaluationValidator $validator, UserRepository $userRepository, QuestionRepository $questionsRepository, AnswersEvaluationRepository $answersEvaluationsRepository)
+    public function __construct(PerformanceEvaluationRepository $repository, PerformanceEvaluationValidator $validator, UserRepository $userRepository, QuestionRepository $questionsRepository, AnswersEvaluationRepository $answersEvaluationsRepository, NotificationRepository $notificationRepository)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
         $this->userRepository = $userRepository;
         $this->questionsRepository = $questionsRepository;
         $this->answersEvaluationsRepository = $answersEvaluationsRepository;
+        $this->notificationRepository = $notificationRepository;
     }
 
     /**
@@ -124,6 +128,9 @@ class PerformanceEvaluationsController extends Controller
             $level = $this->userRepository->getPermissionUser($performanceEvaluation['user_id']);
 
             $performanceEvaluation['level'] =  $level;
+
+            $this->notificationRepository->setNotification($request['user_id'], 'Você tem uma avaliação a ser feita', 'R');
+            $this->notificationRepository->setNotification($request['manager_id'], 'Você tem uma avaliação de desempenho pendente.', 'A', 'performanceEvaluations.managerlist',  $performanceEvaluation->id);
 
             $response = [
                 'message' => 'PerformanceEvaluation created.',
@@ -202,6 +209,8 @@ class PerformanceEvaluationsController extends Controller
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
             $performanceEvaluation = $this->repository->update($request->all(), $id);
+
+            $this->notificationRepository->setNotification($request['manager_id'], 'Você tem uma avaliação de desempenho pendente.', 'A', 'performanceEvaluations.lisgatem',  $performanceEvaluation->id);
 
             $response = [
                 'message' => 'PerformanceEvaluation updated.',

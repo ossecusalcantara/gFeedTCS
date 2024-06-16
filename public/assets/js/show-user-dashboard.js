@@ -40,7 +40,7 @@ $(document).ready(function() {
             max: 4.0, // valor máximo do eixo y
             tickAmount: 8,
             title: {
-                text: 'Médias da Avaliação (Soma das notas ÷ 20)'
+                text: 'Médias da Avaliação (Soma das notas ÷ Qtd. de Perguntas)'
             }
         },
         fill: {

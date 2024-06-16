@@ -11,11 +11,13 @@ use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\AnswersEvaluationCreateRequest;
 use App\Http\Requests\AnswersEvaluationUpdateRequest;
 use App\Repositories\AnswersEvaluationRepository;
+use App\Repositories\NotificationRepository;
 use App\Repositories\PerformanceEvaluationRepository;
 use App\Validators\AnswersEvaluationValidator;
 use Illuminate\Database\QueryException;
 use Exception;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -38,17 +40,20 @@ class AnswersEvaluationsController extends Controller
 
     protected $performanceEvaluationRepository;
 
+    protected $notificationRepository;
+
     /**
      * AnswersEvaluationsController constructor.
      *
      * @param AnswersEvaluationRepository $repository
      * @param AnswersEvaluationValidator $validator
      */
-    public function __construct(AnswersEvaluationRepository $repository, AnswersEvaluationValidator $validator, PerformanceEvaluationRepository $performanceEvaluationRepository)
+    public function __construct(AnswersEvaluationRepository $repository, AnswersEvaluationValidator $validator, PerformanceEvaluationRepository $performanceEvaluationRepository, NotificationRepository $notificationRepository)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
         $this->performanceEvaluationRepository = $performanceEvaluationRepository;
+        $this->notificationRepository = $notificationRepository;
     }
 
     /**
@@ -109,8 +114,10 @@ class AnswersEvaluationsController extends Controller
             $data['conclusion'] = Carbon::today();
             $data['status']     = 'completed';
             
-            //dd($data);
-            $this->performanceEvaluationRepository->updateEvaluationById($evaluationId, $data);
+            $evaluation = $this->performanceEvaluationRepository->updateEvaluationById($evaluationId, $data);
+
+            $this->notificationRepository->setNotification(Auth::id(), 'Avaliação de desempenho realizada com sucesso', 'R');
+            $this->notificationRepository->setNotification($evaluation->user_id, 'Sua avaliação de desempenho foi concluida com sucesso', 'A', 'performanceEvaluations.show',  $evaluation->id);
 
             $response = [
                 'message' => 'AnswersEvaluation created.',
