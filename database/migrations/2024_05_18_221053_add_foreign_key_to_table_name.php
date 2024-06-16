@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::table('app_users', function (Blueprint $table) {
           
-            $table->unsignedInteger('departament_id')->default(1);
+            $table->unsignedInteger('departament_id');
             $table->foreign('departament_id')
                   ->references('id')
                   ->on('departaments'); 
 
-            $table->unsignedInteger('office_id')->default(1);
+            $table->unsignedInteger('office_id');
             $table->foreign('office_id')
                 ->references('id')
                 ->on('offices'); 

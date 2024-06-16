@@ -25,7 +25,8 @@ class Question extends Model implements Transformable
         'name',
         'order',
         'question_description',
-        'type_question_id'
+        'type_question_id',
+        'level'
     ];
     protected $table = 'questions';
 

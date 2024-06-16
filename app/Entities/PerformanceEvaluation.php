@@ -29,7 +29,8 @@ class PerformanceEvaluation extends Model implements Transformable
         'admin_id',
         'manager_id',
         'user_id',
-        'level'
+        'level',
+        'status'
     ];
 
     protected $table = 'performance_evaluations';

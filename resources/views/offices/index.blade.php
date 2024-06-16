@@ -23,13 +23,8 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    @include('templates.formulario.submit', [
-                        'input' => 'Cadastrar',
-                        'attributes' => [
-                            'class' => 'btn btn-primary',
-                        ],
-                    ])
-                    <button type="reset" class="btn btn-secondary">Voltar</button>
+                    {!! Form::submit('Cadastrar', ['class' => 'btn btn-primary']) !!}
+                    <button type="reset" onclick="window.location='{{ route('office.listagem') }}'" class="btn btn-secondary">Voltar</button>
                 </div>
             {!! Form::close() !!}
 

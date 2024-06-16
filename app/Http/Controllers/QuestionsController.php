@@ -89,9 +89,7 @@ class QuestionsController extends Controller
     {
         try {
 
-            
-            $request['order'] = $this->repository->findMax('order');
-            dd($request);
+            $request['order'] = $this->repository->findMax('order', $request['level']);
             
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 

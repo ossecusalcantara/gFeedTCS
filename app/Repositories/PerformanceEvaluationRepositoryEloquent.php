@@ -67,7 +67,7 @@ class PerformanceEvaluationRepositoryEloquent extends BaseRepository implements 
 
     public function getMediaPerformanceEvaluation($userId) {
 
-        $itens = $this->model->where('user_id', $userId)->orderBy('created_at', 'asc')->get();
+        $itens = $this->model->where('user_id', $userId)->where('status', 'completed')->orderBy('created_at', 'asc')->get();
 
         $mediaData = [];
         $mounthData = [];
@@ -87,8 +87,8 @@ class PerformanceEvaluationRepositoryEloquent extends BaseRepository implements 
 
     public function getRecentActivities($userId) {
 
-        $received = $this->model->where('user_id', $userId)->count();
-        $register = $this->model->where('manager_id', $userId)->count();
+        $received = $this->model->where('user_id', $userId)->where('status', 'completed')->count();
+        $register = $this->model->where('manager_id', $userId)->where('status', 'completed')->count();
 
         $data = [];
         array_push($data, ['value' => $received , 'name' => 'Avaliações Recebidas']);

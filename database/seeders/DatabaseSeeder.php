@@ -4,12 +4,16 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Entities\AnswersEvaluation;
 use App\Entities\Departament;
+use App\Entities\Feedback;
 use App\Entities\Office;
+use App\Entities\PerformanceEvaluation;
 use App\Entities\Question;
 use Illuminate\Database\Seeder;
 use App\Entities\User;
 use App\Entities\Skill;
+use App\Entities\SkillProfile;
 use App\Entities\TypeQuestion;
 use App\Models\Permission;
 
@@ -21,6 +25,115 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
+        //$this->SeedPerguntas(3);
+        //$this->SeedQuestions1();
+        $this->SeedFeedback(1);
+    }
+
+    private function SeedAvaliacao() : void {
+
+        $avaliacoes = [
+            ['notes' => 'Avaliação de 30 dias',
+            'deadline' => '2024-01-12',
+            'media' => 3.1,
+            'admin_id' => 3,
+            'manager_id' => 2,
+            'user_id' => 1,
+            'level' => 1,
+            'conclusion' => '2024-01-12',
+            'status' => 'completed'],
+
+            ['notes' => 'Avaliação de 90 dias',
+            'deadline' => '2024-03-12',
+            'media' => 4,
+            'admin_id' => 3,
+            'manager_id' => 2,
+            'user_id' => 1,
+            'level' => 1,
+            'conclusion' => '2024-03-12',
+            'status' => 'completed'],
+
+            ['notes' => 'Avaliação de 1 ano',
+            'deadline' => '2024-07-12',
+            'admin_id' => 3,
+            'manager_id' => 2,
+            'user_id' => 1,
+            'level' => 1],
+        ];
+
+        foreach ($avaliacoes as $value) {
+            PerformanceEvaluation::create($value);
+
+            $latestRecord = PerformanceEvaluation::latest()->first();
+
+            if(isset($value['status'])) {
+                if($value['status'] != 'completed') {
+                    $this->SeedPerguntas($latestRecord->id);
+                }
+            }
+        }
+
+    }
+
+    private function SeedFeedback($quatidade) : void 
+     {
+
+        for ($i=0; $i < $quatidade; $i++) { 
+            $feedbacks = [
+                'reason' => $this->textoAleatorio(4),
+                'notes' => $this->textoAleatorio(10),
+                'user_id' => rand(1,3),
+                'register_id' => rand(1,3)
+            ];
+
+            $latestRecord =   Feedback::create($feedbacks);
+
+            $this->SeedSkillProfile($latestRecord);
+            
+        }
+
+    }
+
+    private function SeedSkillProfile(Feedback $feedback) : void 
+    {
+
+        $qtd = rand(3, 8);
+        for ($i=0; $i < $qtd; $i++) { 
+            
+            $id = rand(1,20);
+            $skill = Skill::where('id', $id)->first();
+
+            $skillP = [
+                'user_id' =>  $feedback->user_id ,
+                'skill_id' => $skill->id,
+                'pontuation' => rand(1,10),
+                'feedback_id' => $feedback->id
+            ];
+
+            SkillProfile::create($skillP);
+
+        }
+
+    }
+
+    private function SeedPerguntas($avaliacao, $nivel = 1) : void
+    {
+
+        
+        $questions = Question::where('level', $nivel)->orderBy('order', 'asc')->get();
+        
+        foreach ($questions as $key => $question) {
+            $perguntas = [
+                'question_id' => $question->id,
+                'performance_evaluation_id' => $avaliacao,
+                'notes' => $this->textoAleatorio(),
+                'punctuation' => rand(1,4), 
+    
+            ];
+            
+            AnswersEvaluation::create($perguntas);
+        }
+
     }
     
     private function SeederUser() : void
@@ -31,7 +144,7 @@ class DatabaseSeeder extends Seeder
             'phone'       => '4899150055', 
             'birth'       => '2003-02-23', 
             'gender'      => 'M', 
-            'notes'       => 'Funcionario', 
+            'notes'       =>  $this->textoAleatorio(5), 
             'email'       => 'gabriel@gmail.com', 
             'departament_id'  => '6', 
             'office_id'       => '16', 
@@ -44,7 +157,7 @@ class DatabaseSeeder extends Seeder
             'phone'       => '4891591515', 
             'birth'       => '1998-02-23', 
             'gender'      => 'M', 
-            'notes'       => 'Funcionario', 
+            'notes'       => $this->textoAleatorio(6), 
             'email'       => 'adson@gmail.com', 
             'departament_id'  => '6', 
             'office_id'       => '2', 
@@ -57,7 +170,7 @@ class DatabaseSeeder extends Seeder
             'phone'       => '4866551515', 
             'birth'       => '2005-02-23', 
             'gender'      => 'M', 
-            'notes'       => 'Funcionario', 
+            'notes'       => $this->textoAleatorio(7), 
             'email'       => 'rogerio@gmail.com', 
             'departament_id'  => '2', 
             'office_id'       => '5', 
@@ -169,7 +282,6 @@ class DatabaseSeeder extends Seeder
             'Produtividade',
             'Diversidade e Adaptabilidade',
             'Engajamento e Trabalho em Equipe',
-            'Autodesenvolvimento',
             'Segurança no Trabalho',
             'Assiduidade e Pontualidade',
 
@@ -183,7 +295,7 @@ class DatabaseSeeder extends Seeder
         }
     }
 
-    private function SeederQuestions() : void
+    private function SeederQuestions2() : void
     { 
         $questions = [
            
@@ -297,13 +409,16 @@ class DatabaseSeeder extends Seeder
             );
         }
 
+    }
+
+    private function SeedQuestions1() : void {
         $questions1 = [
            
             ['type_question_id' => 1
                 , 'level' => 1
                 , 'order' => 1
                 , 'question_description' => 'Transmite informações de forma clara e objetiva, ouve com atenção e preocupa-se em assegurar o entendimento das informações por parte dos receptores.'],
-            ['type_question_id' => 8
+            ['type_question_id' => 7
                 , 'level' => 1
                 , 'order' => 2
                 , 'question_description' => 'Atende as demandas de trabalho esperadas em determinado tempo dentro de metas adequadas para função.'],
@@ -316,44 +431,44 @@ class DatabaseSeeder extends Seeder
                 , 'level' => 1
                 , 'order' => 4
                 , 'question_description' => 'Identifica e propõe ideias e melhorias.'],
-            ['type_question_id' => 9
+            ['type_question_id' => 8
                 , 'level' => 1
                 , 'order' => 5
                 , 'question_description' => 'Respeita a diversidade (raça, crença, orientação sexual, deficiência, cultura, entre outros) proporcionando um ambiente livre
                 de discriminação'],
-            ['type_question_id' => 9
+            ['type_question_id' => 8
                 , 'level' => 1
                 , 'order' => 6
                 , 'question_description' => ' É flexível e reage positivamente as mudanças necessárias e tem facilidade de adaptação para utilização de novos métodos,
                 procedimentos e estratégias.'],
-            ['type_question_id' => 10
+            ['type_question_id' => 9
                 , 'level' => 1
                 , 'order' => 7
                 , 'question_description' => 'Tem comportamentos que servem de exemplos para os colegas: comprometido com objetivos e metas, responsável e
                 participativo.'],
-            ['type_question_id' => 10
+            ['type_question_id' => 9
                 , 'level' => 1
                 , 'order' => 8
                 , 'question_description' => 'Mantém organizado e limpo seu local de trabalho e espaços coletivos (refeitório, banheiros, salas de reuniões, pátios, entre
                 outros).'],
-            ['type_question_id' => 10
+            ['type_question_id' => 9
                 , 'level' => 1
                 , 'order' => 9
                 , 'question_description' => 'Colabora/Ajuda em qualquer situação e divide seu conhecimento/experiências com colegas de forma espontânea.'],
-            ['type_question_id' => 11
-                , 'level' => 2
+            ['type_question_id' => 5
+                , 'level' => 1
                 , 'order' => 10
                 , 'question_description' => ' Preocupa-se com o seu desenvolvimento, investe tempo e esforço em adquirir novos conhecimentos, tomando para si a
                 responsabilidade de manter-se atualizado, bem como participa dos treinamentos promovidos pela empresa.'],
-            ['type_question_id' => 12
+            ['type_question_id' => 11
                 , 'level' => 1
                 , 'order' => 11
                 , 'question_description' => 'Conhece e respeita as normas de segurança e faz uso adequado dos EPIs.'],
-            ['type_question_id' => 13
+            ['type_question_id' => 12
                 , 'level' => 1
                 , 'order' => 12
-                , 'question_description' => '- Cumpre a jornada de trabalho, sem faltas, atrasos e ausencias do posto de trabalho. É comprometido em estar e ser
-                presente'],
+                , 'question_description' => 'Cumpre a jornada de trabalho, sem faltas, atrasos e ausencias do posto de trabalho. É comprometido em estar e ser
+                presente.'],
         ];
 
         
@@ -363,6 +478,29 @@ class DatabaseSeeder extends Seeder
                 $question
             );
         }
+    } 
+
+    public function textoAleatorio($numWords = 5) : string 
+    {
+
+        $text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ac ligula et ex elementum facilisis sit amet in tortor. Morbi ultrices euismod dolor, sed pharetra tortor congue vel. Donec dignissim leo eu lobortis facilisis. Vestibulum facilisis lobortis ante a vestibulum. Proin lobortis dolor risus, rutrum cursus metus vulputate nec. In tincidunt sapien non semper tincidunt. Ut non purus id lacus tempor pulvinar nec id tellus. Integer tempor risus in leo pretium, vitae consequat velit cursus. Sed mollis mauris ac varius sollicitudin.
+        Aenean quam lectus, faucibus et est sed, luctus viverra lacus. Integer vitae dictum dolor. Proin pretium, ipsum id luctus interdum, diam mauris egestas ex, sed auctor felis magna eget est. Fusce cursus ultrices quam sed vestibulum. Donec lacinia vitae sapien a imperdiet. Aliquam at rutrum sapien. Curabitur et ipsum turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In fermentum leo ac turpis convallis, euismod dictum enim hendrerit. Cras vehicula nunc at nisi tempus, non iaculis dolor suscipit. Pellentesque mollis est a est dictum, varius maximus tellus facilisis.
+        Praesent blandit eros mauris, in pharetra sem efficitur vitae. Nunc sit amet turpis nunc. Phasellus faucibus quis massa vitae gravida. Vestibulum fermentum, mauris sed bibendum mollis, nulla quam euismod arcu, eget sodales massa diam non arcu. Nam gravida, mi sed pretium tempor, nunc quam aliquet purus, sit amet efficitur est nisl eget sem. Etiam id laoreet metus. Donec commodo, elit sit amet commodo pretium, risus ex fringilla arcu, varius fringilla lectus velit ac lorem.";
+
+        // Divide o texto em palavras usando espaços como delimitador
+        $words = preg_split('/\s+/', $text, -1, PREG_SPLIT_NO_EMPTY);
+
+        // Embaralha as palavras para obter uma seleção aleatória
+        shuffle($words);
+
+        // Seleciona um número específico de palavras aleatórias, definido por $numWords
+        $randomWords = array_slice($words, 0, $numWords);
+
+        // Concatena as palavras selecionadas em uma única string
+        $randomText = implode(' ', $randomWords);
+
+        return $randomText;
+
     }
     
 

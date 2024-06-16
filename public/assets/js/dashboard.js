@@ -71,6 +71,7 @@ $(document).ready(function() {
         success: function(response) {
 
             data = response.data;
+            console.log(response)
             evaluationData = response.evaluationData;
             dataActivity = response.dataActivity;
 

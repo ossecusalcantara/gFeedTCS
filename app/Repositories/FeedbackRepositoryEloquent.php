@@ -51,7 +51,7 @@ class FeedbackRepositoryEloquent extends BaseRepository implements FeedbackRepos
 
         $startOfYear  = Carbon::now()->startOfYear();
         $startOfMonth = Carbon::now()->startOfMonth();
-        $today = Carbon::today();
+        $today = Carbon::today()->addDay();
 
         $count['countYear'] =  $this->model->where('user_id', $userId)
             ->whereBetween('created_at', [$startOfYear, $today])

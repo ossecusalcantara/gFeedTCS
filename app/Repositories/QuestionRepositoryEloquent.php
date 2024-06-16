@@ -45,9 +45,9 @@ class QuestionRepositoryEloquent extends BaseRepository implements QuestionRepos
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
-    public function findMax($column)
+    public function findMax($column, $where)
     {
-        $max = $this->model->max($column);
+        $max = $this->model->where('level', $where)->max($column);
         return $max + 1;
     }
     

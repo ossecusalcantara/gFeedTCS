@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating">
-                        {!! Form::text( 'cpf', null, ['class' => 'form-control', 'placeholder' => 'CPF', 'required']) !!}
+                        {!! Form::text( 'cpf', null, ['class' => 'form-control cpf', 'placeholder' => 'CPF', 'required']) !!}
                         <label for="cpf">CPF</label>
                     </div>
                 </div>

@@ -28,9 +28,11 @@
  <script src="{{ asset('assets/js/lib/jquery-3.7.1.js') }}"></script>
  <script src="{{ asset('assets/js/DataTables/datatables.js') }}"></script>
  <script src="{{ asset('assets/js/DataTables/datatables.min.js') }}"></script>
- <script src="{{ asset('assets/js/helper.js') }}"></script>
- <script src="{{ asset('assets/js/main.js') }}"></script>
-
+ 
  <!-- Tmplate Main cdn -->
  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+ 
+ <script src="{{ asset('assets/js/helper.js') }}"></script>
+ <script src="{{ asset('assets/js/main.js') }}"></script>
