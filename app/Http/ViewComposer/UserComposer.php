@@ -21,7 +21,7 @@ class UserComposer
     {
         // Obtém o usuário autenticado
         $user = Auth::user();
-
+ 
         $notifications = $this->notificationRepository->getNotifications($user->id);
 
         // Passa o usuário para a view

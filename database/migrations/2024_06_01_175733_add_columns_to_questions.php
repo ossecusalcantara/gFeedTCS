@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('questions', function (Blueprint $table) {
-            $table->string('name', 50);
+            $table->string('name', 50)->nullable();
             $table->integer('order')->nullable();
-            $table->string('question_description', 50);
+            $table->text('question_description');
         });
     }
 

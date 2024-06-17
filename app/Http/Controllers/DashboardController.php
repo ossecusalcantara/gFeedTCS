@@ -12,6 +12,8 @@ use App\Repositories\FeedbackRepository;
 use App\Repositories\NotificationRepository;
 use App\Repositories\PerformanceEvaluationRepository;
 use App\Repositories\SkillProfileRepository;
+use Illuminate\Support\Facades\Hash;
+
 
 class DashboardController extends Controller
 {
@@ -51,9 +53,9 @@ class DashboardController extends Controller
             'email'    => $request->get('username'),
             'password' => $request->get('password')
         ];
-
+        
         try {
-
+            
             if(env('PASSWORD_HASH')) {
 
                 if(Auth::attempt($data , false)) {

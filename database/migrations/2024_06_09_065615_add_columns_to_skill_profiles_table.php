@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('skill_profiles', function (Blueprint $table) {
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('skill_id');
-			$table->integer('punctuation');
+			$table->integer('pontuation');
 
 
             $table->foreign('user_id')

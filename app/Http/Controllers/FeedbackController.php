@@ -104,15 +104,12 @@ class FeedbackController extends Controller
     {
         try {
 
-           // dd($request->all());
-
             $feedback = [
                 'user_id' => $request->input('user_id'),
                 'reason'  => $request->input('reason'),
                 'notes'   => $request->input('notes'),
                 'register_id'  => Auth::id(),
             ];
-
             
             $skills = $request->input('skill_id', []);
             $pontuations = $request->input('pontuation', []);

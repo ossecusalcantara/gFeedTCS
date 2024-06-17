@@ -54,7 +54,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
 
     public function getPermissionUser($userId) {
 
-        $user = $this->model->where('id', $userId)->get();
+        $user = $this->model->where('id', $userId)->first();
 
         if($user->permission == 'app.user')
             return 1;

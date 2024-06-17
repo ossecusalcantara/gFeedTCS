@@ -105,6 +105,9 @@ class UsersController extends Controller
     {
         try {
 
+            if (isset($request['cpf'])) {
+                $request['cpf'] = removeCpfFormatting($request['cpf']);
+            }
             
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
@@ -184,6 +187,10 @@ class UsersController extends Controller
     public function update(UserUpdateRequest $request, $id)
     {
         try {
+
+            if (isset($request['cpf'])) {
+                $request['cpf'] = removeCpfFormatting($request['cpf']);
+            }
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
             

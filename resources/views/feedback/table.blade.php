@@ -31,7 +31,7 @@
                         @can('admin')
                             {!! Form::open(['route' => ['feedback.destroy', $feedback->id], 'method' => 'DELETE', 'style' => 'display:inline;']) !!}
                                 @csrf
-                                {!! Form::submit('Excluir', ['class' => 'dropdown-item', 'onclick' => "return confirm('Você tem certeza que deseja excluir esta habilidade?');"]) !!}
+                                {!! Form::submit('Excluir', ['class' => 'dropdown-item', 'onclick' => "return confirm('Você tem certeza que deseja excluir este feedback?');"]) !!}
                             {!! Form::close() !!}
                         @endcan
                     </ul>

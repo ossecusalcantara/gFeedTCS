@@ -26,7 +26,8 @@ class Feedback extends Model implements Transformable
     protected $fillable = [
         'reason',
         'notes',
-        'user_id'
+        'user_id',
+        'register_id'
     ];
     protected $table = 'feedbacks';
 

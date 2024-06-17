@@ -120,15 +120,13 @@ class PerformanceEvaluationsController extends Controller
         try {
 
             $request['admin_id'] = Auth::id();
+            $level = $this->userRepository->getPermissionUser($request['user_id']);
+            $request['level'] =  $level;
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
-
+            
             $performanceEvaluation = $this->repository->create($request->all());
-
-            $level = $this->userRepository->getPermissionUser($performanceEvaluation['user_id']);
-
-            $performanceEvaluation['level'] =  $level;
-
+            
             $this->notificationRepository->setNotification($request['user_id'], 'Você tem uma avaliação a ser feita', 'R');
             $this->notificationRepository->setNotification($request['manager_id'], 'Você tem uma avaliação de desempenho pendente.', 'A', 'performanceEvaluations.managerlist',  $performanceEvaluation->id);
 

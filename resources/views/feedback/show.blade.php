@@ -52,14 +52,14 @@
 
                         @canany(['manager', 'user'])
                             <div class="text-center">
-                                <button type="button" onclick="window.location='{{ route('feedback.adminList') }}'"
+                                <button type="button" onclick="window.location='{{ route('feedback.listagem') }}'"
                                     class="btn btn-secondary">Voltar</button>
                             </div>
                         @endcanany
-
+                        
                         @can('admin')
                             <div class="text-center">
-                                <button type="button" onclick="window.location='{{ route('feedback.listagem') }}'"
+                                <button type="button" onclick="window.location='{{ route('feedback.adminList') }}'"
                                     class="btn btn-secondary">Voltar</button>
                             </div>
                         @endcan

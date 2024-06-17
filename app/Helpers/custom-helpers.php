@@ -48,3 +48,9 @@ if(!function_exists('formatGender')) {
         return $value == 'M' ? 'Masculino' : 'Feminino';
     }
 }
+
+if(!function_exists('removeCpfFormatting')) {
+    function removeCpfFormatting($cpf) {
+        return preg_replace('/[^0-9]/', '', $cpf);
+    }
+}

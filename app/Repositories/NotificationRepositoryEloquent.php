@@ -47,7 +47,7 @@ class NotificationRepositoryEloquent extends BaseRepository implements Notificat
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
-    public function setNotification($userId, $text, $type, $route = '', $routeId = '') {
+    public function setNotification($userId, $text, $type, $route = '', $routeId = 0) {
 
         $notification = Notification::create([
             'user_id' => $userId,

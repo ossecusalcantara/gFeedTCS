@@ -24,10 +24,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
-        //$this->SeedPerguntas(3);
-        //$this->SeedQuestions1();
-        $this->SeedFeedback(1);
+        $this->SeederDepartamentos();
+        $this->SeederCargos();
+        $this->SeederSkills();
+        $this->SeederTypeQuestios();
+        $this->SeederPermissoes();
+        $this->SeedQuestions1();
+        $this->SeederQuestions2();
+        $this->SeederUser();
+        $this->SeedAvaliacao();
+        $this->SeedFeedback(20);
     }
 
     private function SeedAvaliacao() : void {
@@ -67,7 +73,7 @@ class DatabaseSeeder extends Seeder
             $latestRecord = PerformanceEvaluation::latest()->first();
 
             if(isset($value['status'])) {
-                if($value['status'] != 'completed') {
+                if($value['status'] == 'completed') {
                     $this->SeedPerguntas($latestRecord->id);
                 }
             }
@@ -138,7 +144,7 @@ class DatabaseSeeder extends Seeder
     
     private function SeederUser() : void
     {
-        User::create([
+        $user = User::create([
             'cpf'         => '11122233388', 
             'name'        => 'Gabriel Chaucoski', 
             'phone'       => '4899150055', 
@@ -148,10 +154,13 @@ class DatabaseSeeder extends Seeder
             'email'       => 'gabriel@gmail.com', 
             'departament_id'  => '6', 
             'office_id'       => '16', 
+            'permission'  => 'app.user',
             'password'    => env('PASSWORD_HASH') ? bcrypt('gfeed2024*') : 'gfeed2024*', 
         ]);
 
-        User::create([
+        $user->assignPermission('app.user');
+
+        $userManager = User::create([
             'cpf'         => '11166633399', 
             'name'        => 'Adson Alcântara', 
             'phone'       => '4891591515', 
@@ -161,10 +170,13 @@ class DatabaseSeeder extends Seeder
             'email'       => 'adson@gmail.com', 
             'departament_id'  => '6', 
             'office_id'       => '2', 
+            'permission'  => 'app.manager',
             'password'    => env('PASSWORD_HASH') ? bcrypt('gfeed2024*') : 'gfeed2024*', 
         ]);
 
-        User::create([
+        $userManager->assignPermission('app.manager');
+
+        $userAdmin = User::create([
             'cpf'         => '22222233399', 
             'name'        => 'Rogerio Ricardo', 
             'phone'       => '4866551515', 
@@ -174,49 +186,74 @@ class DatabaseSeeder extends Seeder
             'email'       => 'rogerio@gmail.com', 
             'departament_id'  => '2', 
             'office_id'       => '5', 
+            'permission'  => 'app.admin',
             'password'    => env('PASSWORD_HASH') ? bcrypt('gfeed2024*') : 'gfeed2024*', 
         ]);
+
+        $userAdmin->assignPermission('app.admin');
 
     }
 
     private function SeederDepartamentos() : void
     {
         $departamentos = [
-            'Engenharia',
-            'Recursos Humanos',
-            'Marketing',
-            'Finanças',
-            'Vendas',
-            'TI',
-            'Suporte ao Cliente',
-            'Operações',
-            'Pesquisa e Desenvolvimento',
-            'Logística'
+            ['name' => 'Engenharia', 'description' => 'Responsável pelo desenvolvimento e manutenção dos produtos.'],
+            ['name' => 'Recursos Humanos', 'description' => 'Gerencia a contratação, treinamento e bem-estar dos funcionários.'],
+            ['name' => 'Marketing', 'description' => 'Cuida da promoção e publicidade dos produtos e serviços da empresa.'],
+            ['name' => 'Finanças', 'description' => 'Responsável pela gestão financeira e planejamento orçamentário.'],
+            ['name' => 'Vendas', 'description' => 'Trabalha para vender os produtos e serviços da empresa aos clientes.'],
+            ['name' => 'TI', 'description' => 'Suporta a infraestrutura tecnológica e sistemas da empresa.'],
+            ['name' => 'Suporte ao Cliente', 'description' => 'Atende e resolve as dúvidas e problemas dos clientes.'],
+            ['name' => 'Operações', 'description' => 'Gerencia as operações diárias e a logística interna.'],
+            ['name' => 'Pesquisa e Desenvolvimento', 'description' => 'Foca na inovação e no desenvolvimento de novos produtos.'],
+            ['name' => 'Logística', 'description' => 'Cuida da armazenagem, transporte e distribuição de produtos.']
         ];
-
+    
         foreach ($departamentos as $departamento) {
-            Departament::create([
-                'name' => $departamento, 
-            ]);
+            Departament::create($departamento);
         }
     }
 
     private function SeederCargos() : void
     {
-        $cargos = ['Engenheiro Civil', 'Engenheiro de Software', 'Engenheiro Elétrico',
-            'Recrutador', 'Gerente de RH', 'Especialista em Benefícios',
-            'Analista de Marketing', 'Gerente de Produto', 'Coordenador de Eventos',
-            'Contador', 'Analista Financeiro', 'Tesoureiro',
-            'Vendedor', 'Gerente de Vendas', 'Executivo de Contas',
-            'Desenvolvedor', 'Administrador de Sistemas', 'Analista de Suporte',
-            'Atendente', 'Especialista em Suporte', 'Coordenador de Suporte',
-            'Gerente de Operações', 'Supervisor de Produção', 'Analista de Logística',
-            'Cientista', 'Pesquisador', 'Engenheiro de P&D',
-            'Coordenador de Logística', 'Analista de Transporte', 'Supervisor de Armazém', 'Assitente', 'Auxiliar'];
-
+        $cargos = [
+            ['name' => 'Engenheiro Civil', 'description' => 'Planeja, projeta e supervisiona construções e infraestruturas.'],
+            ['name' => 'Engenheiro de Software', 'description' => 'Desenvolve e mantém sistemas de software.'],
+            ['name' => 'Engenheiro Elétrico', 'description' => 'Projeta e gerencia equipamentos elétricos e eletrônicos.'],
+            ['name' => 'Recrutador', 'description' => 'Responsável pela seleção e contratação de novos funcionários.'],
+            ['name' => 'Gerente de RH', 'description' => 'Gerencia as atividades do departamento de Recursos Humanos.'],
+            ['name' => 'Especialista em Benefícios', 'description' => 'Administra os programas de benefícios dos funcionários.'],
+            ['name' => 'Analista de Marketing', 'description' => 'Desenvolve estratégias de marketing para promover produtos e serviços.'],
+            ['name' => 'Gerente de Produto', 'description' => 'Supervisiona o desenvolvimento e a estratégia de produtos.'],
+            ['name' => 'Coordenador de Eventos', 'description' => 'Planeja e executa eventos corporativos.'],
+            ['name' => 'Contador', 'description' => 'Gerencia e analisa as finanças e contabilidade da empresa.'],
+            ['name' => 'Analista Financeiro', 'description' => 'Analisa dados financeiros para apoiar decisões de negócios.'],
+            ['name' => 'Tesoureiro', 'description' => 'Gerencia o fluxo de caixa e as operações financeiras.'],
+            ['name' => 'Vendedor', 'description' => 'Realiza vendas de produtos e serviços aos clientes.'],
+            ['name' => 'Gerente de Vendas', 'description' => 'Lidera a equipe de vendas e desenvolve estratégias de vendas.'],
+            ['name' => 'Executivo de Contas', 'description' => 'Administra relacionamentos com clientes e gerencia contas importantes.'],
+            ['name' => 'Desenvolvedor', 'description' => 'Cria e mantém aplicativos de software.'],
+            ['name' => 'Administrador de Sistemas', 'description' => 'Gerencia e mantém a infraestrutura de TI da empresa.'],
+            ['name' => 'Analista de Suporte', 'description' => 'Fornece suporte técnico e resolve problemas de TI.'],
+            ['name' => 'Atendente', 'description' => 'Atende e auxilia os clientes em suas necessidades.'],
+            ['name' => 'Especialista em Suporte', 'description' => 'Resolve problemas complexos de suporte ao cliente.'],
+            ['name' => 'Coordenador de Suporte', 'description' => 'Supervisiona a equipe de suporte ao cliente.'],
+            ['name' => 'Gerente de Operações', 'description' => 'Coordena as operações diárias da empresa.'],
+            ['name' => 'Supervisor de Produção', 'description' => 'Supervisiona a linha de produção e garante a eficiência.'],
+            ['name' => 'Analista de Logística', 'description' => 'Gerencia e otimiza a cadeia de suprimentos e logística.'],
+            ['name' => 'Cientista', 'description' => 'Conduz pesquisas e experimentos científicos.'],
+            ['name' => 'Pesquisador', 'description' => 'Desenvolve projetos de pesquisa em diversas áreas.'],
+            ['name' => 'Engenheiro de P&D', 'description' => 'Trabalha no desenvolvimento de novos produtos e tecnologias.'],
+            ['name' => 'Coordenador de Logística', 'description' => 'Gerencia as operações logísticas da empresa.'],
+            ['name' => 'Analista de Transporte', 'description' => 'Planeja e gerencia as operações de transporte.'],
+            ['name' => 'Supervisor de Armazém', 'description' => 'Supervisiona as operações de armazenagem.'],
+            ['name' => 'Assistente', 'description' => 'Apoia em tarefas administrativas e operacionais.'],
+            ['name' => 'Auxiliar', 'description' => 'Realiza atividades de apoio em diversas áreas.'],
+        ];
+    
         foreach ($cargos as $cargo) {
-            Office::create(['name' => $cargo]);
-        } 
+            Office::create($cargo);
+        }
     }
 
     private function SeederSkills() : void
@@ -256,16 +293,14 @@ class DatabaseSeeder extends Seeder
     private function SeederPermissoes() : void
     { 
         $permissions = [
-            'app.admin',
-            'app.user',
-            'app.manager'
+            ['name' => 'app.admin' ,'description' => 'Administrador'],
+            ['name' => 'app.user' ,'description' => 'Usuário'],
+            ['name' => 'app.manager' ,'description' => 'Gestor']
         ];
 
         foreach ($permissions as $permission) {
            
-            Permission::create([
-                'name' => $permission, 
-            ]);
+            Permission::create($permission);
         }
     }
 
