@@ -109,6 +109,8 @@ class UsersController extends Controller
                 $request['cpf'] = removeCpfFormatting($request['cpf']);
             }
             
+            $request['password'] = bcrypt('gfeed2024*');
+
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
             $usuario = $this->repository->create($request->all());
