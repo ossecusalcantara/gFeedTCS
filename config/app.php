@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://g-feed-tcs-1fc10ccde268.herokuapp.com'),
 
     'asset_url' => env('ASSET_URL'),
 
