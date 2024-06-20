@@ -137,5 +137,5 @@
 @endsection
 
 @section('js-view')
-    <script src="{{ secure_asset('assets/js/show-user-dashboard.js') }}"></script>
+    <script src="{{ asset('assets/js/show-user-dashboard.js') }}"></script>
 @endsection

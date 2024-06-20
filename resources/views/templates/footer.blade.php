@@ -15,24 +15,24 @@
          class="bi bi-arrow-up-short"></i></a>
 
  <!-- Vendor JS Files -->
- <script src="{{ secure_asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
- <script src="{{ secure_asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
- <script src="{{ secure_asset('assets/vendor/chart.js/chart.umd.js') }}"></script>
- <script src="{{ secure_asset('assets/vendor/echarts/echarts.min.js') }}"></script>
- <script src="{{ secure_asset('assets/vendor/quill/quill.js') }}"></script>
- <script src="{{ secure_asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
- <script src="{{ secure_asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
- <script src="{{ secure_asset('assets/vendor/php-email-form/validate.js') }}"></script>
+ <script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
+ <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+ <script src="{{ asset('assets/vendor/chart.js/chart.umd.js') }}"></script>
+ <script src="{{ asset('assets/vendor/echarts/echarts.min.js') }}"></script>
+ <script src="{{ asset('assets/vendor/quill/quill.js') }}"></script>
+ <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
+ <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
+ <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
  
  <!-- Template Main JS File -->
- <script src="{{ secure_asset('assets/js/lib/jquery-3.7.1.js') }}"></script>
- <script src="{{ secure_asset('assets/js/DataTables/datatables.js') }}"></script>
- <script src="{{ secure_asset('assets/js/DataTables/datatables.min.js') }}"></script>
+ <script src="{{ asset('assets/js/lib/jquery-3.7.1.js') }}"></script>
+ <script src="{{ asset('assets/js/DataTables/datatables.js') }}"></script>
+ <script src="{{ asset('assets/js/DataTables/datatables.min.js') }}"></script>
  
  <!-- Tmplate Main cdn -->
  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
  
- <script src="{{ secure_asset('assets/js/helper.js') }}"></script>
- <script src="{{ secure_asset('assets/js/main.js') }}"></script>
+ <script src="{{ asset('assets/js/helper.js') }}"></script>
+ <script src="{{ asset('assets/js/main.js') }}"></script>
