@@ -65,5 +65,5 @@
 @endsection
 
 @section('js-view')
-    <script src="{{ asset('assets/js/feedback.js') }}"></script>
+    <script src="{{ secure_asset('assets/js/feedback.js') }}"></script>
 @endsection
