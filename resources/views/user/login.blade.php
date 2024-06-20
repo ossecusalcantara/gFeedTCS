@@ -69,7 +69,7 @@
                                     @endif
 
                                     {!! Form::open([
-                                        'route' => 'user.login',
+                                        'route' => secure_url('user.login'),
                                         'method' => 'post',
                                         'class' => 'row g-3 needs-validation',
                                         'novalidate',
