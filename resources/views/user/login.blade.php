@@ -95,9 +95,6 @@
                                         {!! Form::submit('Entrar', ['class' => 'btn btn-primary w-100']) !!}
                                     </div>
 
-                                    <div class="col-12">
-                                        <p class="small mb-0"><a href="pages-register.html">Esqueceu sua senha?</a></p>
-                                    </div>
                                     {!! Form::close() !!}
 
                                 </div>
