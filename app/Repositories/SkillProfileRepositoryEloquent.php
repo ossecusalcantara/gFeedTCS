@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\skillProfileRepository;
+use App\Repositories\SkillProfileRepository;
 use App\Entities\SkillProfile;
 use App\Validators\SkillProfileValidator;
 

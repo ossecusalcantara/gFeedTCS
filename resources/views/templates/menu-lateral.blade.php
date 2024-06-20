@@ -14,7 +14,7 @@
             <li class="nav-item">
                 <a class="nav-link " href="{{ route('performanceEvaluations.managerlist') }}">
                     <i class="bi bi-x-diamond-fill"></i>
-                    <span>Avaliação de Desenpenho</span>
+                    <span>Avaliação de Desempenho</span>
                 </a>
             </li>
         @endcan
@@ -27,7 +27,7 @@
             <ul id="feedback-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="{{ route('feedback.index') }}">
-                        <i class="bi bi-circle"></i><span>Cadastros</span>
+                        <i class="bi bi-circle"></i><span>Cadastro</span>
                     </a>
                 </li>
                 <li>
@@ -55,13 +55,13 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#performanceEvaluations-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-x-diamond-fill"></i><span>Avaliação de Desenpenho</span><i
+                    <i class="bi bi-x-diamond-fill"></i><span>Avaliação de Desempenho</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="performanceEvaluations-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
                         <a href="{{ route('performanceEvaluations.store') }}">
-                            <i class="bi bi-circle"></i><span>Cadastros</span>
+                            <i class="bi bi-circle"></i><span>Cadastro</span>
                         </a>
                     </li>
                     <li>
@@ -107,22 +107,7 @@
             </li>
         @endcan
 
-
-        <li class="nav-heading">Pages</li>
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-faq.html">
-                <i class="bi bi-question-circle"></i>
-                <span>F.A.Q</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-contact.html">
-                <i class="bi bi-envelope"></i>
-                <span>Contato</span>
-            </a>
-        </li>
+        <li class="nav-heading">...</li>
 
     </ul>
 

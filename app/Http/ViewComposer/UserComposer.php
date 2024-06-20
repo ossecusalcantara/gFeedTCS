@@ -2,6 +2,7 @@
 
 namespace App\Http\ViewComposer;
 
+use App\Entities\Notification;
 use App\Repositories\NotificationRepository;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,7 @@ class UserComposer
         $user = Auth::user();
  
         $notifications = $this->notificationRepository->getNotifications($user->id);
+        
 
         // Passa o usuário para a view
         $view->with('user', $user)->with('notifications', $notifications);

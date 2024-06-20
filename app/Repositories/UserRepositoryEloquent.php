@@ -7,6 +7,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\UserRepository;
 use App\Entities\User;
 use App\Validators\UserValidator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -49,7 +50,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
 
     public function selectBoxList(string $descricao = 'name', string $chave = 'id')
     {
-        return $this->model->orderBy($descricao, 'asc')->pluck($descricao, $chave)->all();
+        return $this->model->whereNot('id', Auth::id())->orderBy($descricao, 'asc')->pluck($descricao, $chave)->all();
     }
 
     public function getPermissionUser($userId) {
