@@ -5,6 +5,7 @@ namespace App\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 /**
  * Class Notification.
@@ -28,6 +29,19 @@ class Notification extends Model implements Transformable
         'route',
         'route_id'
     ];
+
     protected $table = 'notifications';
+
+    protected $appends = [
+        'formatted_created_at'
+    ];
+
+    public function formattedCreatedAt() : Attribute 
+    {
+        return Attribute::make(
+            get:fn () => formattDateActivitie($this->created_at)
+        );
+    }
+
 
 }

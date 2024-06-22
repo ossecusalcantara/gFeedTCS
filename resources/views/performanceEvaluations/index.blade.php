@@ -12,6 +12,13 @@
         <div class="card-body">
             <h5 class="card-title">Cadastro de avaliação de desempenho, preencha todas os campos.</h5>
 
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-octagon me-1"></i>
+                        {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             
             {!! Form::open(['route' => 'performanceEvaluations.store', 'method' => 'post', 'class' => 'row g-3']) !!}
 
@@ -23,7 +30,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-floating ">
-                        {!! Form::select('manager_id', $usuarios_list , null, [ 'class' => 'form-select select2', 'aria-label' => 'Gestor', 'required']) !!}
+                        {!! Form::select('manager_id', $managers_list , null, [ 'class' => 'form-select select2', 'aria-label' => 'Gestor', 'required']) !!}
                         <label for="manager_id">Gestor</label>
                     </div>
                 </div>

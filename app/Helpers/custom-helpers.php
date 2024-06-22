@@ -1,4 +1,6 @@
 <?php 
+use Carbon\Carbon;
+
 
 if(!function_exists('formatCnpjCpf')) {
     function formatCnpjCpf($value)
@@ -26,9 +28,14 @@ if(!function_exists('formatData')) {
     function formatData($value)
     {
         $birth = explode('-', $value);
+
         
-        if(count( (array) $birth) != 3)
-            return "";
+        if(mb_strlen($value) != 10) {
+
+            $data = Carbon::parse($value);
+
+            return $data->format('d/m/Y');
+        }
 
         $birth = $birth[2] . '/' . $birth[1] . '/' . $birth[0];
         return $birth;
@@ -52,5 +59,19 @@ if(!function_exists('formatGender')) {
 if(!function_exists('removeCpfFormatting')) {
     function removeCpfFormatting($cpf) {
         return preg_replace('/[^0-9]/', '', $cpf);
+    }
+}
+
+if(!function_exists('formattDateActivitie')) {
+    function formattDateActivitie($data) {
+        $dataInicio = Carbon::parse($data);
+        $dataFim = Carbon::now();
+        $diferencaHoras = $dataInicio->diffInHours($dataFim, true);
+
+        if($diferencaHoras > 24) {
+            return $dataInicio->format('d/m');
+        }
+
+        return $diferencaHoras;
     }
 }

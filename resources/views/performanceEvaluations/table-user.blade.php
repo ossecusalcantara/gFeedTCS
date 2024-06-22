@@ -32,19 +32,21 @@
                         <i class="bi bi-three-dots"></i>
                     </button>
                     <ul class="dropdown-menu">
-                    @if ($performanceEvaluation->status == 'completed')
-                        <li><a class="dropdown-item" href="{{ route('performanceEvaluations.show', $performanceEvaluation->id)}}">Visualizar</a></li>
-                    @endif
-
-                    @can('admin')
-                        @if ($performanceEvaluation->status == 'pending')
-                            <li><a class="dropdown-item" href="{{ route('performanceEvaluations.edit', $performanceEvaluation->id)}}">Editar</a></li>
-                            {!! Form::open(['route' => ['performanceEvaluations.destroy', $performanceEvaluation->id], 'method' => 'DELETE', 'style' => 'display:inline;']) !!}
-                                @csrf
-                                {!! Form::submit('Excluir', ['class' => 'dropdown-item', 'onclick' => "return confirm('Você tem certeza que deseja excluir esta avaliaçao de desempenho?');"]) !!}
-                            {!! Form::close() !!}
+                        @if ($performanceEvaluation->status == 'completed')
+                            <li><a class="dropdown-item" href="{{ route('performanceEvaluations.show', $performanceEvaluation->id)}}">Visualizar</a></li>
                         @endif
-                    @endcan
+
+                        @can('manager') 
+                            @if ($performanceEvaluation->status == 'pending')
+                                <li><a class="dropdown-item" href="{{ route('performanceEvaluations.accomplish', $performanceEvaluation->id)}}">Realizar</a></li>
+                            @endif
+                        @endcan
+
+                        @can('admin') 
+                            @if ($performanceEvaluation->status == 'pending')
+                                <li><a class="dropdown-item" href="{{ route('performanceEvaluations.accomplish', $performanceEvaluation->id)}}">Realizar</a></li>
+                            @endif
+                        @endcan
                     </ul>
                 </div>
             </td>

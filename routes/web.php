@@ -21,9 +21,20 @@ use App\Http\Controllers\SkillsController;
 */
 Route::get('/', [Controller::class, 'fazerLogin']);
 Route::get('/login', [Controller::class, 'fazerLogin']);
-Route::post('/login', [DashboardController::class, 'auth'])->name('user.login');
+Route::post('/login', [Controller::class, 'auth'])->name('user.login');
+Route::post('/logout', [Controller::class, 'logout'])->name('user.logout');
+
+
 Route::post('/change-password', [UsersController::class, 'changePassword'])->name('user.changePassword');
-Route::post('/logout', [UsersController::class, 'logout'])->name('user.logout');
+Route::post('/disable/{id}', [UsersController::class, 'disable'])->name('user.disable');
+Route::post('/activate/{id}', [UsersController::class, 'activate'])->name('user.activate');
+
+/*
+|--------------------------------------------------------------------------
+| Dashboard Routes
+|--------------------------------------------------------------------------
+|
+*/
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
 Route::get('api/dashboard', [DashboardController::class, 'getDadosDashboard'])->name('user.getDadosDashboard');
 Route::get('api/dashboard/{id}', [DashboardController::class, 'getDadosDashboardUserShow'])->name('user.getDadosDashboardUserShow');
@@ -35,7 +46,8 @@ Route::get('api/dashboard/{id}', [DashboardController::class, 'getDadosDashboard
 |
 */
 Route::get('/performanceEvaluations/listagem', [PerformanceEvaluationsController::class, 'listagem'])->name('performanceEvaluations.listagem');
-Route::get('/performanceEvaluations/manager/listagem', [PerformanceEvaluationsController::class, 'listagem'])->name('performanceEvaluations.managerlist');
+Route::get('/performanceEvaluations/manager/listagem', [PerformanceEvaluationsController::class, 'managerlist'])->name('performanceEvaluations.managerlist');
+Route::get('/performanceEvaluations/user/listagem', [PerformanceEvaluationsController::class, 'userlist'])->name('performanceEvaluations.userlist');
 Route::get('/performanceEvaluations/manager/responder/{id}', [PerformanceEvaluationsController::class, 'accomplish'])->name('performanceEvaluations.accomplish');
 Route::resource('performanceEvaluations', PerformanceEvaluationsController::class);
 

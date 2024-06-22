@@ -68,7 +68,7 @@ class SkillProfileRepositoryEloquent extends BaseRepository implements SkillProf
         $averagePontuations = [];
         $skillDescriptions = [];
         foreach ($skillData as $skill => $data) {
-           $average = $data['total'] / $data['count'];
+           $average = round($data['total'] / $data['count'], 1);
            
            array_push($skillDescriptions, $skill);
            array_push($averagePontuations, $average);

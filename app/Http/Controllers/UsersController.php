@@ -109,7 +109,7 @@ class UsersController extends Controller
                 $request['cpf'] = removeCpfFormatting($request['cpf']);
             }
             
-            $request['password'] = bcrypt('gfeed2024*');
+            $request['password'] =  Hash::make('gfeed2024*');
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
@@ -274,7 +274,8 @@ class UsersController extends Controller
         return redirect()->back()->with('message', 'User deleted.');
     }
 
-    public function changePassword(Request $request) {
+    public function changePassword(Request $request) 
+    {
 
         $data = [
             'currentPassword' =>  $request->get('currentPassword'),
@@ -292,19 +293,25 @@ class UsersController extends Controller
             return redirect()->back()->with('error', 'A nova senha e a senha de confirmação não coincidem');
         }
 
-        $password = bcrypt($data['newPassword']);
+        $password =  Hash::make($data['newPassword']);
         $this->repository->setNewPassword($user->id, ['password' => $password]);
 
         return redirect()->back()->with('success', 'Senha alterada com sucesso');
     }
 
-    public function logout(Request $request) {
+    public function disable($id) 
+    {
+        $user = $this->repository->disable($id);
 
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        return redirect()->route('user.listagem')
+                         ->with('success', 'Usuário desabilitado com sucesso.');
+    } 
 
-        return redirect('/login')->with('success', 'Você saiu com sucesso!');
+    public function activate($id) 
+    {
+        $user = $this->repository->activate($id);
 
-    }
+        return redirect()->route('user.listagem')
+                         ->with('success', 'Usuário habilitado com sucesso.');
+    } 
 }

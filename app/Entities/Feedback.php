@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 /**
  * Class Feedback.
@@ -31,9 +32,20 @@ class Feedback extends Model implements Transformable
     ];
     protected $table = 'feedbacks';
 
+    protected $appends = [
+        'formatted_created_at'
+    ];
+
     protected function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function formattedCreatedAt() : Attribute 
+    {
+        return Attribute::make(
+            get:fn () => formatData($this->created_at)
+        );
     }
 
 }

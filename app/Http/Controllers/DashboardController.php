@@ -43,68 +43,8 @@ class DashboardController extends Controller
     public function index() 
     {
         $activities   = $this->notificationRepository->getActivities(Auth::id());
-        //dd($activities);
+
         return view('user.dashboard', ['activities' => $activities]);
-    }
-
-    public function auth(Request $request) 
-    {
-        $data = [
-            'email'    => $request->get('username'),
-            'password' => $request->get('password')
-        ];
-        
-        try {
-            
-            if(env('PASSWORD_HASH')) {
-
-                if(Auth::attempt($data , false)) {
-
-                    $user = $this->repository->findWhere(['email' => $data['email']])->first();
-
-                    if($user->hasPermission('app.admin'))
-                        Gate::authorize('admin');
-
-                    if($user->hasPermission('app.user'))
-                        Gate::authorize('user');
-
-                    if($user->hasPermission('app.manager'))
-                        Gate::authorize('manager');
-
-                    return redirect()->route('user.dashboard');
-                }
-
-                redirect()->back()->with('error', 'E-mail ou senha informado é inválido');
-            } else {
-
-                $user = $this->repository->findWhere(['email' => $data['email']])->first();
-
-                if (!$user) {
-                    return redirect()->back()->with('error', 'E-mail informado é inválido');
-                }
-
-                if ($user->password != $data['password']) {
-                    return redirect()->back()->with('error', 'Senha informada é inválida');
-                }
-
-                Auth::login($user);
-
-                if($user->hasPermission('app.admin'))
-                    Gate::authorize('admin');
-
-                if($user->hasPermission('app.user'))
-                    Gate::authorize('user');
-
-                if($user->hasPermission('app.manager'))
-                    Gate::authorize('manager');
-                
-            }
-
-           return redirect()->route('user.dashboard');
-        } catch (Exception $e) {
-           return $e->getMessage();
-        }
-
     }
 
     public function getDadosDashboard(Request $request) {

@@ -19,6 +19,22 @@
             </li>
         @endcan
 
+        
+        <li class="nav-item">
+            @can('manager')
+                <a class="nav-link " href="{{ route('performanceEvaluations.managerlist') }}">
+            @endcan
+            @can('admin')
+                <a class="nav-link " href="{{ route('performanceEvaluations.managerlist') }}">
+            @endcan
+            @can('user')
+                <a class="nav-link " href="{{ route('performanceEvaluations.userlist') }}">
+            @endcan
+                <i class="bi bi-x-diamond-fill"></i>
+                <span>Avaliação de Desempenho</span>
+            </a>
+        </li>
+
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#feedback-nav" data-bs-toggle="collapse" href="#">
                 <i class=" ri-command-fill"></i><span>Feedback 360</span><i
@@ -41,7 +57,7 @@
         @can('admin')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Acompanhamentos</span><i
+                    <i class="bi bi-menu-button-wide"></i><span>Gestão de Feedbacks</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -55,7 +71,7 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#performanceEvaluations-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-x-diamond-fill"></i><span>Avaliação de Desempenho</span><i
+                    <i class="bi bi-x-diamond-fill"></i><span>Gestão de Avalições</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="performanceEvaluations-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">

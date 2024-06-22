@@ -13,10 +13,16 @@
             <h5 class="card-title">Atualização de usuário, preencha todas os campos.</h5>
 
             {!! Form::model($user, ['route' => ['user.update', $user->id], 'method' => 'put', 'class' => 'row g-3']) !!}
-                <div class="col-md-12">
+                <div class="col-md-10">
                     <div class="form-floating">
                         {!! Form::text( 'name', null, ['class' => 'form-control', 'placeholder' => 'Nome', 'required']) !!}
                         <label for="name">Nome</label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-floating ">
+                        {!! Form::select('status', ['active' => 'Ativo', 'inactive' => 'Inativo'] , null, [ 'class' => 'form-select', 'aria-label' => 'Status', 'required']) !!}
+                        <label for="status">Status</label>
                     </div>
                 </div>
                 <div class="col-md-6">

@@ -7,7 +7,7 @@
         <th>Avaliado</th>
         @endcan
         <th>Motivo</th>
-        {{-- <th>Data</th> --}}
+        <th>Data</th> 
         <th class="text-center">Ações</th>
       </tr>
   
@@ -19,7 +19,7 @@
             <td> {{ $feedback->user->name }}</td>
             @endcan
             <td> {{ $feedback->reason }}</td>
-            {{-- <td> {{ $feedback->formatted_type }}</td> --}}
+            <td> {{ $feedback->formatted_created_at }}</td>
             <td class="text-center">
                 <div class="btn-group">
                     <button type="button" class="btn btn-sm " data-bs-toggle="dropdown" aria-expanded="false">

@@ -62,7 +62,7 @@ class PerformanceEvaluationRepositoryEloquent extends BaseRepository implements 
 
         $this->model->where('id', $performanceEvaluationsId)->update($data);
 
-        return $this->model->where('id', $performanceEvaluationsId)->get();
+        return $this->model->where('id', $performanceEvaluationsId)->first();
     }
 
     public function getMediaPerformanceEvaluation($userId) {

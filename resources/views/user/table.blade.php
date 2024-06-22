@@ -35,10 +35,17 @@
                         <li><a class="dropdown-item" href="{{ route('user.show', $user->id)}}">Visualizar</a></li>
                         <li><a class="dropdown-item" href="{{ route('user.edit', $user->id)}}">Editar</a></li>
     
-                        {!! Form::open(['route' => ['user.destroy', $user->id], 'method' => 'DELETE', 'style' => 'display:inline;']) !!}
+                    @if ($user->status == 'active')
+                        {!! Form::open(['route' => ['user.disable', $user->id], 'method' => 'POST', 'style' => 'display:inline;']) !!}
                             @csrf
-                            {!! Form::submit('Excluir', ['class' => 'dropdown-item', 'onclick' => "return confirm('Você tem certeza que deseja excluir esta habilidade?');"]) !!}
+                            {!! Form::submit('Desativar', ['class' => 'dropdown-item', 'onclick' => "return confirm('Você tem certeza que deseja desativar este usuário?');"]) !!}
                         {!! Form::close() !!}
+                    @else
+                        {!! Form::open(['route' => ['user.activate', $user->id], 'method' => 'POST', 'style' => 'display:inline;']) !!}
+                            @csrf
+                            {!! Form::submit('Ativar', ['class' => 'dropdown-item', 'onclick' => "return confirm('Você tem certeza que deseja ativar este usuário?');"]) !!}
+                        {!! Form::close() !!}
+                    @endif
                     </ul>
                 </div>
             </td>

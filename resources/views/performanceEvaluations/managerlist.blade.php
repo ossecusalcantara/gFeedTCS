@@ -15,8 +15,8 @@
                             <h5 class="card-title">Avaliações de Desempenho</h5>
                         </div>
                     </div>
-               
-                @include('performanceEvaluations.table')
+
+                 @include('performanceEvaluations.table-user')
             </div>
         </div>
     </div>

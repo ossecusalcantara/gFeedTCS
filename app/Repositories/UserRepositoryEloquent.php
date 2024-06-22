@@ -50,7 +50,19 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
 
     public function selectBoxList(string $descricao = 'name', string $chave = 'id')
     {
-        return $this->model->whereNot('id', Auth::id())->orderBy($descricao, 'asc')->pluck($descricao, $chave)->all();
+        return $this->model->whereNot('id', Auth::id())
+            ->where('status', 'active')
+            ->orderBy($descricao, 'asc')->pluck($descricao, $chave)->all();
+    }
+
+    public function selectBoxListManager(string $descricao = 'name', string $chave = 'id')
+    {
+        return $this->model->whereNot('id', Auth::id())
+            ->where(function ($query) {
+                $query->where('permission', 'app.manager')->orWhere('permission', 'app.admin');
+            })
+            ->where('status', 'active')
+            ->orderBy($descricao, 'asc')->pluck($descricao, $chave)->all();
     }
 
     public function getPermissionUser($userId) {
@@ -77,6 +89,24 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         }
 
         return $this->model->where('id', $userId)->update($data);
+    }
+
+    public function disable($id) 
+    {
+        $user = $this->model->findOrFail($id);
+        $user->status = 'inactive';
+        $user->save();
+
+        return $user;
+    }
+
+    public function activate($id) 
+    {
+        $user = $this->model->findOrFail($id);
+        $user->status = 'active';
+        $user->save();
+
+        return $user;
     }
     
 }

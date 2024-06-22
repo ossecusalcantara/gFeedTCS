@@ -68,8 +68,9 @@ class PerformanceEvaluationsController extends Controller
     public function index()
     {
         $usuarios_list = $this->userRepository->selectBoxList();
+        $managers_list = $this->userRepository->selectBoxListManager();
 
-        return view('performanceEvaluations.index', ['usuarios_list' => $usuarios_list ]);
+        return view('performanceEvaluations.index', ['usuarios_list' => $usuarios_list, 'managers_list' => $managers_list ]);
     }
 
     public function listagem() 
@@ -91,10 +92,18 @@ class PerformanceEvaluationsController extends Controller
     public function managerlist() 
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $performanceEvaluations = $this->repository->where( 'manager_id', Auth::id())->all();
+        $performanceEvaluations = $this->repository->where('manager_id', Auth::id())->get();
 
         return view('performanceEvaluations.managerlist', ['performanceEvaluations' => $performanceEvaluations]);
 
+    }
+
+    public function userlist() 
+    {
+        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $performanceEvaluations = $this->repository->where('user_id', Auth::id())->get();
+
+        return view('performanceEvaluations.managerlist', ['performanceEvaluations' => $performanceEvaluations]);
     }
 
     public function accomplish($id) 
@@ -119,6 +128,10 @@ class PerformanceEvaluationsController extends Controller
     {
         try {
 
+            if($request->get('user_id') == $request->get('manager_id')) {
+                return redirect()->back()->with('error', 'Os campos gestor e colaborar não podem conter o mesmo usuário!');
+            }
+
             $request['admin_id'] = Auth::id();
             $level = $this->userRepository->getPermissionUser($request['user_id']);
             $request['level'] =  $level;
@@ -127,13 +140,13 @@ class PerformanceEvaluationsController extends Controller
             
             $performanceEvaluation = $this->repository->create($request->all());
             
-            $this->notificationRepository->setNotification($request['user_id'], 'Você tem uma avaliação a ser feita', 'R');
-            $this->notificationRepository->setNotification($request['manager_id'], 'Você tem uma avaliação de desempenho pendente.', 'A', 'performanceEvaluations.managerlist',  $performanceEvaluation->id);
-
             $response = [
                 'message' => 'PerformanceEvaluation created.',
                 'data'    => $performanceEvaluation->toArray(),
             ];
+            
+            $this->notificationRepository->setNotification($request['user_id'], 'Você tem uma avaliação a ser feita', 'R');
+            $this->notificationRepository->setNotification($request['manager_id'], 'Você tem uma avaliação de desempenho pendente.', 'A', 'performanceEvaluations.accomplish',  $performanceEvaluation->id);
 
             if ($request->wantsJson()) {
                 return response()->json($response);
@@ -203,6 +216,10 @@ class PerformanceEvaluationsController extends Controller
     public function update(PerformanceEvaluationUpdateRequest $request, $id)
     {
         try {
+
+            if($request->get('user_id') == $request->get('manager_id')) {
+                return redirect()->back()->with('error', 'Os campos gestor e colaborar não podem conter o mesmo usuário!');
+            }
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 

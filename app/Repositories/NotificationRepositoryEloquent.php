@@ -63,6 +63,9 @@ class NotificationRepositoryEloquent extends BaseRepository implements Notificat
 
         return $this->model->where('user_id', $userId)
             ->where('view', 'N')
+            ->where(function ($query) {
+                $query->where('type', 'A')->orWhere('type', 'N');
+              })
             ->orderBy('created_at', 'asc')->get();
 
     }
@@ -72,13 +75,12 @@ class NotificationRepositoryEloquent extends BaseRepository implements Notificat
         $startOfWeek  = Carbon::now()->startOfWeek(); 
         $endOfWeek    = Carbon::now()->endOfWeek(); 
 
-        return $this->model->where('user_id', $userId)
+        return  $this->model->where('user_id', $userId)
             ->where(function ($query) {
                 $query->where('type', 'R')->orWhere('type', 'N');
               })
             ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
             ->orderBy('created_at', 'asc')->get();
-
     }
 
     public function setViewNotification($id) {

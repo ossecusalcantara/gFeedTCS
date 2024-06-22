@@ -20,13 +20,16 @@ class UserComposer
 
     public function compose(View $view): void
     {
-        // Obtém o usuário autenticado
+
         $user = Auth::user();
  
-        $notifications = $this->notificationRepository->getNotifications($user->id);
-        
+        if(!is_null($user)) {
 
-        // Passa o usuário para a view
-        $view->with('user', $user)->with('notifications', $notifications);
+            $notifications = $this->notificationRepository->getNotifications($user->id);
+
+            $view->with('user', $user)->with('notifications', $notifications);
+        }
+        
+        $view->with('user', $user);
     }
 }

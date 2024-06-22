@@ -81,7 +81,7 @@
                                 @if($activitie->type == 'N')
 
                                     <div class="activity-item d-flex">
-                                        <div class="activite-label">2 hrs</div>
+                                        <div class="activite-label">{{ $activitie->formatted_created_at }} hrs</div>
                                         <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
                                         <div class="activity-content">
                                             {{ $activitie->text }}
@@ -91,7 +91,7 @@
                                 @elseif($activitie->type == 'R')
                                     
                                     <div class="activity-item d-flex">
-                                        <div class="activite-label">32 min</div>
+                                        <div class="activite-label">{{ $activitie->formatted_created_at }} min</div>
                                         <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
                                         <div class="activity-content">
                                             {{ $activitie->text }}
@@ -101,7 +101,7 @@
                                 @elseif($activitie->type == 'A')
 
                                     <div class="activity-item d-flex">
-                                        <div class="activite-label">2 days</div>
+                                        <div class="activite-label">{{ $activitie->formatted_created_at }} days</div>
                                         <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
                                         <div class="activity-content">
                                             {{ $activitie->text }}
@@ -111,56 +111,6 @@
                                 @endif
                                 
                             @endforeach
-
-                            {{-- <div class="activity-item d-flex">
-                                <div class="activite-label">32 min</div>
-                                <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                <div class="activity-content">
-                                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a>
-                                    beatae
-                                </div>
-                            </div>
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">56 min</div>
-                                <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                                <div class="activity-content">
-                                    Voluptatem blanditiis blanditiis eveniet
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">2 hrs</div>
-                                <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                                <div class="activity-content">
-                                    Voluptates corrupti molestias voluptatem
-                                </div>
-                            </div>
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">1 day</div>
-                                <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                                <div class="activity-content">
-                                    Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati
-                                        voluptatem</a> tempore
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">2 days</div>
-                                <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-                                <div class="activity-content">
-                                    Est sit eum reiciendis exercitationem
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">4 weeks</div>
-                                <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                                <div class="activity-content">
-                                    Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
-                                </div>
-                            </div><!-- End activity item--> --}}
 
                         </div>
 
