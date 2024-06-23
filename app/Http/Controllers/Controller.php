@@ -27,11 +27,7 @@ class Controller extends BaseController
         $this->repository = $repository;
     }  
 
-    public function homepage() {
-       return view('welcome');
-    }
-
-    public function fazerLogin() {
+    public function loginPage() {
         return view('user.login');
     }
 

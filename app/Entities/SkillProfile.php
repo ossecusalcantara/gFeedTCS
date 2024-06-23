@@ -24,7 +24,8 @@ class SkillProfile extends Model implements Transformable
     protected $fillable = [
         'pontuation' ,
         'user_id' ,
-        'skill_id'
+        'skill_id',
+        'feedback_id'
     ];
 
     protected $table = "skill_profiles";

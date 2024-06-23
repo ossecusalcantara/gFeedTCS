@@ -11,7 +11,8 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Permission;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
+
 
 class User extends Authenticatable
 {
@@ -101,7 +102,7 @@ class User extends Authenticatable
 
     public function setPasswordAttribute($value) 
     {
-        $this->attributes['password'] = env('PASSWORD_HASH') ? bcrypt($value) : $value;
+        $this->attributes['password'] = env('PASSWORD_HASH') ? Hash::make($value) : $value;
     }
 
     protected function formattedCpf() : Attribute

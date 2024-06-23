@@ -19,8 +19,8 @@ use App\Http\Controllers\SkillsController;
 |--------------------------------------------------------------------------
 |
 */
-Route::get('/', [Controller::class, 'fazerLogin']);
-Route::get('/login', [Controller::class, 'fazerLogin']);
+Route::get('/', [Controller::class, 'loginPage']);
+Route::get('/login', [Controller::class, 'loginPage']);
 Route::post('/login', [Controller::class, 'auth'])->name('user.login');
 Route::post('/logout', [Controller::class, 'logout'])->name('user.logout');
 

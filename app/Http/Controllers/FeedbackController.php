@@ -116,9 +116,8 @@ class FeedbackController extends Controller
 
             $this->validator->with($feedback)->passesOrFail(ValidatorInterface::RULE_CREATE);
             $feedback = $this->repository->create($feedback);
-            
             for ($i=0; $i < count( $skills); $i++) { 
-               
+
                 $skillProfile = SkillProfile::create([
                     'user_id' => $feedback->user_id,
                     'skill_id' => $skills[$i],
@@ -128,7 +127,7 @@ class FeedbackController extends Controller
 
             }
 
-            $this->notificationRepository->setNotification($feedback->user_id, 'Você recebue um feedback','N','feedback.show', $feedback->id);
+            $this->notificationRepository->setNotification($feedback->user_id, 'Você recebeu um feedback','N','feedback.show', $feedback->id);
             $this->notificationRepository->setNotification($feedback->register_id, 'Você cadastrou um feedback', 'R');
 
             $response = [
