@@ -78,40 +78,27 @@
 
                             @foreach ($activities as $activitie)
 
-                                @if($activitie->type == 'N')
-
-                                    <div class="activity-item d-flex">
+                                <div class="activity-item d-flex">
+                                    @if($activitie->formatted_created_at == 0) 
+                                        <div class="activite-label">Agora <br> mesmo</div>
+                                    @elseif($activitie->formatted_created_at <= 24)
                                         <div class="activite-label">{{ $activitie->formatted_created_at }} hrs</div>
+                                    @else
+                                        <div class="activite-label">{{ $activitie->formatted_created_at }}</div>
+                                    @endif
+                                    @if($activitie->type == 'N')
                                         <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                                        <div class="activity-content">
-                                            {{ $activitie->text }}
-                                        </div>
-                                    </div>
-
-                                @elseif($activitie->type == 'R')
-                                    
-                                    <div class="activity-item d-flex">
-                                        <div class="activite-label">{{ $activitie->formatted_created_at }} min</div>
+                                    @elseif($activitie->type == 'R')
                                         <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                        <div class="activity-content">
-                                            {{ $activitie->text }}
-                                        </div>
-                                    </div>
-
-                                @elseif($activitie->type == 'A')
-
-                                    <div class="activity-item d-flex">
-                                        <div class="activite-label">{{ $activitie->formatted_created_at }} days</div>
+                                    @elseif($activitie->type == 'A')
                                         <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-                                        <div class="activity-content">
-                                            {{ $activitie->text }}
-                                        </div>
+                                    @endif
+                                    <div class="activity-content">
+                                        {{ $activitie->text }}
                                     </div>
-
-                                @endif
+                                </div>
                                 
                             @endforeach
-
                         </div>
 
                     </div>

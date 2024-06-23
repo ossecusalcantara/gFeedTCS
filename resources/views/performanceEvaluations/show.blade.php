@@ -8,7 +8,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title"> Avaliação de Desenpenho - Nível {{ $performanceEvaluation->level }} @if ($performanceEvaluation->level == 2)
+                    <h5 class="card-title"> Avaliação de Desempenho - Nível {{ $performanceEvaluation->level }} @if ($performanceEvaluation->level == 2)
                             Lideranças
                         @endif
                     </h5>

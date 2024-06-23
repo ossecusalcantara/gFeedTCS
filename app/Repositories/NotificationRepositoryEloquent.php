@@ -80,7 +80,7 @@ class NotificationRepositoryEloquent extends BaseRepository implements Notificat
                 $query->where('type', 'R')->orWhere('type', 'N');
               })
             ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
-            ->orderBy('created_at', 'asc')->get();
+            ->orderBy('created_at', 'desc')->get();
     }
 
     public function setViewNotification($id) {

@@ -8,7 +8,7 @@
 <div class="card">
     <div class="card-body">
         <div class="row text-center">
-            <h4 class="card-title"> Avaliação de Desenpenho - Nível {{ $performanceEvaluation->level }} @if( $performanceEvaluation->level == 2) Lideranças @endif </h4>
+            <h4 class="card-title"> Avaliação de Desempenho - Nível {{ $performanceEvaluation->level }} @if( $performanceEvaluation->level == 2) Lideranças @endif </h4>
         </div>
         <h5 class="card-title">Avalie cada compêtencia conforme a frequência que mais
             representa o colaborador.</h5>
