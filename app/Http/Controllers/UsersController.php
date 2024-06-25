@@ -109,7 +109,8 @@ class UsersController extends Controller
                 $request['cpf'] = removeCpfFormatting($request['cpf']);
             }
             
-            $request['password'] =  Hash::make('gfeed2024*');
+            $defaultPassword = config('app.default_password');
+            $request['password'] =  Hash::make($defaultPassword);
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 

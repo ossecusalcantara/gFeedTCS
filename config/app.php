@@ -18,6 +18,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'default_password' => env('DEFAULT_PASSWORD', 'gfeed2024*'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
