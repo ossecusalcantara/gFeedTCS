@@ -10,14 +10,14 @@
             </a>
         </li>
 
-        @can('manager')
+        {{-- @can('manager')
             <li class="nav-item">
                 <a class="nav-link " href="{{ route('performanceEvaluations.managerlist') }}">
                     <i class="bi bi-x-diamond-fill"></i>
                     <span>Avaliação de Desempenho</span>
                 </a>
             </li>
-        @endcan
+        @endcan --}}
 
         
         <li class="nav-item">
