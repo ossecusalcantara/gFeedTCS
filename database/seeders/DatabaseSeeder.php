@@ -25,17 +25,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('app_users')->update(['password' => '$2y$12$9D7y85D3wUyC0HiG7uxv8.7bCWC7pAG5/4SfrNSg9cfLEpz0lkCWu']);
-        // $this->SeederDepartamentos();
-        // $this->SeederCargos();
-        // $this->SeederSkills();
-        // $this->SeederTypeQuestios();
-        // $this->SeederPermissoes();
-        // $this->SeedQuestions1();
-        // $this->SeederQuestions2();
-        // $this->SeederUser();
-        // $this->SeedAvaliacao();
-        // $this->SeedFeedback(20);
+        $this->SeederDepartamentos();
+        $this->SeederCargos();
+        $this->SeederSkills();
+        $this->SeederTypeQuestios();
+        $this->SeederPermissoes();
+        $this->SeedQuestions1();
+        $this->SeederQuestions2();
+        $this->SeederUser();
+        $this->SeedAvaliacao();
+        $this->SeedFeedback(20);
     }
 
     private function SeedAvaliacao() : void {
