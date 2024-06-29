@@ -12,6 +12,7 @@ use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Repositories\DepartamentRepository;
+use App\Repositories\NotificationRepository;
 use App\Repositories\OfficeRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\PermissionRepository;
@@ -44,6 +45,8 @@ class UsersController extends Controller
 
     protected $permissionRepository;
 
+    protected $notificationRepository;
+
 
 
     /**
@@ -52,13 +55,14 @@ class UsersController extends Controller
      * @param UserRepository $repository
      * @param UserValidator $validator
      */
-    public function __construct(UserRepository $repository, UserValidator $validator, DepartamentRepository $departamentRepository, OfficeRepository $officeRepository, PermissionRepository $permissionRepository )
+    public function __construct(UserRepository $repository, UserValidator $validator, DepartamentRepository $departamentRepository, OfficeRepository $officeRepository, PermissionRepository $permissionRepository,NotificationRepository $notificationRepository )
     {
         $this->repository = $repository;
         $this->validator  = $validator;
         $this->departamentRepository = $departamentRepository;
         $this->officeRepository      = $officeRepository;
         $this->permissionRepository  = $permissionRepository;
+        $this->notificationRepository = $notificationRepository;
 
     }
 
@@ -105,13 +109,8 @@ class UsersController extends Controller
     {
         try {
 
-            if (isset($request['cpf'])) {
-                $request['cpf'] = removeCpfFormatting($request['cpf']);
-            }
+            $request['password'] = env('DEFAULT_PASSWORD');
             
-            $defaultPassword = config('app.default_password');
-            $request['password'] =  Hash::make($defaultPassword);
-
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
             $usuario = $this->repository->create($request->all());
@@ -190,10 +189,6 @@ class UsersController extends Controller
     public function update(UserUpdateRequest $request, $id)
     {
         try {
-
-            if (isset($request['cpf'])) {
-                $request['cpf'] = removeCpfFormatting($request['cpf']);
-            }
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
             

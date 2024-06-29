@@ -11,7 +11,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;

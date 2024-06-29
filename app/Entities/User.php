@@ -100,9 +100,14 @@ class User extends Authenticatable
         return $this->permissions()->where('name', $permission)->exists();
     }
 
-    public function setPasswordAttribute($value) 
+    public function setCpfAttribute($value) 
     {
-        $this->attributes['password'] = env('PASSWORD_HASH') ? Hash::make($value) : $value;
+        $this->attributes['cpf'] =  preg_replace('/[^0-9]/', '', $value);
+    }
+
+    public function setPhoneAttribute($value) 
+    {
+        $this->attributes['phone'] =  preg_replace('/[^0-9]/', '', $value);
     }
 
     protected function formattedCpf() : Attribute

@@ -57,7 +57,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating">
-                        {!! Form::text( 'phone', null, ['class' => 'form-control', 'placeholder' => 'Telefone', 'required']) !!}
+                        {!! Form::text( 'phone', null, ['class' => 'form-control phone', 'placeholder' => 'Telefone', 'required']) !!}
                         <label for="email">Telefone</label>
                     </div>
                 </div>
