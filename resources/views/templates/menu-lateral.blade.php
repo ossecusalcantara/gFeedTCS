@@ -10,28 +10,28 @@
             </a>
         </li>
 
-        {{-- @can('manager')
+         @can('manager')
             <li class="nav-item">
                 <a class="nav-link " href="{{ route('performanceEvaluations.managerlist') }}">
                     <i class="bi bi-x-diamond-fill"></i>
                     <span>Avaliação de Desempenho</span>
                 </a>
             </li>
-        @endcan --}}
+        @endcan 
 
-        
+        @can('admin')
+            <li class="nav-item">
+                <a class="nav-link " href="{{ route('performanceEvaluations.managerlist') }}">
+                    <i class="bi bi-x-diamond-fill"></i>
+                    <span>Avaliação de Desempenho</span>
+                </a>
+            </li>
+        @endcan
+                
         <li class="nav-item">
-            @can('manager')
-                <a class="nav-link " href="{{ route('performanceEvaluations.managerlist') }}">
-            @endcan
-            @can('admin')
-                <a class="nav-link " href="{{ route('performanceEvaluations.managerlist') }}">
-            @endcan
-            @can('user')
                 <a class="nav-link " href="{{ route('performanceEvaluations.userlist') }}">
-            @endcan
-                <i class="bi bi-x-diamond-fill"></i>
-                <span>Avaliação de Desempenho</span>
+                <i class="bi bi-flower2"></i>
+                <span>Minhas Avaliações</span>
             </a>
         </li>
 

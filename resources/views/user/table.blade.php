@@ -3,6 +3,7 @@
     <thead>
       <tr>
         <th>Id</th>
+        <th class="text-center">Foto</th>
         <th>Nome</th>
         <th>E-mail</th>
         <th>Telefone</th>
@@ -14,7 +15,8 @@
     <tbody>
         @foreach ($users as $user)
         <tr>
-            <th> {{ $user->id }}</th>
+            <th> {{ $user->id }}</th> 
+            <th class="text-center"> <img src="{{ asset("img/profile/{$user->profile_picture}") }}" alt="" class="rounded-circle img-fluid" style="width: 50px; height: 50px;"></th> 
             <td> {{ $user->name }}</td>
             <td> {{ $user->email }}</td>
             <td> {{ $user->formatted_phone }}</td>
