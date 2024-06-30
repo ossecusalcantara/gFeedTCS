@@ -146,7 +146,7 @@ class PerformanceEvaluationsController extends Controller
             ];
             
             $this->notificationRepository->setNotification($request['user_id'], 'Você tem uma avaliação a ser feita', 'R');
-            $this->notificationRepository->setNotification($request['manager_id'], 'Você tem uma avaliação de desempenho pendente.', 'A', 'performanceEvaluations.accomplish',  $performanceEvaluation->id);
+            $this->notificationRepository->setNotification($request['manager_id'], 'Você tem uma avaliação de desempenho pendente', 'A', 'performanceEvaluations.accomplish',  $performanceEvaluation->id);
 
             if ($request->wantsJson()) {
                 return response()->json($response);
@@ -225,7 +225,7 @@ class PerformanceEvaluationsController extends Controller
 
             $performanceEvaluation = $this->repository->update($request->all(), $id);
 
-            $this->notificationRepository->setNotification($request['manager_id'], 'Você tem uma avaliação de desempenho pendente.', 'A', 'performanceEvaluations.lisgatem',  $performanceEvaluation->id);
+            $this->notificationRepository->setNotification($request['manager_id'], 'Você tem uma avaliação de desempenho pendente', 'A', 'performanceEvaluations.lisgatem',  $performanceEvaluation->id);
 
             $response = [
                 'message' => 'PerformanceEvaluation updated.',

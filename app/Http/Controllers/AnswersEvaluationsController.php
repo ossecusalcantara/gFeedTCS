@@ -118,7 +118,7 @@ class AnswersEvaluationsController extends Controller
 
             dd($evaluation);
 
-            $this->notificationRepository->setNotification(Auth::id(), 'Avaliação de desempenho realizada com sucesso', 'R');
+            $this->notificationRepository->setNotification(Auth::id(), 'Avaliação de desempenho foi realizada com sucesso', 'R');
             $this->notificationRepository->setNotification($evaluation->user_id, 'Sua avaliação de desempenho foi concluida com sucesso', 'A', 'performanceEvaluations.show',  $evaluation->id);
 
             $response = [
