@@ -14,7 +14,7 @@
 
         <h6>Instruções</h6>
         <ul>
-            <li> 1. Leia cada pergunta atentamente. </li>
+            <li> 1. Descreva suas impressões atentamente. </li>
             <li> 2. Responda de forma honesta e específica. </li>
             <li> 3. Use exemplos concretos sempre que possível. </li>
             <li> 4. Todas as suas respostas são confidenciais e serão usadas apenas para fins de desenvolvimento pessoal. </li>

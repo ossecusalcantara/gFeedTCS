@@ -17,7 +17,7 @@
                             <div class="col-lg-2 pt-3 text-end">
                                 
                                 <button type="button" onclick="window.location='{{ route('departament.store') }}'" class="btn btn-primary btn-sm ">
-                                    Add Setor
+                                    Novo Setor
                                 </button>
                             </div>
                         </div>

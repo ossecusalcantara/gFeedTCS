@@ -71,7 +71,7 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#performanceEvaluations-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-x-diamond-fill"></i><span>Gestão de Avalições</span><i
+                    <i class="bi bi-x-diamond-fill"></i><span>Gestão de Avaliações</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="performanceEvaluations-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">

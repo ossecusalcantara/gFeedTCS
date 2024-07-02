@@ -17,7 +17,7 @@
                             <div class="col-lg-2 pt-3 text-end">
                                 
                                 <button type="button" onclick="window.location='{{ route('questions.store') }}'" class="btn btn-primary btn-sm ">
-                                    Add Pergunta
+                                    Nova Pergunta
                                 </button>
                             </div>
                         </div>
